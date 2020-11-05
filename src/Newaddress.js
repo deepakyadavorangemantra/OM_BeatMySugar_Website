@@ -1,0 +1,487 @@
+import React from 'react';
+import Menu from './Header';
+import Footer from "./Footer";
+import PostApiCall from "./Api";
+import Notiflix from "notiflix-react";
+import GetApiCall from './GetApi'
+import moment from 'moment'
+
+class Newaddress extends React.Component
+{
+
+    constructor(props){
+        super(props)
+        this.state={
+            Name : '',
+            Mobile : '',
+            Address :'',
+            Street : '',
+            Landmark : '',
+            City : '',
+            State : '',
+            Country : '',
+            Pincode : '',
+
+            CityId : '',
+            StateId : '',
+            CountryId : '',
+
+            CountryData : [],
+            StateData : [],
+            CityData : [],
+
+
+
+            NumRegex: /^0|[0-9]\d*$/,
+            MobileRegex: /^[0-9]*$/,
+            AlphaNumericRegex: /^[a-zA-Z0-9]*$/,
+            SpecialRegex: /[-!$%^&*()_+|~=`'"{}\[\]:\/;<>?,.@#]/,
+            EmailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            UrlRegex: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+      
+
+        }
+    }
+
+    componentDidMount(){
+
+        GetApiCall.getRequest("GetCountry").then(resultdes =>
+            resultdes.json().then(objcountry => {
+           
+              this.setState({
+                  CountryData : objcountry.data
+              })
+      
+              
+              this.setState({ CountryId: 101 ,
+            Country : objcountry.data[100].label
+            });
+
+      
+              PostApiCall.postRequest(
+                {
+                  countryid: 101
+                },
+                "GetState"
+              ).then(results =>
+         
+                results.json().then(obj => {
+                  if (results.status == 200 || results.status == 201) {
+                   
+                    this.setState({
+                        StateData : obj.data
+                    })
+                  
+                    this.setState({ StateId: obj.data[0].value,
+                    State : obj.data[0].label
+                    });
+      
+                    PostApiCall.postRequest(
+                      {
+                        stateid: obj.data[0].value
+                      },
+                      "GetCity"
+                    ).then(results =>
+                      results.json().then(objcity => {
+                        if (results.status == 200 || results.status == 201) {
+                     
+      
+                         
+                          this.setState({ CityId: objcity.data[0].value,
+                        CityData : objcity.data,
+                            City : objcity.data[0].label
+                        });
+                          Notiflix.Loading.Remove();
+                       
+                        }
+                      })
+                    );
+      
+                  }
+                })
+              );
+        
+            })
+          );
+
+    }
+
+    onChangeCountry(country) {
+        this.setState({
+          CountryId: country.target.value
+        });
+        
+        this.setState({
+            Country : this.state.CountryData[country.target.value - 1].label
+        })
+    
+        Notiflix.Loading.Dots('Please wait...');
+
+        PostApiCall.postRequest(
+          {
+            countryid: country.target.value
+          },
+          "GetState"
+        ).then(results =>
+          results.json().then(obj => {
+            if (results.status == 200 || results.status == 201) {
+              this.setState({
+                  StateData : obj.data
+              })
+    
+              PostApiCall.postRequest(
+                {
+                  stateid: obj.data[0].value
+                },
+                "GetCity"
+              ).then(results =>
+                results.json().then(objcity => {
+                  if (results.status == 200 || results.status == 201) {
+                    
+                    this.setState({ City: objcity.data[0].value ,
+                    State : obj.data[0].label,
+                    CityData : objcity.data
+                    });
+                    Notiflix.Loading.Remove()
+                  }
+                })
+              );
+            }
+          })
+        );
+      }
+    
+      onChangeState(state) {
+        this.setState({
+          StateId: state.target.value
+        });
+    
+        for (
+          var i = 0;
+          i < Object.keys(this.state.StateData).length;
+          i++
+        ) {
+          if (
+            this.state.StateData[i].value == state.target.value
+          ) {
+            this.setState({
+                State : this.state.StateData[i].label
+            })
+          }
+        }
+
+        Notiflix.Loading.Dots('Please wait...');
+    
+        PostApiCall.postRequest(
+          {
+            stateid: state.target.value
+          },
+          "GetCity"
+        ).then(results =>
+          results.json().then(obj => {
+            if (results.status == 200 || results.status == 201) {
+            this.setState({
+                CityData : obj.data,
+                City : obj.data[0].label,
+            })
+      
+
+            Notiflix.Loading.Remove()  
+            }
+          })
+        );
+      }
+      onChangeCity(city) {
+        this.setState({
+          CityId: city.target.value
+        });
+    
+        for (
+          var i = 0;
+          i < Object.keys(this.state.CityData).length;
+          i++
+        ) {
+          if (this.state.CityData[i].value == city.target.value) {
+            this.setState({
+                City : this.state.CityData[i].label
+            })
+          }
+        }
+      }
+
+
+      onSave(){
+
+       
+
+        if(this.state.Name != ''){
+
+            if(this.state.Mobile != ''){
+
+                if(this.state.Mobile.length == 10){
+
+                if(this.state.Address != ''){
+
+                    if(this.state.Street != ''){
+
+                        if(this.state.Country != ''){
+
+                            if(this.state.State != ''){
+
+                                if(this.state.City != ''){
+
+                                    if(this.state.Pincode != ''){
+
+                                        Notiflix.Loading.Dots('Please wait...');
+                                        var log = localStorage.getItem('CustomerLoginDetails')
+                                        var login = JSON.parse(log)
+
+                                        PostApiCall.postRequest(
+                                            {
+                                                 user_id : login.fld_userid,
+                                                 name : this.state.Name,
+                                                 mobile : this.state.Mobile,
+                                                 address : this.state.Address,
+                                                 street : this.state.Street,
+                                                 landmark : this.state.Landmark,
+                                                 country : this.state.Country,
+                                                 state : this.state.State,
+                                                 city : this.state.City,
+                                                 pincode : this.state.Pincode,
+                                                 updated_by : login.fld_userid,
+                                                 updated_on : moment().format('lll').toString(),
+                                            },
+                                            "AddUserAddressMapping"
+                                          ).then(results =>
+                                            results.json().then(obj => {
+                                              if (results.status == 200 || results.status == 201) {
+
+                                                window.location.href = '/selectaddress'
+                                             
+                                              }
+                                            })
+                                          );
+
+
+
+
+                                    }else{
+                                        Notiflix.Notify.Failure('Please Enter Pincode.')
+                                    }
+
+                                }else{
+                                    Notiflix.Notify.Failure('Please select City.')
+                                }
+                            }else{
+                                Notiflix.Notify.Failure('Please select State.')
+                            }
+                        }else{
+                            Notiflix.Notify.Failure('Please select Country.')
+                        }
+                    }else{
+                        Notiflix.Notify.Failure('Please Enter Area, Colony, Street, Sector, Village.')
+                    }
+                }else{
+                    Notiflix.Notify.Failure('Please Enter Flat, House No., Building, Company, Apartment.')
+                }
+            }else{
+                Notiflix.Notify.Failure('Please Enter a valid Mobile Number.')
+            }
+            }else{
+                Notiflix.Notify.Failure('Please Enter your Mobile Number.')
+            }
+
+        }else{
+            Notiflix.Notify.Failure('Please Enter your Full Name.')
+        }
+
+      }
+
+    render()
+    {
+        return(
+            <div>
+                <Menu></Menu>
+                    <div class="container">
+                        <div class="container-box doctors-section" style={{background:"none"}}>
+                            <div class="row">
+                            <div class="col-md-3">
+                                    
+                                    </div>
+                                <div class="col-md-6 white-bg" >
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3>New Address</h3>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                <div class="form-group required-field">
+                                                        <label for="acc-name">Full Name</label>
+                                                        <input type="text" class="form-control" 
+                                                        value={this.state.Name}
+                                                        onChange={(text)=>{
+                                                            this.setState({
+                                                                Name : text.target.value
+                                                            })
+                                                        }}
+                                                        required=""/>
+                                                    </div>
+                                                    <div class="form-group required-field">
+                                                        <label for="acc-name">Mobile Number</label>
+                                                        <input type="text"
+                                                         value={this.state.Mobile}
+                                                         onChange={(text)=>{
+                                                            if((this.state.MobileRegex.test(text.target.value)) && (text.target.value.length <= 10)){
+
+                                                             this.setState({
+                                                                 Mobile: text.target.value
+                                                             })
+                                                            }
+                                                         }}
+                                                        class="form-control"  required=""/>
+                                                    </div>
+                                                    <div class="form-group required-field">
+                                                        <label for="acc-name">Flat, House No., Building, Company, Apartment</label>
+                                                        <input type="text" class="form-control" 
+                                                         value={this.state.Address}
+                                                         onChange={(text)=>{
+                                                             this.setState({
+                                                                 Address : text.target.value
+                                                             })
+                                                         }}
+                                                        required=""/>
+                                                    </div>
+                                                </div>
+
+                                            
+
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group required-field">
+                                        <label for="acc-email">Area, Colony, Street, Sector, Village</label>
+                                        <input 
+                                         value={this.state.Street}
+                                         onChange={(text)=>{
+                                             this.setState({
+                                                 Street : text.target.value
+                                             })
+                                         }}
+                                        class="form-control"  required=""/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="acc-email">Landmark</label>
+                                        <input 
+                                         value={this.state.Landmark}
+                                         onChange={(text)=>{
+                                             this.setState({
+                                                 Landmark : text.target.value
+                                             })
+                                         }}
+                                        class="form-control" required=""/>
+                                    </div>
+                                
+
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group required-field">
+                                        <label for="acc-email">Country</label>
+                                        <select class="form-control"
+                                        disabled
+                                          value={this.state.CountryId}
+                                          onChange={this.onChangeCountry.bind(this)}
+                                        >
+                                          
+                                            {this.state.CountryData.map(user => (
+                              <option key={user.value} value={user.value}>
+                                {user.label}
+                              </option>
+                            ))}
+                                        </select>
+                                    </div>
+                                            </div>
+                                        <div class="col-md-6">
+                                        <div class="form-group required-field">
+                                        <label for="acc-password">State</label>
+                                        
+                                        <select class="form-control"
+                                          value={this.state.StateId}
+                                          onChange={this.onChangeState.bind(this)}
+                                        >
+                                          
+                                            {this.state.StateData.map(user => (
+                              <option key={user.value} value={user.value}>
+                                {user.label}
+                              </option>
+                            ))}
+                                        </select>
+                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <div class="form-group required-field">
+                                        <label for="acc-email">City</label>
+                                     
+                                        <select class="form-control"
+                                          value={this.state.CityId}
+                                          onChange={this.onChangeCity.bind(this)}
+                                        >
+                                          
+                                            {this.state.CityData.map(user => (
+                              <option key={user.value} value={user.value}>
+                                {user.label}
+                              </option>
+                            ))}
+                                        </select>
+                                    </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                        <div class="form-group required-field">
+                                        <label for="acc-password">Pincode</label>
+                                        <input 
+                                         value={this.state.Pincode}
+                                         onChange={(text)=>{
+                                            if((this.state.MobileRegex.test(text.target.value)) && (text.target.value.length <= 6)){
+
+                                             this.setState({
+                                                 Pincode : text.target.value
+                                             })
+                                            }
+                                         }}
+                                        class="form-control"  required=""/>
+                                    </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                      
+                                       
+                                    </div>
+
+                                
+
+                                    <div class="form-footer">
+
+                                        <div class="form-footer-right">
+                                            <button class="btn btn-primary"
+                                            onClick={this.onSave.bind(this)}
+                                            >Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <Footer></Footer>
+            </div>
+        )
+    }
+}
+
+export default Newaddress;
