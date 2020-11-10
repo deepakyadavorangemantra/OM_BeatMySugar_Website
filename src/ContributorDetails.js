@@ -27,12 +27,12 @@ class ContributorDetails extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("Please wait...");
 
-  
+    //  console.log(this.props.match.params.contributorid.split('-')[0])
 
     PostApiCall.postRequest(
       {
@@ -42,13 +42,13 @@ class ContributorDetails extends React.Component {
     ).then((results) =>
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
-
+          // console.log(obj.data[0]);
           this.setState({
             SelectedContributors: obj.data[0],
             
           });
 
- 
+          // Notiflix.Loading.Remove()
         }
       })
     );
@@ -68,7 +68,8 @@ class ContributorDetails extends React.Component {
 
 
   onViewContributor(name, id){
-  
+    // console.log(name)
+    // console.log(id)
     window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
       }
 

@@ -45,7 +45,14 @@ class Footer extends React.Component
                                            <li><a href="/Termsmarketplace">Terms of Market Place</a></li>
                                            </ul>
                                                
-                                                  
+                                                    {/* <ul class="links">
+                                                        <li><a href="/aboutus">About BeatMySugar</a></li>
+                                                        <li><a href="#">Media & News</a></li> 
+                                                        <li><a href="/careers">Careers</a></li>
+                                                        <li><a href="/contactus">Contact Us</a></li>
+                                                        <li><a href="#">Customer Reviews</a></li> 
+                                                    </ul>
+                                                */}
                                                
                                                   
                                                
@@ -60,10 +67,18 @@ class Footer extends React.Component
                                                 <ul class="links">
                                                 <li><a href="/careers">Careers</a></li>
                                                 <li><a href="/sellwithus">Sell With Us</a></li>
-                                               
+                                                {/* <li><a href="/insurance">Insurance</a></li> */}
                                                 </ul>
                                                    
-                                                        
+                                                        {/* <ul class="links">
+                                                            <li><a href="/privacypolicy">Privacy Policy</a></li>
+                                                         <li><a href="#">Return Policy</a></li>
+                                                            <li><a href="/terms&condition">Terms & Conditions</a></li>
+                                                            <li><a href="#">FAQ</a></li> 
+                                                            <li><a href="/disclaimer">Disclaimer</a></li>
+                                                        </ul>
+                                                    */}
+                                                   
                                                       
                                                    
                                                
@@ -79,7 +94,24 @@ class Footer extends React.Component
                                                 <li><a href="/aboutus">About BeatMySugar </a></li>
                                                 <li><a href="/contactus">Contact Us </a></li>
                                                 </ul>
-                                                           
+                                                            {/* <a href="tel:(+91) 9024422444"><h2 class="customer-support-number"><i class="fas fa-phone-volume"></i> +91 90244 22444</h2></a>
+                                                           <a href="mailto:wecare@beatmysugar.com"><h2 class="customer-support-number"><i class="fas fa-envelope-open"></i> wecare@beatmysugar.com</h2></a>  */}
+                                                            {/* <ul class="cc-list">
+                                                                    <li> <img src="/assets/images/visa.png" alt="payment methods" class="footer-payments"/></li>
+                                                                    
+                                                                    <li> <img src="/assets/images/master.png" alt="payment methods" class="footer-payments" style={{width:'45px'}}/></li>
+                                                                     <li> <img src="/assets/images/maestro.png" alt="payment methods" class="footer-payments" style={{width:'45px'}}/></li>
+                                                                     <li> <img src="/assets/images/rupay.png" alt="payment methods" class="footer-payments"/></li>
+                                                                  
+                                                               
+                                                                </ul>
+                                                                <ul class="cc-list">
+                                                                    <li> <img src="/assets/images/amex.png" alt="payment methods" class="footer-payments"/></li>
+                                                                    <li> <img src="/assets/images/paytm.png" alt="payment methods" class="footer-payments" style={{width:'45px'}}/></li>
+                                                                    <li> <img src="/assets/images/cash-on-delivery.png" alt="payment methods" class="footer-payments" style={{width:'45px'}}/></li>
+                                                                   
+                                                                    <li> <img src="/assets/images/net-banking.png" alt="payment methods" class="footer-payments" style={{width:'45px'}}/></li>
+                                                                </ul> */}
                                                            
                                                         </div>
                                             </div>

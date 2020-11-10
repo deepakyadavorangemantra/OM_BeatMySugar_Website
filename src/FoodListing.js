@@ -69,7 +69,7 @@ class FoodListing extends React.Component {
 
     var search = JSON.parse(localStorage.getItem('SearchText'))
 
-
+    // console.log(this.props.match.params.category)
     PostApiCall.postRequest(
       {
         category: this.props.match.params.id,
@@ -80,7 +80,7 @@ class FoodListing extends React.Component {
         if (results.status == 200 || results.status == 201) {
 
 
-   
+          // console.log(obj.data)
 
           var srDt= []
           if(search != null){
@@ -90,7 +90,7 @@ class FoodListing extends React.Component {
               if (item.fld_name.toLowerCase().includes(search.toLowerCase())
               || item.fld_brand.toLowerCase().includes(search.toLowerCase())
               || item.Filters.toLowerCase().includes(search.toLowerCase())
-           
+              // || item.fld_keyingredients.toLowerCase().includes(search.toLowerCase())
               ) {
                 srDt.push(item)
               }
@@ -99,12 +99,12 @@ class FoodListing extends React.Component {
 
             var dtar = [...srDt];
             for (var i = 0; i < Object.keys(srDt).length; i++) {
-     
+              // console.log(dtar[i].SelectedVar)
               if (srDt[i].Variant != null) {
                 dtar[i].SelectedVar = srDt[i].Variant.split("^")[0];
                 dtar[i].Selectdd = srDt[i].Variant.split("^")[0].split('#')[1]+' '+srDt[i].Variant.split("^")[0].split('#')[2]+' - ₹'+srDt[i].Variant.split("^")[0].split('#')[3]
               }else{
-      
+                // dtar.splice(obj.data[i])
               }
             }
             var finlar = []
@@ -114,7 +114,7 @@ class FoodListing extends React.Component {
               }
 
             }
-         
+            // console.log(dtar)
             this.setState({
               Food: finlar,
               FoodRef: finlar,
@@ -127,12 +127,12 @@ class FoodListing extends React.Component {
 
             var dtar1 = [...obj.data];
             for (var i = 0; i < Object.keys(obj.data).length; i++) {
-      
+              // console.log(dtar[i].SelectedVar)
               if (obj.data[i].Variant != null) {
                 dtar1[i].SelectedVar = obj.data[i].Variant.split("^")[0];
                 dtar1[i].Selectdd = obj.data[i].Variant.split("^")[0].split('#')[1]+' '+obj.data[i].Variant.split("^")[0].split('#')[2]+' - ₹'+obj.data[i].Variant.split("^")[0].split('#')[3]
               }else{
-   
+                // dtar.splice(obj.data[i])
               }
             }
 
@@ -145,9 +145,10 @@ class FoodListing extends React.Component {
             }
 
             this.setState({
-           
+              // Food: dtar,
+              // Sera: dtar,
               FoodVariantRef :finlar2 ,
-      
+              // done : true
             });
 
 
@@ -157,12 +158,12 @@ class FoodListing extends React.Component {
 
               var dtar2 = [...obj.data];
               for (var i = 0; i < Object.keys(obj.data).length; i++) {
-      
+                // console.log(dtar[i].SelectedVar)
                 if (obj.data[i].Variant != null) {
                   dtar2[i].SelectedVar = obj.data[i].Variant.split("^")[0];
                   dtar2[i].Selectdd = obj.data[i].Variant.split("^")[0].split('#')[1]+' '+obj.data[i].Variant.split("^")[0].split('#')[2]+' - ₹'+obj.data[i].Variant.split("^")[0].split('#')[3]
                 }else{
-         
+                  // dtar.splice(obj.data[i])
                 }
               }
 
@@ -174,7 +175,7 @@ class FoodListing extends React.Component {
   
               }
               
-          
+              // console.log(dtar)
               this.setState({
                 Food: finlar1,
                 FoodRef: finlar1,
@@ -200,7 +201,7 @@ class FoodListing extends React.Component {
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
 
-          
+          // console.log(obj.data)
         this.setState({
           BrandData: obj.data,
           BrandDataRef : obj.data,
@@ -218,7 +219,7 @@ class FoodListing extends React.Component {
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
 
-
+          // console.log(obj.data)
         this.setState({
           FlavourData: obj.data,
         });
@@ -229,7 +230,7 @@ class FoodListing extends React.Component {
 
     GetApiCall.getRequest("GetFoodPriceDataFilter").then(resultdes =>
       resultdes.json().then(obj => {
-  
+        // console.log(obj.data)
           this.setState({
               
           PriceData : obj.data
@@ -246,14 +247,42 @@ class FoodListing extends React.Component {
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
 
-       
+          // console.log(obj.data)
         this.setState({
           AdditionalData: obj.data,
         });
       }
     })
     );
-    
+    // Notiflix.Loading.Remove();
+
+    //       PostApiCall.postRequest(
+    //         {
+    //           category: this.props.match.params.id,
+    //         },
+    //         "GetFilterFoodListing"
+    //       ).then((results) =>
+    //         results.json().then((obj) => {
+    //           if (results.status == 200 || results.status == 201) {
+    //             console.log(obj.data)
+    //       var dtar = [...obj.data];
+    //       for (var i = 0; i < Object.keys(obj.data).length; i++) {
+    //         // console.log(dtar[i].SelectedVar)
+    //         if (obj.data[i].Variant != null) {
+    //           dtar[i].SelectedVar = obj.data[i].Variant.split("^")[0];
+    //         }else
+    //         {
+    //           // dtar.splice(res.data.data[i])
+    //         }
+    //       }
+
+    //       this.setState({
+    //         FoodVariantRef: dtar,
+    //       });
+    //     }
+  
+    //   Notiflix.Loading.Remove();
+    // }))
   }
 
   truncate(source, size) {
@@ -267,7 +296,7 @@ class FoodListing extends React.Component {
  
 
 OnSubmitBrandFilter(){
-
+  // console.log(this.state.BrandFilter)
   var  newData = []
   var count = 0;
 
@@ -293,7 +322,7 @@ OnSubmitBrandFilter(){
 
       }else
       {
-
+        // console.log(newData[0])
         this.OnSubmitPriceFilter(newData)
       }
      
@@ -336,9 +365,9 @@ OnSubmitPriceFilter(Ref){
         item.Variant.split('^').filter(item2=> {
      
           if (item2.split('#')[3] >= this.state.PriceFilter[i].fld_min && item2.split('#')[3] <= this.state.PriceFilter[i].fld_max) {
-      
+          //  console.log(item)
             newData.push(item)
-        
+              // return true;
           }
       })
       }
@@ -362,7 +391,7 @@ OnSubmitPriceFilter(Ref){
       {
 
        
-
+        // console.log(newData)
     
         var resArr = [];
         newData.forEach(function(item){
@@ -378,19 +407,19 @@ OnSubmitPriceFilter(Ref){
       for(var j =0 ; j < this.state.PriceFilter.length;j++){
 
           for (var i = 0; i < Object.keys(resArr).length; i++) {
-          
+            // console.log(dtar[i].SelectedVar)
             resArr[i].Variant.split('^').filter((item2,ind)=> {
      
               if (item2.split('#')[3] >= this.state.PriceFilter[j].fld_min && item2.split('#')[3] <= this.state.PriceFilter[j].fld_max) {
-        
+              //  console.log(item)
               dtar[i].SelectedVar = resArr[i].Variant.split("^")[ind];
               dtar[i].Selectdd = resArr[i].Variant.split("^")[ind].split('#')[1]+' '+resArr[i].Variant.split("^")[ind].split('#')[2]+' - ₹'+resArr[i].Variant.split("^")[ind].split('#')[3];
-           
+                  // return true;
               }
           })
           }
         }
-
+          // console.log(dtar)
         this.OnSubmitFlavourFilter(dtar)
       }
      
@@ -458,7 +487,7 @@ else
 
 OnSubmitFilter(Ref){
 
-
+  // console.log(Ref)
 
   var  newData = []
   var count = 0;
@@ -472,12 +501,12 @@ OnSubmitFilter(Ref){
      
         if (item2.includes(this.state.AdditionalFilter[i])) {
           newData.push(item)
-            
+            // return true;
         }
       })
     
     })
-
+    // console.log(newData)
   
     count = count + 1
 
@@ -535,9 +564,9 @@ else
         </div>
         <main class="main">
           <div class="container healthcare-slider doctors-section">
-     
+            {/* <h3 class="section-title">Food</h3> */}
             <div class="row">
-            
+              {/* {this.state.Book.map((book, index) => ( */}
 
               <div class="sidebar-overlay"></div>
               <div class="sidebar-toggle">
@@ -662,7 +691,52 @@ else
                   </ul>
                 </div>
 
-               
+                {/* <div class="brands">
+                  <h5 style={{display : this.state.FlavourData.length ==0 ? 'none' : ''}}>Flavors</h5>
+                  <ul >
+                 
+                
+                 
+                  {this.state.FlavourData.map((dt, i) => (
+                          <li>
+                            <input
+                              checked={
+                                this.state.FlavourFilter.includes(dt.fld_flavour)
+                                  ? true
+                                  : false
+                              }
+                              type="checkbox"
+                              name="checkbox3"
+                              id="checkbox3"
+                              class="css-checkbox"
+                              onChange={() => {
+                                var ar = [...this.state.FlavourFilter];
+
+                                if (ar.includes(dt.fld_flavour)) {
+                                  ar.splice(ar.indexOf(dt.fld_flavour), 1);
+                                } else {
+                                  ar.push(dt.fld_flavour);
+                                }
+
+                                this.setState({
+                                  FlavourFilter: ar,
+                                },()=>{
+                                  this.OnSubmitBrandFilter()
+                                });
+                              }}
+                            />
+                            <label for="checkbox3" class="css-label">
+                              {dt.fld_flavour}
+                            </label>
+                          </li>
+                        ))}
+                  
+                   
+                   
+                  
+                  </ul>
+                </div>
+              */}
                 <div class="brands">
                   <h5 style={{display : this.state.AdditionalData.length ==0 ? 'none' : ''}}>Additional Filters</h5>
                   <ul >
@@ -735,7 +809,7 @@ else
                  
                   ) : (
                     <div class="col-md-12">
-                      
+                      {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
                     </div>
                   )}
 
@@ -797,7 +871,7 @@ else
                               {info.SelectedVar.split("#")[0]}
                             </a>
                           </p>
-                    
+                          {/* {book.fld_discountpercent == 0.0 ? ( */}
                           <p class="food-height">
                             <p class="small-desc item-name">
                               <span
@@ -820,7 +894,7 @@ else
                                   var dr = [...this.state.Food];
                                   for (var i = 0;i < info.Variant.split("^").length;i++) {
                                     if ( dt.target.value ==info.Variant.split("^")[i].split("#")[1] + " " +info.Variant.split("^")[i].split("#")[2] + " - ₹" + info.Variant.split("^")[i].split("#")[3]) {
-                   
+                                      // console.log(info.Variant.split(',')[i])
                                       dr[index].SelectedVar = info.Variant.split("^")[i];
                                       dr[index].Selectdd = info.Variant.split("^")[i].split("#")[1] + " " +info.Variant.split("^")[i].split("#")[2] + " - ₹" + info.Variant.split("^")[i].split("#")[3]
                                     }
@@ -829,7 +903,7 @@ else
                                   this.setState({
                                     Food: dr,
                                   });
-                    
+                                  // console.log(dt.target.value)
                                 }}
                               >
                                 {info.VariantDropDown.split(",").map(
@@ -908,7 +982,7 @@ else
                                     PostApiCall.postRequest(
                                       {
                                         customer_id: login.fld_userid,
-                                      
+                                        // customer_id : 13,
                                         variant_id: info.SelectedVar.split(
                                           "#"
                                         )[7],
@@ -916,11 +990,11 @@ else
                                         quantity: 1,
                                         updated_on: moment().format("lll"),
                                         updated_by: login.fld_userid,
-                                    
+                                        // updated_by :13
                                       },
                                       "AddWishlist"
                                     ).then((results) =>
-                                     
+                                      // const objs = JSON.parse(result._bodyText)
                                       results.json().then((obj) => {
                                         if (
                                           results.status == 200 ||
@@ -930,7 +1004,7 @@ else
                                           Notiflix.Notify.Info(
                                             "Product added to Wishlist."
                                           );
-                                 
+                                          // window.location.reload()
                                         } else {
                                           Notiflix.Loading.Remove();
                                           Notiflix.Notify.Failure(
@@ -940,7 +1014,7 @@ else
                                       })
                                     );
                                   } else {
-                                  
+                                    // console.log('please login first')
                                     Notiflix.Notify.Failure(
                                       "Please Login to add products to your wishlist."
                                     );
@@ -950,7 +1024,7 @@ else
                                 <i class="fas fa-heart"></i>
                               </button>{" "}
                             </li>
-                            
+                            {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
                           </ul>
                         </div>
                       </div>
@@ -959,7 +1033,83 @@ else
                 </div>
               </div>
             
-              
+              {/* ))} */}
+              {/* <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div>
+
+                       <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div>
+
+                       <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div>
+
+                       <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div>
+
+                       <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div>
+
+                       <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div>
+
+                       <div class="col-md-2">
+                            <div class="book book-inner">
+                                    <img src="assets/images/books/book.jpg"/>
+                                    <div class="button"><a href="/bookDetails"> Quick View </a></div>
+     
+                                    <p class="book-title">The Cauliflower Diet by Radha Thomas</p>
+                                    <p class="price"><span><s>₹375.00</s></span> ₹300.00</p>
+                                    <p class="discount-price">You Save ₹75 (20%)</p>
+                                     </div>
+                       </div> */}
             </div>
           </div>
         </main>
@@ -1030,11 +1180,11 @@ else
                                                    .replace(/\//g, "-")
                                                    .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
                                                }`
-                                      
+                                               // updated_by :13
                                              },
                                              "AddShoppingCart"
                                            ).then((results) =>
-                                     
+                                             // const objs = JSON.parse(result._bodyText)
                                              results.json().then((obj) => {
                                                if (
                                                  results.status == 200 ||
@@ -1045,7 +1195,7 @@ else
  
  
                                                
-                                            
+                                                 // window.location.reload();
  
                                                  this.props.setcartitemcount(obj.data.length)
                                                  this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1068,7 +1218,7 @@ else
  
                                            var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
    
-                                           
+                                           // console.log(cart_info)
                                            var newCart = cart_info != null ? cart_info : []
    
                                            if(cart_info != null){
@@ -1076,14 +1226,14 @@ else
                                          
                                              var item = newCart.filter(val => val.fld_variantid == info.SelectedVar.split("#")[7].split('$')[0] && val.fld_productcategory == 'Food')
    
-                                           
+                                             // console.log(item)
                                              if(item[0] != undefined){
    
                                                var newIndex = newCart.indexOf(item[0])
    
                                                newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
    
-                                           
+                                               // console.log(newCart)
    
                                                localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)
@@ -1116,7 +1266,7 @@ else
                                                }
    
                                                newCart.push(addNewCartData)
-                                             
+                                               // console.log(newCart.length)
                                               
                                                localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)

@@ -2,7 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import Header from "./Header";
 import Footer from "./Footer";
-// import News from "./News";
+import News from "./News";
 import GetApiCall from "./GetApi";
 
 import moment from "moment";
@@ -21,7 +21,7 @@ class CareersListing extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-  
+      //  #507dc0'
     });
 
    
@@ -31,7 +31,7 @@ class CareersListing extends React.Component {
             GetApiCall.getRequest("GetCareerWebsite").then(resultdes =>
               resultdes.json().then(obj => {
              
-     
+              // console.log(obj.data)
               
                 this.setState({
                    CareerData : obj.data
@@ -70,7 +70,18 @@ class CareersListing extends React.Component {
             <div class="col-md-10">
               <div class="row">
                 {this.state.CareerData.map((career, index) => (
-                  <div class="col-md-6" style={{ marginBottom: "2%" }}>
+                  <div class="col-md-6" style={{ marginBottom: "2%" }}
+                  
+                  onClick={() => {
+                    window.location.href = `/careers/${
+                      career.fld_id +
+                      "/" +
+                      career.fld_title
+                        .replace(/ /g, "-")
+                        .replace(/\//g, "-")
+                    }`;
+                  }}
+                  >
                     <div class="job-card">
                       <div class="job-icon">
                         <i class="fas fa-briefcase-medical"></i>
@@ -80,12 +91,12 @@ class CareersListing extends React.Component {
                         <h5>{career.fld_employmenttype}</h5>
                         <ul>
                           <li>
-                            <i class="fas fa-suitcase"></i>
-                            {Parser(
+                            
+                            <p><i class="fas fa-suitcase"></i>{Parser(
                               career.fld_workexperience
                                 .replace(/font-family/g, "")
                                 .replace(/<p>/g, "")
-                            )}
+                            )}</p>
                           </li>{" "}
                           <br />
                           <li>
@@ -102,7 +113,7 @@ class CareersListing extends React.Component {
                               .replace(/<p>/g, "")
                           )}
                         </p>
-                        <a
+                        {/* <a
                           onClick={() => {
                             window.location.href = `/careers/${
                               career.fld_id +
@@ -116,7 +127,7 @@ class CareersListing extends React.Component {
                           style={{ color: "#507dbe" }}
                         >
                           View Job
-                        </a>
+                        </a> */}
                       </div>
                     </div>
                   </div>

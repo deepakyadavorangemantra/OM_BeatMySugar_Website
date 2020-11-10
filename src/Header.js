@@ -34,13 +34,15 @@ class Menu extends React.Component {
       SearchBarCategory: [],
       SearchSelectedCategory: "All",
       SearchText: "",
+      
+      OfferData : []
     };
   }
 
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-  
+      //  #507dc0'
     });
 
     var login = localStorage.getItem("CustomerLoginDetails");
@@ -50,9 +52,24 @@ class Menu extends React.Component {
       LoginData: details,
     });
 
+
+    GetApiCall.getRequest("GetFestiveOfferHomePageWebsite").then((results) => {
+      results
+        .json()
+        .then((data) => ({
+          data: data,
+          status: results.status,
+        }))
+        .then((res) => {
+          this.setState({
+            OfferData : res.data.data
+          })
+        })
+    });
+
     GetApiCall.getRequest("GetFoodCategoryWebsiteData").then((resultdes) =>
       resultdes.json().then((obj) => {
-      
+        // console.log(obj.data)
         this.setState({
           FoodCategory: obj.data,
         });
@@ -83,10 +100,12 @@ class Menu extends React.Component {
           fld_status: "Active",
           fld_page: "healthknowledge",
         });
- 
+        // console.log(dts)
         this.setState({
           SearchBarCategory: dts,
-     
+          // SearchSelectedCategory : dts[0].fld_category
+          // CategorySelected : obj.data[0].fld_category,
+          // FoodRef : obj.data
         });
       })
     );
@@ -124,12 +143,12 @@ class Menu extends React.Component {
               updated_on: moment().format("lll"),
               updated_by: login.fld_userid,
               url : newCart[i].fld_url
-       
+              // updated_by :13
             },
             "AddShoppingCart"
           // eslint-disable-next-line no-loop-func
           ).then((results) =>
-
+            // const objs = JSON.parse(result._bodyText)
             results.json().then((obj) => {
 
               if (results.status == 200 || results.status == 201 ) {
@@ -165,11 +184,11 @@ class Menu extends React.Component {
               updated_on: moment().format("lll"),
               updated_by: login.fld_userid,
               url : newCart[i].fld_url
-
+              // updated_by :13
             },
             "AddShoppingCart"
           ).then((results) =>
-       
+            // const objs = JSON.parse(result._bodyText)
             results.json().then((obj) => {
 
               if (results.status == 200 || results.status == 201 ) {
@@ -204,11 +223,11 @@ class Menu extends React.Component {
               updated_on: moment().format("lll"),
               updated_by: login.fld_userid,
               url : newCart[i].fld_url
- 
+              // updated_by :13
             },
             "AddShoppingCart"
           ).then((results) =>
-           
+            // const objs = JSON.parse(result._bodyText)
             results.json().then((obj) => {
 
               if (results.status == 200 || results.status == 201 ) {
@@ -259,7 +278,7 @@ class Menu extends React.Component {
 
   SyncCartData(login){
 
-
+     // Notiflix.Loading.Dots("");
 
      var arr = [];
      var subt = 0;
@@ -278,7 +297,9 @@ class Menu extends React.Component {
             if (obj.data.length > 0) {
               arr.push(obj.data);
 
-              
+              // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+              //     subt = subt + obj.data[i].fld_discountprice
+              // }
             }
 
             this.setState(
@@ -301,6 +322,9 @@ class Menu extends React.Component {
                       if (obj.data.length > 0) {
                         arr.push(obj.data);
 
+                        // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                        //     subt = subt + obj.data[i].fld_discountprice
+                        // }
                       }
 
                       this.setState(
@@ -326,7 +350,9 @@ class Menu extends React.Component {
                                 if (obj.data.length > 0) {
                                   arr.push(obj.data);
 
-                                
+                                  // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                  //     subt = subt + obj.data[i].fld_discountprice
+                                  // }
                                 }
 
                                 this.setState(
@@ -337,7 +363,7 @@ class Menu extends React.Component {
                                   () => {
                                     cn = cn + 1;
 
-                       
+                                    // console.log(this.state.Cart)
 
                                     for (
                                       var i = 0;
@@ -382,11 +408,12 @@ class Menu extends React.Component {
         })
       );
 
-    
+      // Notiflix.Loading.Remove();
   }
 
   Results() {
-
+    // console.log(this.state.HeaderText)
+    // console.log(this.state.CategorySelect)
   }
 
   render() {
@@ -489,11 +516,16 @@ class Menu extends React.Component {
                     />
                   </a>
                 </div>
-               
+                {/* 
+                   <div className="header-center">
+                   <h3 className="header-text d-none d-md-block">Simplifying Diabetes Management</h3>
+                </div> */}
 
                 <div class="header-center">
                   <div class="header-search">
-                
+                    {/* <a href="#" class="search-toggle" role="button">
+                      <i class="icon-magnifier"></i>
+                    </a> */}
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -509,7 +541,7 @@ class Menu extends React.Component {
                               });
                             }}
                           >
-                     
+                            {/* <option value="Select Search Category">Select Search Category</option> */}
                             {this.state.SearchBarCategory.map((cat, index) => (
                               <option
                                 value={cat.fld_category}
@@ -518,6 +550,13 @@ class Menu extends React.Component {
                                 {cat.fld_category}
                               </option>
                             ))}
+                              {/* <option
+                              value={"Diwali offer"}
+                              label={"Diwali Offers"}
+                            >
+                              Diwali Offers
+                            </option> */}
+                      
                           </select>
                         </div>
                         <input
@@ -570,7 +609,7 @@ class Menu extends React.Component {
                                         this.state.SearchBarCategory[i]
                                           .fld_page == "search"
                                       ) {
-                                      
+                                        // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                         window.location.href = `/search/${this.state.SearchText.replace(
                                           /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
                                           "-"
@@ -600,12 +639,55 @@ class Menu extends React.Component {
                           placeholder=""
                           required=""
                         />
-                       
+                        {/* <ul class="search-ac">
+                          <li>
+                            <a href="#0">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <img src="assets/images/accu-check.jpg"></img>
+                                </div>
+                                <div class="col-md-8">
+                                  <p class="brand">
+                                    <b>Brand</b>
+                                  </p>
+                                  <p>Accu check 14 strips</p>
+                                </div>
+
+                                <div class="col-md-2">
+                                  <p>Rs.500</p>
+                                </div>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#0">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <img src="https://images.beatmysugar.com/images/Food/BMS-DFF-10008-8-0.png"></img>
+                                </div>
+                                <div class="col-md-8">
+                                  <p class="brand">
+                                    <b>Brand</b>
+                                  </p>
+                                  <p>
+                                    Keeros Roasted Supersnacks Multigrain &
+                                    Multiseed Jars
+                                  </p>
+                                </div>
+
+                                <div class="col-md-2">
+                                  <p>Rs.500</p>
+                                </div>
+                              </div>
+                            </a>
+                          </li>
+                        </ul>
+                       */}
 
                         <button
                           class="btn"
                           onClick={() => {
-                          
+                            // console.log('test')
                             if (
                               this.state.SearchSelectedCategory ==
                               "Select Search Category"
@@ -650,7 +732,7 @@ class Menu extends React.Component {
                                       this.state.SearchBarCategory[i]
                                         .fld_page == "search"
                                     ) {
-                                     
+                                      // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                       window.location.href = `/search/${this.state.SearchText.replace(
                                         /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
                                         "-"
@@ -676,14 +758,60 @@ class Menu extends React.Component {
                       </div>
                     </form>
 
-                   
+                    {/* <form action="#" method="get">
+                                <div class="header-search-wrapper">
+                                    <input type="search" class="form-control" 
+                                    value={this.state.HeaderText}
+                                    onChange={(text)=>{
+                                        this.setState({
+                                            HeaderText : text.target.value
+                                        })
+                                    }}
+                                    name="q" id="q" placeholder="Search for Doctor & Nutritionists" required/>
+                                    {/* <div class="select-custom">
+                                        <select id="cat" name="cat">
+                                            <option value="">110001 Delhi</option>
+                                            <option value="4">600001 Chennai</option>
+                                           
+                                           
+                                        </select>
+                                    </div> */}
+                    {/* <div class="select-custom">
+                                        <select value={this.state.CategorySelect} onChange={(text)=>{
+                                            this.setState({
+                                                CategorySelect : text.target.value
+                                            })
+                                        }}>
+                                            <option value="All">All Categories</option> */}
+                    {/* <option value="4">Medicine</option>
+                                            <option value="12">Healthcare Devices</option>
+                                            <option value="13">Foot Care Essentials</option>
+                                            <option value="66">Services</option>
+                                            <option value="67">Diagnostic Lab Tests</option> */}
+                    {/* <option value="Doctors">Doctors</option>
+                                             <option value="Nutritionists">Nutritionists</option>
+                                           
+                                        </select>
+                                    </div>
+                                 
+                                    <button class="btn" type="submit"><i class="icon-magnifier"
+                                    onClick={this.Results.bind(this)}
+                                    ></i></button>
+                                </div>
+                            </form> */}
                   </div>
                 </div>
 
                 <div class="header-right">
-                
+                  {/* <button class="search-menu-toggler active" type="button">
+                    <i class="icon-magnifier"></i>
+                  </button> */}
 
-                  <button class="cart-mobile" type="button">
+                  <button class="cart-mobile" type="button"
+                  onClick={()=>{
+                    window.location.href = '/cart'
+                  }}
+                  >
                     
                     <span class="cart-items-mobile">
                     {this.props.CartReducer.ItemCount}
@@ -697,7 +825,13 @@ class Menu extends React.Component {
                   <ul class="top-right d-none d-sm-none d-md-block">
                     <li style={{borderRight : '0px'}}>
                       <div
-                       
+                        // style={{
+                        //   display:
+                        //     this.state.LoginData != null &&
+                        //     this.state.LoginData != ""
+                        //       ? ""
+                        //       : "none",
+                        // }}
                       >
                         <a href="/cart" class="d-none d-md-block">
                           <i class="fas fa-shopping-cart"></i>{" "}
@@ -740,11 +874,11 @@ class Menu extends React.Component {
                               {" "}
                               <i class="fas fa-user"></i> My Account
                             </span>
-                        
+                            {/* {this.state.LoginData.fld_name}{" "} */}
                             <i class="fas fa-caret-down"></i>
                           </a>{" "}
                         </p>
-                       
+                        {/* | <a href="/Logout"><i class="fas fa-sign-out-alt"></i> Logout</a> */}
                         <div
                           id="myDropdown"
                           class="dropdown-content login-dropdown"
@@ -788,7 +922,34 @@ class Menu extends React.Component {
                         </div>
                       </li>
                     ) : (
-                     
+                      // <li class="dropdown">
+
+                      //     <a class=" dropbtn" >
+                      //         <i class="fa fa-user"></i>
+
+                      //      </a>
+
+                      //             <div id="myDropdown" class="dropdown-content">
+
+                      //                 <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" class="user-image"/>
+                      //                    <p style={{textAlign:"center"}}><span class="user-name">Welcome, {this.state.LoginData.fld_name}</span></p>
+
+                      //                    <div class="clearfix"></div>
+                      //                     <div >
+                      //                         <ul class="account-settings-list">
+                      //                             <li><a href="/Profile"><i class="fas fa-user"></i> My Profile</a></li>
+
+                      //               <li>
+
+                      //                    <a href='/Logout' class="acount-btn logout-btn" style={{textAlign:'center'}}
+
+                      //                    >Logout</a></li>
+                      //                 </ul>
+
+                      //     </div>
+
+                      //                   </div>
+                      //         </li>
 
                       <li class="dropdown">
                         <p class="acount-btn dropbtn">
@@ -801,10 +962,32 @@ class Menu extends React.Component {
                           </a>
                         </p>
 
-                        
+                        {/* <div id="myDropdown" class="dropdown-content login-dropdown">
+                                    
+                                    <a href="/Login"><i class="fas fa-user"></i>Login</a>
+                                    <a href="/register"><i class="fas fa-sign-in-alt"></i>Sign Up</a>
+                                      </div> */}
                       </li>
                     )}
-                   
+                    {/* <li class="dropdown">
+                                <a href="#" class="acount-btn dropbtn" >MY ACCOUNT</a> 
+                                <div id="myDropdown" class="dropdown-content">
+                                    
+                                       <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" class="user-image"/>
+                                       <span class="user-name">Welcome, Saravan Kumar B</span>
+                                     
+                                       <div class="clearfix"></div>
+                                        <div>
+                                            <ul class="account-settings-list">
+                                                <li><a href=""><i class="fas fa-user"></i> My Profile</a></li>
+                                                <li><a href=""><i class="fas fa-box"></i> Orders</a></li>
+                                                <li><a href=""><i class="fas fa-heart"></i> Wishlist</a></li>
+                                                <li><a href=""><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    
+                                      </div>
+                            </li> */}
                   </ul>
                 </div>
               </div>
@@ -894,7 +1077,44 @@ class Menu extends React.Component {
                       </ul>
                     </li>
 
-                 
+                    <li class="hvr-overline-from-left" style={{    marginRight: '10px'}}>
+                      <a href="/festive-offers" class="">
+                        {/* {console.log(this.state.OfferData)} */}
+                     {this.state.OfferData[0] != undefined ? this.state.OfferData[0].fld_title : ''}
+                     <span><img class="new-option" src="/assets/images/lamp.png"></img></span>
+                     
+                      </a>
+                    </li>
+
+                    {/* <li><a href="/allopathy">Allopathy</a></li> 
+
+                    {/* <li><a  href="/ayurveda" >Ayurveda</a> </li> */}
+
+                    {/* <li><a href="#">Health Supplements</a></li> */}
+
+                    {/* <li class="hvr-overline-from-left">
+                                <a 
+                                href="/device"
+                                 class="">Healthcare Devices</a>
+                               
+                            </li>      */}
+
+                    {/* <li class="hvr-overline-from-left"><a href="/food" class="">Food</a>
+                               
+                               </li>  */}
+
+                    {/* <li class="hvr-overline-from-left">
+                                <a 
+                                href="/footcare"
+                                 class="">Foot Care</a>
+                               
+                            </li> */}
+
+                    {/* <li class="hvr-overline-from-left"><a 
+                            href="/book"
+                             class="">Books</a>
+                               
+                            </li> */}
 
                     <li class="hvr-overline-from-left">
                       <a href="/insurance">Insurance</a>
@@ -910,13 +1130,54 @@ class Menu extends React.Component {
                         Dietitians
                       </a>
                     </li>
+                 
 
-                   
+                    {/* <li class="hvr-overline-from-left"><a 
+                            href="/socks"
+                             class="">Socks</a>
+                               
+                            </li> */}
+
+                    {/* <li class="hvr-overline-from-left"><a 
+                            href="/book"
+                             class="">Books</a>
+                               
+                            </li> */}
+                    {/* <li class="hvr-overline-from-left"><a 
+                            href="/careers"
+                             class="">Careers</a>
+                               
+                            </li> */}
+                    {/* <li class="hvr-overline-from-left">
+                      <a href="/contactus" class="">
+                        Contact Us
+                      </a>
+                    </li> */}
+                    {/* <li class="hvr-overline-from-left">
+                                <a href="#" class="">Lifestyle Services</a>
+                                <ul>
+                                    <li><a 
+                                    href="/nutritionist"
+                                    >Dietitians </a></li>
+                                    <li><a href="/yoga">Yoga</a>
+                                     
+                                    </li>
+                                   
+                                </ul>
+                               
+                            </li> */}
+                    {/* <li class="hvr-overline-from-left"><a 
+                            href="/lab"
+                             class="">Diagonstic Labs</a>
+                               
+                            </li> */}
 
                     <li style={{ float: "right", paddingRight: "10px" }}>
+                      {/* //    <a href="/personalinformation" class="cont-details prescription-btn">Upload Prescription</a> */}
                       <h3
+                        // onClick={this.OnTestPayAPI.bind(this)}
                         className="header-text d-none d-md-block "
-                        style={{ padding: "1rem 7px" }}
+                        style={{ padding: "13px 7px" }}
                       >
                         Simplifying Diabetes Management
                       </h3>
@@ -927,10 +1188,55 @@ class Menu extends React.Component {
             </div>
           </div>
         </header>
+
+        <section class="">
+                <div class="container ">
+                  <div class="mobile-search-bar">
+                  <div class="row">
+                    <div class="col-md-10 col-10">
+                        <input type="text" class="form-control" placeholder="Search"
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+
+                            window.location.href = `/search/${this.state.SearchText.replace(
+                              /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                              "-"
+                            )}`;
+                            
+                          }
+                        }}
+                        value={this.state.SearchText}
+                          onChange={(text) => {
+                            this.setState({
+                              SearchText: text.target.value,
+                            });
+                          }}
+                        ></input>
+                    </div>
+                    <div class="col-md-2 col-2">
+                        <button class="search-button-mobile"
+                        onClick={()=>{
+                          window.location.href = `/search/${this.state.SearchText.replace(
+                            /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                            "-"
+                          )}`;
+                          
+                        }}
+                        ><i class="icon-magnifier"></i></button>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+            </section>
+            
         <div class="mobile-menu-overlay"></div>
         <div class="mobile-menu-container">
           <div class="mobile-menu-wrapper">
-          
+            {/* <div class="header-left">
+        <a href="/" class="logo">
+                            <img src="/assets/images/bms-logo.png" alt="BeatMySugar Logo" class="logo-width"/>
+                        </a>
+                        </div> */}
 
             <nav class="mobile-nav">
               {this.state.LoginData != null && this.state.LoginData != "" ? (
@@ -962,7 +1268,16 @@ class Menu extends React.Component {
                 </div>
               )}
 
-             
+              {/* <div class="user-name-box">
+            <img
+                  src="/assets/images/user.png"
+                  alt="BeatMySugar Logo"
+                  class="logo-width user-image-sidebar"
+                 
+                />
+                <p class="user-name"><a href="/Login">Log In</a> <a href="/register">Sign Up</a></p>
+                </div> */}
+              {/* {this.state.LoginData != null && this.state.LoginData != "" ? ( */}
                 <div class="bottom-bar">
                   <ul>
                     <li>
@@ -974,10 +1289,16 @@ class Menu extends React.Component {
                         ₹{parseFloat(this.props.CartReducer.TotalAmount).toFixed(2)}
                       </a>
                     </li>
-                   
+                    {/* <li>
+                      <a href="/wishlist">
+                        <i class="fas fa-heart"> </i> Wishlist
+                      </a>
+                    </li> */}
                   </ul>
                 </div>
-              
+              {/* ) : (
+                ""
+              )} */}
               <div class="clearfix"></div>
               <ul class="mobile-menu">
                 <li class="hvr-overline-from-left">
@@ -1003,6 +1324,35 @@ class Menu extends React.Component {
                   </a>{" "}
                 </li>
 
+                {/* <li><a href="/allopathy">Allopathy</a></li> */}
+
+                {/* <li><a  href="/ayurveda" >Ayurveda</a> </li> */}
+
+                {/* <li><a href="#">Health Supplements</a></li> */}
+
+                {/* <li class="hvr-overline-from-left">
+                                <a 
+                                href="/device"
+                                 class="">Healthcare Devices</a>
+                               
+                            </li>      */}
+
+                {/* <li class="hvr-overline-from-left"><a href="/food" class="">Food</a>
+                               
+                               </li>  */}
+
+                {/* <li class="hvr-overline-from-left">
+                                <a 
+                                href="/footcare"
+                                 class="">Foot Care</a>
+                               
+                            </li> */}
+
+                {/* <li class="hvr-overline-from-left"><a 
+                            href="/book"
+                             class="">Books</a>
+                               
+                            </li> */}
 
                 <div>
                   <div
@@ -1033,7 +1383,7 @@ class Menu extends React.Component {
                           float: "right",
                           paddingTop: "7px",
                           display: this.state.isOpen == "Food" ? "none" : "",
-                         
+                          // fontSize: '17px'
                         }}
                       ></i>
                     </span>
@@ -1045,7 +1395,7 @@ class Menu extends React.Component {
                           float: "right",
                           paddingTop: "7px",
                           display: this.state.isOpen == "Food" ? "" : "none",
-                
+                          // fontSize: '17px'
                         }}
                       ></i>
                     </span>
@@ -1109,7 +1459,7 @@ class Menu extends React.Component {
                           float: "right",
                           paddingTop: "7px",
                           display: this.state.isOpen == "Foot" ? "none" : "",
-                         
+                          // fontSize: '17px'
                         }}
                       ></i>
                     </span>
@@ -1121,7 +1471,7 @@ class Menu extends React.Component {
                           float: "right",
                           paddingTop: "7px",
                           display: this.state.isOpen == "Foot" ? "" : "none",
-                       
+                          // fontSize: '17px'
                         }}
                       ></i>
                     </span>
@@ -1156,7 +1506,39 @@ class Menu extends React.Component {
                   </Collapse>
                 </div>
 
-               
+                <li class="hvr-overline-from-left">
+                      <a href="/festive-offers" class="">
+                        {/* {console.log(this.state.OfferData)} */}
+                     {this.state.OfferData[0] != undefined ? this.state.OfferData[0].fld_title : ''}
+                      </a>
+                    </li>
+                {/* <li class="hvr-overline-from-left">
+                  <a 
+       
+                   class="">
+                    Footcare
+                  </a>
+                  <ul>
+                        <li>
+                          <a 
+                           onClick={()=>{
+                            localStorage.removeItem('SearchText')
+                            window.location.href = '/footwear'
+                          }}
+                         >Footwear</a>
+                        </li>
+                        <li>
+                          <a 
+                           onClick={()=>{
+                            localStorage.removeItem('SearchText')
+                            window.location.href = '/socks'
+                          }}
+                          >Socks</a>
+                        </li>
+                      </ul>
+                </li>
+
+               */}
                 <li class="hvr-overline-from-left">
                   <a href="/insurance">Insurance</a>
                 </li>
@@ -1171,7 +1553,17 @@ class Menu extends React.Component {
                     Dietitians
                   </a>
                 </li>
-                
+                {/* 
+                <li class="hvr-overline-from-left" style={{borderTop:"1px solid  #e6e6e6"}}>
+                  <a href="/Login" class="">
+                    Login
+                  </a>
+                </li>
+                <li class="hvr-overline-from-left">
+                  <a href="/register" class="">
+                    Sign Up
+                  </a>
+                </li> */}
 
                 <div
                   style={{
@@ -1209,7 +1601,7 @@ class Menu extends React.Component {
                           float: "right",
                           paddingTop: "0px",
                           display: this.state.isOpen == "Account" ? "none" : "",
-                       
+                          // fontSize: '17px'
                         }}
                       ></i>
                     </span>
@@ -1221,7 +1613,7 @@ class Menu extends React.Component {
                           float: "right",
                           paddingTop: "0px",
                           display: this.state.isOpen == "Account" ? "" : "none",
-                     
+                          // fontSize: '17px'
                         }}
                       ></i>
                     </span>
@@ -1355,7 +1747,7 @@ class Menu extends React.Component {
                     });
                   }}
                 >
-      
+                  {/* <option value="Select Search Category">Select Search Category</option> */}
                   {this.state.SearchBarCategory.map((cat, index) => (
                     <option value={cat.fld_category} label={cat.fld_category}>
                       {cat.fld_category}
@@ -1409,7 +1801,7 @@ class Menu extends React.Component {
                                 this.state.SearchBarCategory[i].fld_page ==
                                 "search"
                               ) {
-                          
+                                // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                 window.location.href = `/search/${this.state.SearchText.replace(
                                   /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
                                   "-"
@@ -1442,7 +1834,7 @@ class Menu extends React.Component {
               </div>
               <a
                 onClick={() => {
-               
+                  // console.log('test')
                   if (
                     this.state.SearchSelectedCategory ==
                     "Select Search Category"
@@ -1483,7 +1875,7 @@ class Menu extends React.Component {
                           } else if (
                             this.state.SearchBarCategory[i].fld_page == "search"
                           ) {
-                          
+                            // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                             window.location.href = `/search/${this.state.SearchText.replace(
                               /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
                               "-"

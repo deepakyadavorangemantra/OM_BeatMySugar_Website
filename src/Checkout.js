@@ -31,13 +31,13 @@ class Checkout extends React.Component
         var cartdt = JSON.parse(localStorage.getItem('CartData'))
 
 
-
+        // console.log(cartdt)
 
         var crdt = []
         for(var i = 0 ; i<Object.keys(cartdt).length;i++){
 
             for(var j = 0 ; j<Object.keys(cartdt[i]).length;j++){
-          
+                // subt = subt + this.state.Cart[i][j].fld_discountprice*this.state.Cart[i][j].fld_quantity
                 crdt.push(cartdt[i][j])
                 this.setState({
                     CartData : crdt
@@ -56,12 +56,12 @@ class Checkout extends React.Component
             PostApiCall.postRequest({
     
                 customer_id : login.fld_userid,
-             
+                // customer_id : 13,
 
             
             },"GetAddressCustomer").then((results) => 
             
-        
+              // const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
    
             
@@ -113,7 +113,9 @@ class Checkout extends React.Component
                                                     </address>
         
                                                     <div class="address-box-action clearfix">
-                                                
+                                                        {/* <a href="#" class="btn btn-sm btn-link">
+                                                            Edit
+                                                        </a> */}
         
                                                         <a onClick={()=>{
                                                             this.setState({
@@ -125,7 +127,25 @@ class Checkout extends React.Component
                                                     </div>
                                                 </div>
                                                 ))}
-                                               
+                                                {/* <div class="shipping-address-box active">
+                                                    <address>
+                                                        Susan Mason <br/>
+                                                        123 Street Name, City Name <br/>
+                                                        Los Angeles, California 03100 <br/>
+                                                        United States <br/>
+                                                        (123) 789-6150 <br/>
+                                                    </address>
+        
+                                                    <div class="address-box-action clearfix">
+                                                        <a href="#" class="btn btn-sm btn-link">
+                                                            Edit
+                                                        </a>
+        
+                                                        <a href="#" class="btn btn-sm btn-outline-secondary float-right">
+                                                            Ship Here
+                                                        </a>
+                                                    </div>
+                                                </div> */}
                                             </div>
                                             <a href="/newaddress" class="btn btn-sm btn-outline-secondary btn-new-address">+ New Address</a>
                                         </li>
@@ -164,7 +184,19 @@ class Checkout extends React.Component
                                                    
                                                     </tr>
                               ))}
-                                                   
+                                                    {/* <tr>
+                                                        <td class="product-col">
+                                                           
+                                                            <div>
+                                                                <h2 class="product-title">
+                                                                    <a href="product.html">Bgr Tablet</a>
+                                                                </h2>
+        
+                                                                <span class="product-qty">Qty: 4</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="price-col">&#8377;7.90</td>
+                                                    </tr> */}
                                                 </tbody>    
                                             </table>
                                         </div>
@@ -212,7 +244,9 @@ class Checkout extends React.Component
                                                     </address>
         
                                                     <div class="address-box-action clearfix">
-                                                      
+                                                        {/* <a href="#" class="btn btn-sm btn-link">
+                                                            Edit
+                                                        </a> */}
         
                                                         <a onClick={()=>{
                                                             this.setState({
@@ -224,9 +258,28 @@ class Checkout extends React.Component
                                                     </div>
                                                 </div>
                                                 ))}
-                                               
+                                                {/* <div class="shipping-address-box active">
+                                                    <address>
+                                                        Susan Mason <br/>
+                                                        123 Street Name, City Name <br/>
+                                                        Los Angeles, California 03100 <br/>
+                                                        United States <br/>
+                                                        (123) 789-6150 <br/>
+                                                    </address>
+        
+                                                    <div class="address-box-action clearfix">
+                                                        <a href="#" class="btn btn-sm btn-link">
+                                                            Edit
+                                                        </a>
+        
+                                                        <a href="#" class="btn btn-sm btn-outline-secondary float-right">
+                                                            Ship Here
+                                                        </a>
+                                                    </div>
+                                                </div> */}
                                             </div>
-                                               </li>
+                                            {/* <a href="/newaddress" class="btn btn-sm btn-outline-secondary btn-new-address">+ New Address</a> */}
+                                        </li>
         
         
                                      
@@ -240,7 +293,7 @@ class Checkout extends React.Component
                                     <div class="checkout-steps-action">
                                     <button class="btn btn-sm btn-primary" type="submit" onClick={
                                             ()=>{
-                                          
+                                                // console.log(this.state.ShippingAddress[this.state.SelectedAddress])
                                                if(this.state.SelectedShippingAddress != ''){
                                                    if(this.state.SelectedBillingAddress != ''){
                                                     localStorage.setItem('CustomerShippingAddress',JSON.stringify(this.state.SelectedShippingAddress))

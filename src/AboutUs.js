@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 
 import Header from "./Header";
 import Footer from "./Footer";
-// import News from "./News";
+import News from "./News";
 
 class AboutUs extends React.Component {
   render() {

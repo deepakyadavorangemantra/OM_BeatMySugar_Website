@@ -3,7 +3,7 @@ import logo from './logo.svg';
 
 import Header from './Header'
 import Footer from './Footer'
-// // import News from './News';
+import News from './News';
 
 
 
@@ -19,7 +19,12 @@ class PrivacyPolicy extends React.Component {
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                         <div class="container">
                             <ol class="breadcrumb">
-                            
+                                {/* <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                                <li class="breadcrumb-item" aria-current="page">Privacy Policy</li> */}
+                                {/* <li class="breadcrumb-item" aria-current="page">Diabetes</li>
+                                <li class="breadcrumb-item" aria-current="page">Type 1 Diabetes</li>
+                                <li class="breadcrumb-item active" aria-current="page">Type 1 diabetes causes and risk factors */}
+                                    {/* </li> */}
                             </ol>
                         </div>
                         {/* <!-- End .container --> */}

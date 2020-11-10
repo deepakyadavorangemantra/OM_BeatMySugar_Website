@@ -24,6 +24,7 @@ class NutritionistDetails extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("Please wait...");
@@ -61,7 +62,9 @@ class NutritionistDetails extends React.Component {
 
     GetApiCall.getRequest("GetSocialPosts").then((resultdes) =>
       resultdes.json().then((obj) => {
-      
+        //  Notiflix.Loading.Remove()
+
+        //         }
 
         var x = Math.floor(Math.random() * obj.data.length);
         var y = Math.floor(Math.random() * obj.data.length);
@@ -75,6 +78,7 @@ class NutritionistDetails extends React.Component {
           SocialPosts2: obj.data[y].fld_imageurl,
         });
 
+        //    console.log(obj.data[x])
       })
     );
 
@@ -93,7 +97,25 @@ class NutritionistDetails extends React.Component {
           <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
               <ol class="breadcrumb">
-               
+                {/* <li class="breadcrumb-item">
+                  <a href="/">
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                  Nutritionists / Dietitians
+                </li>
+                {this.state.BreadCrumCity != "" ? (
+                  <li class="breadcrumb-item" aria-current="page">
+                    {this.state.BreadCrumCity}
+                  </li>
+                ) : (
+                  ""
+                )}
+                
+                <li class="breadcrumb-item active" aria-current="page">
+                  {this.state.Doctor.fld_name}
+                </li> */}
               </ol>
             </div>
             {/* <!-- End .container --> */}
@@ -129,7 +151,8 @@ class NutritionistDetails extends React.Component {
                           <div></div>
                         )}
 
-                      
+                        {/* <span><p>Dentist</p></span>
+                                            <span><p>Orthodontist</p></span> */}
                       </div>
 
                       <div class="clearfix"></div>
@@ -210,7 +233,18 @@ class NutritionistDetails extends React.Component {
                         )}
                       </div>
                     </div>
-                  
+                    {/* <div class="col-md-3 doctors-details doctor-contact-details doctor-details-inner contactdetails-align">
+                                    <p><a href={"mailto:"+this.state.Doctor.fld_email} style={{textTransform:"lowercase"}}><i class="fas fa-envelope"></i> {this.state.Doctor.fld_email}</a></p>
+                                    <p><a href={"tel:(+91)" + this.state.Doctor.fld_mobile} style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> +91 {this.state.Doctor.fld_mobile}</a></p>
+                                    <ul class="doctor-social-media">
+                                    {(this.state.Doctor.fld_facebooklink == null || this.state.Doctor.fld_facebooklink == '') ? '' : <li><a href={this.state.Doctor.fld_facebooklink}><i class="icon-facebook"></i></a></li> } 
+                                    {(this.state.Doctor.fld_instagramlink == null || this.state.Doctor.fld_instagramlink == '') ? '' : <li><a href={this.state.Doctor.fld_instagramlink}><i class="icon-instagram"></i></a></li> }  
+                                    {(this.state.Doctor.fld_twitterlink == null || this.state.Doctor.fld_twitterlink == '') ? '' :  <li><a href={this.state.Doctor.fld_twitterlink}><i class="icon-twitter"></i></a></li> }  
+                                    {(this.state.Doctor.fld_linkedinlink == null || this.state.Doctor.fld_linkedinlink == '') ? '' :  <li><a href={this.state.Doctor.fld_linkedinlink}><i class="icon-linkedin"></i></a></li>}  
+                          
+                                    </ul>
+                                  
+                                </div> */}
                   </div>
                 </div>
 
@@ -254,22 +288,42 @@ class NutritionistDetails extends React.Component {
                           </tr>
                           <tr>
                             <td></td>
-                            
+                            {/* <td>
+                                                    <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> {doc.fld_phone}</a></p>
+                                                    </td> */}
                           </tr>
                           <tr>
                             <td></td>
                             <td>
+                              {/* <b>Timings</b> */}
                             </td>
                           </tr>
                           <tr>
                             <td></td>
+                            {/* <td>Mon - Sat</td> */}
                           </tr>
                           <tr>
                             <td>
+                              {/* <i class="fas fa-clock"></i> */}
                             </td>
-                            
+                            {/* <td>
+                              {doc.fld_fromtime.split(":")[0] +
+                                ":" +
+                                doc.fld_fromtime.split(":")[1] +
+                                " " +
+                                doc.fld_fromtime.split(" ")[1]}{" "}
+                              -{" "}
+                              {doc.fld_totime.split(":")[0] +
+                                ":" +
+                                doc.fld_totime.split(":")[1] +
+                                " " +
+                                doc.fld_totime.split(" ")[1]}
+                            </td> */}
                           </tr>
-                         
+                          {/* <tr class="location">
+                                                            <td><i class="fas fa-map-marked-alt margin-space"></i></td>
+                                                            <td><a href="">Get Location</a></td>
+                                                        </tr> */}
                         </table>
                       </div>
                     ))}
@@ -279,6 +333,7 @@ class NutritionistDetails extends React.Component {
 
               <div
               class="col-md-3"
+              //    class="col-lg-4 col-md-6 col-sm-6 col-12"
             >
              <div style={{marginTop: '0px',marginBottom:"30px",padding:"20px",background:"#fff"}}>
     <div id="blogbanner"></div>

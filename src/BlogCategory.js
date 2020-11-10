@@ -3,7 +3,7 @@ import React from 'react';
 import logo from './logo.svg';
 import Header from './Header'
 import Footer from './Footer'
-// import News from './News';
+import News from './News';
 import GetApiCall from './GetApi'
 import moment from 'moment'
 import Notiflix from "notiflix-react";
@@ -41,16 +41,16 @@ class BlogCategory extends React.Component {
 
   window.scrollTo(0, 0)
         
-    
+        // console.log('in Blog')
 
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
-      
+            //  #507dc0'
           });
       
           Notiflix.Loading.Dots('Please wait...');
 
-       
+          // console.log(this.props.match.params.sub == undefined)
           this.setState({
               BlogCategoryTitle : this.props.match.params.sub == undefined ?  this.props.match.params.category.replace( /-/g,' ')
               : this.props.match.params.sub.replace( /-/g,' ')
@@ -66,13 +66,22 @@ class BlogCategory extends React.Component {
           results.json().then(obj => {
            
           if(results.status == 200 || results.status == 201){
- 
+    //     GetApiCall.getRequest("GetBlogNine").then(resultdes =>
+    //         resultdes.json().then(obj => {
+            
+    // console.log(obj.data)
     this.setState({
         Blog : obj.data
     })
  
      Notiflix.Loading.Remove()
 
+    // //         }
+    
+    //         this.props.setBlogData(obj.data)
+           
+
+    //         }))
 
 
           }
@@ -107,16 +116,26 @@ class BlogCategory extends React.Component {
                          
       
                                     <div class="col-md-9">
-                                        
+                                          {/* <div class="row"> */}
                                       
                                                   <div class="row">
-                                                     
+                                                      {/* <div class="row"> */}
+                                                      {/* <Masonry
+                      className={'row'} // default ''
+                      elementType={'ul'} // default 'div'
+                      // style={{    marginBottom: '200px'}}
+                      options={masonryOptions} // default {}
+                      disableImagesLoaded={false} // default false
+                      updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                      // imagesLoadedOptions={imagesLoadedOptions} // default {}
+                  > */}
       
       
        {this.state.Blog.map(
           (blog,index) => (
       
       
+              // <img src={blog.fld_previewimage} class="img-responsive"/>
          
             <div class="col-lg-4 col-md-6 col-sm-6 col-12"  key={index}>
             <div class="blog-box-inner blog-box">
@@ -136,7 +155,11 @@ class BlogCategory extends React.Component {
                       }
                     }}
                     src={blog.fld_previewimage} />
-                   
+                    {/* <span class="grid-item-date">
+                              <span class="grid-item-day">{moment(blog.fld_publishdate).format('ll').split(' ')[1].split(',')[0]}</span>
+          <span class="grid-item-month">{moment(blog.fld_publishdate).format('ll').split(' ')[0]} ' {moment(blog.fld_publishdate).format("YY")}</span>
+                                       
+                                    </span> */}
                     <div class="blog-masonry-textbox content-box">
                     <a 
                      onClick={()=>{
@@ -158,7 +181,7 @@ class BlogCategory extends React.Component {
                         <p class="border-btm blog-desc-short">
                             
                         {Parser(((blog.fld_shortdescription).replace(/font-family/g, '')
-                
+                      //   .replace('color', '')
                         ))}
                         
                             </p>
@@ -175,7 +198,7 @@ class BlogCategory extends React.Component {
                                             <div onClick={()=>{
       
                                         
-                                         
+                                              // console.log(this.state.BlogCategoryTitle )
                                   
                                               if( blog.fld_subcategory == null || blog.fld_subcategory.replace( / /g,'-') == '' ){
                                                 window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( / /g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( / /g,'-')}` : 
@@ -211,7 +234,7 @@ class BlogCategory extends React.Component {
                                
                                  
                                  <BlogCategorySection></BlogCategorySection>
-                            
+                                 {/* <BlogSection /> */}
                              
                              </div>
                                  

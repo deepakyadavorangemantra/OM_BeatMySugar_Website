@@ -2,6 +2,7 @@
 // const urlString = "http://localhost:8080/BackofficeApi/";
 const urlString = "http://65.0.39.41:8080/BackofficeApi/"; 
 
+//  var urlString = "http://localhost:7000/BackofficeApi/";
 
 const GetApiCall = {
   getRequest(url) {

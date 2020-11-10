@@ -49,7 +49,7 @@ class FoodDetails extends React.Component {
 
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
- 
+      //  #507dc0'
     });
 
 
@@ -68,7 +68,7 @@ class FoodDetails extends React.Component {
             FoodMaster: obj.data[0],
           });
 
-          
+          // console.log(obj.data[0])
 
   PostApiCall.postRequest(
       {
@@ -80,17 +80,17 @@ class FoodDetails extends React.Component {
       results1.json().then((obj1) => {
         if (results1.status == 200 || results1.status == 201) {
 
-
+          // console.log(obj1.data)
      
           var dtar = [...obj1.data]
               for(var i =0 ;i<Object.keys(obj1.data).length;i++){
 
-    
+                // console.log(dtar[i])
                 if(obj1.data[i].Variant != null){
                   dtar[i].SelectedVar = obj1.data[i].Variant.split('^')[0] 
                 }else
                 {
-     
+                  // dtar.splice(dtar[i])
                 }
             
 
@@ -118,7 +118,7 @@ class FoodDetails extends React.Component {
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
 
-
+          // console.log(obj.data)
 
           this.setState({
             FoodVariants: obj.data,
@@ -130,7 +130,7 @@ class FoodDetails extends React.Component {
 
           
           
-
+              // console.log(obj.data[i])
               this.setState({
                 SelectedVariant : obj.data[i],
                 SelectedPack : obj.data[i].Pack
@@ -162,6 +162,14 @@ class FoodDetails extends React.Component {
                 })
               }
 
+          }
+
+          if(Object.keys(obj.data).length == 0)
+          {
+            Notiflix.Loading.Remove();
+            this.setState({
+              done : true,
+            })
           }
 
 
@@ -225,7 +233,7 @@ class FoodDetails extends React.Component {
               return result + (item.fld_amount*item.fld_quantity);
             }, 0))
             Notiflix.Notify.Info("Product Added to Cart");
-           
+            // window.location.reload()
 
           } else {
             Notiflix.Loading.Remove()
@@ -237,7 +245,7 @@ class FoodDetails extends React.Component {
 
       var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-   
+      // console.log(cart_info)
       var newCart = cart_info != null ? cart_info : []
 
       if(cart_info != null){
@@ -245,7 +253,7 @@ class FoodDetails extends React.Component {
     
         var item = newCart.filter(val => val.fld_variantid == this.state.SelectedVariant.fld_id && val.fld_productcategory == 'Food')
 
-   
+        // console.log(item)
         if(item[0] != undefined){
 
           var newIndex = newCart.indexOf(item[0])
@@ -328,7 +336,7 @@ class FoodDetails extends React.Component {
 
 
   truncate(source, size) {
-    
+    // console.log(source)
     if (source != null) {
       return source.length > size ? source.slice(0, size - 1) + "…" : source;
     }
@@ -392,7 +400,22 @@ class FoodDetails extends React.Component {
           <div id="myTarget" class="d-none d-sm-none d-md-block"></div>
           <div id="myTargetMobile" class="d-md-none d-sm-block"></div>
         </div>
-        <main class="main" style={{display : this.state.done ? '' : 'none'}}>
+
+        {JSON.stringify(this.state.SelectedVariant) == '[]' && this.state.done ? (
+                
+                <div class="col-md-12">
+                  <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
+                </div>
+           
+            ) : (
+              <div class="col-md-12">
+                {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
+              </div>
+            )}
+
+
+
+        <main class="main" style={{display : this.state.done & JSON.stringify(this.state.SelectedVariant) != '[]' ? '' : 'none'}}>
           <div class="container">
             <div class="container-box" style={{ marginTop: "40px" }}>
               <div class="row">
@@ -449,7 +472,9 @@ class FoodDetails extends React.Component {
                         {this.state.SelectedVariant.fld_name}
                         </h1>
                           <div class="ratings-container">
-                         
+                          {/* <a href="#" class="rating-link"> */}
+                               {/* <span class="company-name">{this.state.SelectedVariant.fld_sku}</span> */}
+                            {/* </a> */}
                             <p class="rating-link">
                               Brand <span class="company-name">{this.state.FoodMaster.fld_brand}</span>
                             </p>
@@ -460,7 +485,10 @@ class FoodDetails extends React.Component {
                           Country Of Origin  <span class="company-name">{this.state.FoodMaster.fld_countryoforigin}</span>
                             </p>
                           </div>
-                         
+                          {/* <p>
+                            <span class="product-price">&#8377;700.00</span>
+                            <p class="extrapheight"></p>
+                          </p> */}
                              {this.state.SelectedVariant.fld_discountpercent == 0 ?
                           
                           <div>
@@ -654,7 +682,7 @@ class FoodDetails extends React.Component {
                                     
                                     },"AddWishlist").then((results) => 
                                     
-                        
+                                      // const objs = JSON.parse(result._bodyText)
                                       results.json().then(obj => {
                            
                                     
@@ -663,7 +691,7 @@ class FoodDetails extends React.Component {
                                         
                                         Notiflix.Loading.Remove()
                                         Notiflix.Notify.Info('Product added to Wishlist.')
-                                      
+                                        // window.location.reload()
                                        
                            
                                       }else{
@@ -674,7 +702,7 @@ class FoodDetails extends React.Component {
                                    }))
                         
                                 }else{
-                 
+                                // console.log('please login first')
                                     Notiflix.Notify.Failure('Please Login to add products to your wishlist.')
                                 }
                         
@@ -686,7 +714,9 @@ class FoodDetails extends React.Component {
                         >
                               <span>Add to Wishlist</span>
                             </a>
-                
+                            {/* <a href="#" class="paction add-compare" title="Add to Compare">
+                                                    <span>Add to Compare</span>
+                                                </a> */}
                           </div>
                         </div>
                       </div>
@@ -757,8 +787,11 @@ class FoodDetails extends React.Component {
                   <div class="widget widget-banner">
                     <div class="banner banner-image">
                       <a href="#">
-                       
-                        <div id="adbanner"></div>
+                        {/* <img
+                          src="/assets/images/banners/banner-sidebar.jpg"
+                          alt="Banner Desc"
+                        /> */}
+                        {/* <div id="adbanner"></div> */}
                       </a>
                     </div>
                   </div>
@@ -806,7 +839,7 @@ class FoodDetails extends React.Component {
                           {info.SelectedVar.split('#')[0]}
                         </a>
                       </p>
-    
+                      {/* {book.fld_discountpercent == 0.0 ? ( */}
                         <p >
                         <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Brand:</span> {info.fld_brand}  </p>
                         {info.VariantDropDown == '' || info.VariantDropDown == null || info.VariantDropDown == 'NULL'
@@ -819,7 +852,7 @@ class FoodDetails extends React.Component {
                           for(var i =0 ;i<info.Variant.split('^').length;i++){
 
                             if(dt.target.value == (info.Variant.split('^')[i].split('#')[1]+" "+info.Variant.split('^')[i].split('#')[2]+" - ₹"+info.Variant.split('^')[i].split('#')[3])){
-                
+                              // console.log(info.Variant.split(',')[i])
                               dr[index].SelectedVar = info.Variant.split('^')[i]
                             }
 
@@ -828,7 +861,7 @@ class FoodDetails extends React.Component {
                           this.setState({
                             RelatedProducts : dr
                           })
-                       
+                          // console.log(dt.target.value)
 
                         }}
                         
@@ -899,7 +932,7 @@ class FoodDetails extends React.Component {
                                 PostApiCall.postRequest({
                         
                                   customer_id : login.fld_userid,
-                      
+                                  // customer_id : 13,
                                   variant_id : info.SelectedVar.split('#')[7],
                                   product_category : 'Food',
                                   quantity :1,
@@ -908,7 +941,7 @@ class FoodDetails extends React.Component {
                                 
                                 },"AddWishlist").then((results) => 
                                 
-                      
+                                  // const objs = JSON.parse(result._bodyText)
                                   results.json().then(obj => {
                        
                                 
@@ -917,7 +950,7 @@ class FoodDetails extends React.Component {
                                     
                                     Notiflix.Loading.Remove()
                                     Notiflix.Notify.Info('Product added to Wishlist.')
-                                 
+                                    // window.location.reload()
                                    
                        
                                   }else{
@@ -928,7 +961,7 @@ class FoodDetails extends React.Component {
                                }))
                     
                             }else{
-                  
+                            // console.log('please login first')
                                 Notiflix.Notify.Failure('Please Login to add products to your wishlist.')
                             }
                     
@@ -940,7 +973,7 @@ class FoodDetails extends React.Component {
                             <i class="fas fa-heart"></i>
                           </button>{" "}
                         </li>
-                       
+                        {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
                       </ul>
                     </div>
                   </div>
@@ -1011,11 +1044,11 @@ class FoodDetails extends React.Component {
                                                    .replace(/\//g, "-")
                                                    .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
                                                }`
-                                    
+                                               // updated_by :13
                                              },
                                              "AddShoppingCart"
                                            ).then((results) =>
-                                             
+                                             // const objs = JSON.parse(result._bodyText)
                                              results.json().then((obj) => {
                                                if (
                                                  results.status == 200 ||
@@ -1028,7 +1061,7 @@ class FoodDetails extends React.Component {
                                                  Notiflix.Notify.Info(
                                                    "Product added to Cart."
                                                  );
-                                      
+                                                 // window.location.reload();
  
                                                  this.props.setcartitemcount(obj.data.length)
                                                  this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1048,7 +1081,7 @@ class FoodDetails extends React.Component {
  
                                            var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
    
-                            
+                                           // console.log(cart_info)
                                            var newCart = cart_info != null ? cart_info : []
    
                                            if(cart_info != null){
@@ -1056,14 +1089,14 @@ class FoodDetails extends React.Component {
                                          
                                              var item = newCart.filter(val => val.fld_variantid == info.SelectedVar.split("#")[7].split('$')[0] && val.fld_productcategory == 'Food')
    
-                                       
+                                             // console.log(item)
                                              if(item[0] != undefined){
    
                                                var newIndex = newCart.indexOf(item[0])
    
                                                newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
    
-                                         
+                                               // console.log(newCart)
    
                                                localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)
@@ -1096,7 +1129,7 @@ class FoodDetails extends React.Component {
                                                }
    
                                                newCart.push(addNewCartData)
-                                             
+                                               // console.log(newCart.length)
                                               
                                                localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)

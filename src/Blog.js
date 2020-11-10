@@ -4,7 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 
 
-// // import News from './News';
+import News from './News';
 
 import GetApiCall from './GetApi'
 
@@ -49,11 +49,11 @@ class Blog extends React.Component {
 
   window.scrollTo(0, 0)
         
-        
+        // console.log('in Blog')
 
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
-         
+            //  #507dc0'
           });
       
           Notiflix.Loading.Dots('Please wait...');
@@ -69,7 +69,7 @@ class Blog extends React.Component {
                         
             
                 
-                               
+                                // console.log(obj.data)
 
             obj.data.filter(item => {
               if (item.fld_title.toLowerCase().includes(search.toLowerCase())
@@ -95,7 +95,7 @@ class Blog extends React.Component {
             
                  Notiflix.Loading.Remove()
             
-         
+                //         }
                 
                         this.props.setBlogData(obj.data)
                         this.setState({
@@ -112,7 +112,7 @@ class Blog extends React.Component {
         GetApiCall.getRequest("GetBlogCategoryWebsite").then(resultdes =>
                 resultdes.json().then(obj => {
                 
-
+//        console.log(obj.data)
 this.setState({
 BlogCategory : obj.data
 })
@@ -150,16 +150,25 @@ BlogCategory : obj.data
                 {/* <!-- End .container --> */}
 
                 <div class="container doctors-section">
-                      
+                        {/* <h3 class="section-title">Health Knowledge</h3> */}
                     <div class="row">
 
                    
 
                               <div class="col-md-9">
-                                  
+                                    {/* <div class="row"> */}
                                 
                                             <div class="row">
-                                               
+                                                {/* <div class="row"> */}
+                                                {/* <Masonry
+                className={'row'} // default ''
+                elementType={'ul'} // default 'div'
+                // style={{    marginBottom: '200px'}}
+                options={masonryOptions} // default {}
+                disableImagesLoaded={false} // default false
+                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                // imagesLoadedOptions={imagesLoadedOptions} // default {}
+            > */}
  {this.props.BlogDetails.BlogData.length == 0 && this.state.done ? 
                 
                 <div class="col-md-12">
@@ -175,7 +184,11 @@ BlogCategory : obj.data
                        <img 
                        onClick={()=>{this.onBlogView(blog)}}
                        src={blog.fld_previewimage} />
-                      
+                       {/* <span class="grid-item-date">
+                              <span class="grid-item-day">{moment(blog.fld_publishdate).format('ll').split(' ')[1].split(',')[0]}</span>
+                                        <span class="grid-item-month">{moment(blog.fld_publishdate).format('ll').split(' ')[0]} ' {moment(blog.fld_publishdate).format("YY")}</span>
+                                       
+                                    </span> */}
                        <div class="blog-masonry-textbox content-box">
                          <a onClick={()=>{this.onBlogView(blog)}}>  <h3 class="blog-masonry-title" style={{overflow : 'hidden'}}>{blog.fld_title}</h3></a>
                            <p class="name-title"><span>By</span> {blog.fld_writtenby}</p>
@@ -206,18 +219,346 @@ BlogCategory : obj.data
         
         
 
-       
+        // <img src={blog.fld_previewimage} class="img-responsive"/>
+   
+//       <div class="col-lg-4 col-md-6 col-sm-6 col-12"  key={index}>
+//       <div class="blog-box-inner">
+//               <img src={blog.fld_previewimage} class="img-responsive"/>
+//               <div class="blog-masonry-textbox">
+//                   <h3 class="blog-masonry-title">{blog.fld_title}</h3>
+//                   <p class="name-title"><span>By</span> {blog.fld_bywhom}</p>
+//                   <p class="border-btm">
+                      
+//                   {Parser(((blog.fld_shortdescription).replace(/font-family/g, '')
+//                   ))}
+                  
+//                       </p>
+                      
+//                   <ul class="comments-list" style={{marginBottom:"0px"}}>
+//                           <li><p class="date">{moment(blog.fld_publishdate).format('ll')}</p></li>
+//                           <li > 
+//                               <a ><i class="fas fa-thumbs-up" ></i> { blog.fld_likecount}</a>
+//                           </li>
+//                           <li > 
+//                                   <a><i class="fas fa-comments" ></i> { blog.fld_commentcount}</a>
+//                               </li>   
+//                               <li style={{float:"right"}}>
+//                                       <div onClick={()=>{
+
+//                                         window.location.href = `/healthknowledge/${blog.fld_category.replace( / /g,'-')}/${(blog.fld_subcategory != '' ? blog.fld_subcategory.replace( / /g,'-') : '')+"/" }${blog.fld_blogid+"-"+blog.fld_title.replace( / /g,'-')}`
+         
+//                                       }}><a  class="read-more-btn-blog">Read More</a></div>
+//                               </li>
+                         
+//                       </ul>
+//               </div>
+ 
+//           </div>
+// </div>	
+
+
     
 ))
     } 
 
- 
+    
+
+{/* </div> */}
+{/* </Masonry>                                    */}
+               {/* {this.props.BlogDetails.BlogData.map(
+                              (blog,index) => (
+                             
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item" key={index}>
+                                <div class="blog-masonry-box">
+                                        <img src={blog.fld_previewimage} class="img-responsive"/>
+                                        <div class="blog-masonry-textbox">
+                                            <h3 class="blog-masonry-title">{blog.fld_title}</h3>
+                                            <p class="name-title"><span>By</span> {blog.fld_bywhom}</p>
+                                            <p class="border-btm">
+                                            {Parser((blog.fld_shortdescription).replace(/font-family/g, '').replace(/color/g, ''))}
+
+                                                </p>
+                                                
+                                            <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                    <li><p class="date">{moment(blog.fld_publishdate).format('ll')}</p></li>
+                                                    <li > 
+                                                        <a ><i class="fas fa-thumbs-up" ></i> { blog.fld_likecount}</a>
+                                                    </li>
+                                                    <li > 
+                                                            <a><i class="fas fa-comments" ></i> { blog.fld_commentcount}</a>
+                                                        </li>   
+                                                        <li style={{float:"right"}}>
+                                                                <div onClick={()=>{
+                                                                    // console.log(index)
+                                                                    localStorage.setItem('BlogDetails',JSON.stringify(this.props.BlogDetails.BlogData[index]))
+                                                                    this.props.history.push(`Blog/${blog.fld_title}`)
+                                                                }}><a  class="read-more-btn-blog">Read More</a></div>
+                                                        </li>
+                                                   
+                                                </ul>
+                                        </div>
+                           
+                                    </div>
+                        </div>	
+                      
+
+                              
+                          ))
+                              } */}
+
+                        
+      
+              
+                                                    {/* <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/diabetes-2.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Gestational diabetes mellitus</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">Gestational diabetes mellitus (GDM) is defined as any degree of glucose intolerance with onset or first recognition during pregnancy (1). The definition applies whether insulin or only diet modification is used for treatment and whether or not the condition persists after pregnancy. Risk assessment for GDM should be undertaken at the first prenatal visit. Women with clinical characteristics consistent with a high risk of GDM (marked obesity, personal history of GDM, glycosuria, or a strong family history of diabetes) should undergo glucose testing (see below) as soon as feasible. If they are found not to have GDM at that initial screening</p>
+                                                                        <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                <li><p class="date">24. JAN 2019</p></li>
+                                                                                <li > 
+                                                                                    <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                </li>
+                                                                                <li > 
+                                                                                        <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                    </li>   
+                                                                                    <li style={{float:"right"}}>
+                                                                                            <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                    </li>
+                                                                               
+                                                                            </ul>
+                                                                    </div>
+                                                                </div>			
+                                                    </div>
+                                                  
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat1">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/hypo.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Hypoglycemia Condition</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">Hypoglycemia is a condition caused by a very low level of blood sugar (glucose), your body's main energy source.
+
+                                                                                Hypoglycemia is often related to the treatment of diabetes. However, a variety of conditions — many rare — can cause low blood sugar in people without diabetes. Like fever, hypoglycemia isn't a disease itself — it's an indicator of a health problem.</p>
+                                                                                <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                        <li><p class="date">24. JAN 2019</p></li>
+                                                                                        <li > 
+                                                                                            <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                        </li>
+                                                                                        <li > 
+                                                                                                <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                            </li>   
+                                                                                            <li style={{float:"right"}}>
+                                                                                                    <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                            </li>
+                                                                                       
+                                                                                    </ul>
+                                                                    </div>
+                                                                </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat1">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/physical.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Diabetes Physical Activity</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">The adoption and maintenance of physical activity are critical foci for blood glucose management and overall health in individuals with diabetes and prediabetes. Recommendations and precautions vary depending on individual characteristics and health status. In this Position Statement, we provide a clinically oriented review and evidence-based recommendations regarding physical activity and exercise in people with type 1 diabetes, type 2 diabetes, gestational diabetes mellitus, and prediabetes.</p>
+                                                                        <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                <li><p class="date">24. JAN 2019</p></li>
+                                                                                <li > 
+                                                                                    <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                </li>
+                                                                                <li > 
+                                                                                        <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                    </li>   
+                                                                                    <li style={{float:"right"}}>
+                                                                                            <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                    </li>
+                                                                               
+                                                                            </ul>
+                                                                    </div>
+                                                                </div>
+                                                    </div>	
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat1">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/tablets.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Oral Antibiotic Medicine</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">One drug makes up the class of oral diabetes medications known as the biguanides, and that is metformin (Glucophage). It works by decreasing production of glucose by the liver and by making muscle more sensitive to insulin. The thiazolidinediones, rosiglitazone (Avandia) and pioglitazone (Actos), work in a similar way.
+                                                                            </p>
+                                                                            <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                    <li><p class="date">24. JAN 2019</p></li>
+                                                                                    <li > 
+                                                                                        <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                    </li>
+                                                                                    <li > 
+                                                                                            <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                        </li>   
+                                                                                        <li style={{float:"right"}}>
+                                                                                                <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                        </li>
+                                                                                   
+                                                                                </ul>
+                                                                    </div>
+                                                                </div>
+                                                    </div>				
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat2 cat3">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/food.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Types of diets for diabetics</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">Foods to eat for a type 2 diabetic diet meal plan include complex carbohydrates such as brown rice, whole wheat, quinoa, oatmeal, fruits, vegetables, beans, and lentils. Foods to avoid include simple carbohydrates, which are processed, such as sugar, pasta, white bread, flour, and cookies, pastries.
+                                                                            </p>
+                                                                            <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                    <li><p class="date">24. JAN 2019</p></li>
+                                                                                    <li > 
+                                                                                        <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                    </li>
+                                                                                    <li > 
+                                                                                            <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                        </li>   
+                                                                                        <li style={{float:"right"}}>
+                                                                                                <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                        </li>
+                                                                                   
+                                                                                </ul>
+                                                                    </div>
+                                                                </div>			
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat1">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/diabetes.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Type 1 diabetes causes and risk factors</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">Type 1 diabetes, once known as juvenile diabetes or insulin-dependent diabetes, is a chronic condition in which the pancreas produces little or no insulin. Insulin is a hormone needed to allow sugar (glucose) to enter cells to produce energy.
+
+                                                                            </p>
+                                                                            <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                    <li><p class="date">24. JAN 2019</p></li>
+                                                                                    <li > 
+                                                                                        <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                    </li>
+                                                                                    <li > 
+                                                                                            <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                        </li>   
+                                                                                        <li style={{float:"right"}}>
+                                                                                                <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                        </li>
+                                                                                   
+                                                                                </ul>
+                                                                    </div>
+                                                                </div>
+                                                    </div>					
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat2 cat3">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/diabetes-2.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Gestational diabetes mellitus</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">Gestational diabetes mellitus (GDM) is defined as any degree of glucose intolerance with onset or first recognition during pregnancy (1). The definition applies whether insulin or only diet modification is used for treatment and whether or not the condition persists after pregnancy. Risk assessment for GDM should be undertaken at the first prenatal visit. Women with clinical characteristics consistent with a high risk of GDM (marked obesity, personal history of GDM, glycosuria, or a strong family history of diabetes) should undergo glucose testing (see below) as soon as feasible. If they are found not to have GDM at that initial screening</p>
+                                                                        <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                <li><p class="date">24. JAN 2019</p></li>
+                                                                                <li > 
+                                                                                    <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                </li>
+                                                                                <li > 
+                                                                                        <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                    </li>   
+                                                                                    <li style={{float:"right"}}>
+                                                                                            <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                    </li>
+                                                                               
+                                                                            </ul>
+                                                                    </div>
+                                                                </div>			
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 grid-item cat1">
+                                                            <div class="blog-masonry-box">
+                                                                    <img src="assets/images/blog/hypo.jpg" class="img-responsive"/>
+                                                                    <div class="blog-masonry-textbox">
+                                                                        <h3 class="blog-masonry-title">Hypoglycemia Condition</h3>
+                                                                        <p class="name-title"><span>By</span> BeatMySugar</p>
+                                                                        <p class="border-btm">Hypoglycemia is a condition caused by a very low level of blood sugar (glucose), your body's main energy source.
+
+                                                                                Hypoglycemia is often related to the treatment of diabetes. However, a variety of conditions — many rare — can cause low blood sugar in people without diabetes. Like fever, hypoglycemia isn't a disease itself — it's an indicator of a health problem.</p>
+                                                                                <ul class="comments-list" style={{marginBottom:"0px"}}>
+                                                                                        <li><p class="date">24. JAN 2019</p></li>
+                                                                                        <li > 
+                                                                                            <a href=""><i class="fas fa-thumbs-up"></i> 3</a>
+                                                                                        </li>
+                                                                                        <li > 
+                                                                                                <a href=""><i class="fas fa-comments"></i> 3</a>
+                                                                                            </li>   
+                                                                                            <li style={{float:"right"}}>
+                                                                                                    <a href="blog-inner.html" class="read-more-btn-blog">Read More</a>
+                                                                                            </li>
+                                                                                       
+                                                                                    </ul>
+                                                                    </div>
+                                                                </div>
+                                                    </div>
+                                                   */}
+                                                {/* </div>		 */}
                                             </div>
                                            
                                         </div>
-                          
+                              {/* </div> */}
+                           
                            <BlogCategorySection></BlogCategorySection>
-                      
+                       {/* <div class="col-md-3">
+                       <div class="MainMenu">
+                                         
+                                          
+                                            <h2 class="sidebar-title ">Categories</h2>
+
+                                            <div class="gw-sidebar">
+                                                    <div id="gw-sidebar" class="gw-sidebar">
+                                                      <div class="nano-content">
+                                                        <ul class="gw-nav gw-nav-list">
+                                                         
+                                                    
+                                                          
+                                                        
+                                                    
+                                                           {this.state.BlogCategory.map((cat,index)=>(
+                                                            cat.fld_subcategory=='' ? 
+                                                            <li>  <a href="javascript:void(0)" id="tabs">{cat.fld_category}</a> </li>
+                                                            :
+                                                            <li class="init-arrow-down" > 
+                                                               <a href="javascript:void(0)" > 
+                                                               <span class="gw-menu-text" >{cat.fld_category}</span> 
+                                                               <b class="gw-arrow icon-arrow-up8"></b>
+                                                               </a>
+                                                       
+                                                               <ul class="gw-submenu" >
+                                                               {cat.fld_subcategory.split(',').map((sub,index)=>(
+                                                          sub == '' ? ' ':
+                                                           <li>  <a href="javascript:void(0)" id="tabs">{sub}</a> </li>
+                                                           ))}
+                                                              
+                                                            </ul>
+                                                        </li>
+                                                               ))}
+                                                        
+                                                         
+                                                        
+                                                        </ul>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                 
+                                                  <h2 class="sidebar-title margin-top-20">Tags</h2>
+                                                  <p class="tags">Insulin, Sugar, Medicine, Diabetes, Diet, Yoga, Hypoglycemia, Diagnostic Labs, Ayurveda, Sugar Free, Ketoacideosis</p>
+                                        </div>
+                                        </div>
+                       
+                        */}
                        
                        </div>
                            

@@ -29,13 +29,13 @@ class EmailVerification extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-   
+      //  #507dc0'
     });
 
     var data = localStorage.getItem("CustormerRegister");
     var customer = JSON.parse(data);
 
-
+    //    console.log(customer)
 
     if (customer != null) {
       this.setState({
@@ -71,10 +71,13 @@ class EmailVerification extends React.Component {
           },
           "RegisterCustomer"
         ).then((results) =>
-          
+          // const objs = JSON.parse(result._bodyText)
           results.json().then((obj) => {
             if (results.status == 200 || results.status == 201) {
-           
+              // console.log(JSON.parse(JSON.stringify(obj.data[0])).Result)
+              // console.log((JSON.parse(JSON.stringify(obj.data[0]))).Result)
+
+              // if(((JSON.parse(JSON.stringify(obj.data[0]))).Result) == 'Successfully Registered'){
 
               PostApiCall.postRequest(
                 {
@@ -83,7 +86,7 @@ class EmailVerification extends React.Component {
                 },
                 "CustomerRegistrationMailer"
               ).then((results1) =>
-           
+                // const objs = JSON.parse(result._bodyText)
                 results1.json().then((obj1) => {
                   if (results1.status == 200 || results1.status == 201) {
                     PostApiCall.postRequest(
@@ -111,7 +114,11 @@ class EmailVerification extends React.Component {
                   }
                 })
               );
-             
+              // }
+              // else
+              // {
+              //     Notiflix.Notify.Failure('Email Address Already Registered.');
+              // }
             } else {
               Notiflix.Loading.Remove();
               Notiflix.Notify.Success(
@@ -151,20 +158,23 @@ class EmailVerification extends React.Component {
       },
       "RegisterCustomer"
     ).then((results) =>
-    
+      // const objs = JSON.parse(result._bodyText)
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
 
           
           fetch(
-            "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
+            "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
               this.state.CustomerData.mobile +
               "&msg=Hi " +
               this.state.CustomerData.name +
               ", Welcome to BeatMySugar, your very own world for Simplifying Diabetes Management. Team BeatMySugar"
           ).then((response) => response.json());
 
-         
+          // console.log(JSON.parse(JSON.stringify(obj.data[0])).Result)
+          // console.log((JSON.parse(JSON.stringify(obj.data[0]))).Result)
+
+          // if(((JSON.parse(JSON.stringify(obj.data[0]))).Result) == 'Successfully Registered'){
 
           PostApiCall.postRequest(
             {
@@ -173,10 +183,19 @@ class EmailVerification extends React.Component {
             },
             "CustomerRegistrationMailer"
           ).then((results1) =>
-     
+            // const objs = JSON.parse(result._bodyText)
             results1.json().then((obj1) => {
               if (results1.status == 200 || results1.status == 201) {
-                
+                // PostApiCall.postRequest({
+
+                //     name : this.state.CustomerData.name,
+                //     email : this.state.CustomerData.email,
+
+                // }, "CustomerRegistraionMobileOTP").then((results2) =>
+
+                //     results2.json().then(obj2 => {
+
+                //         if(results1.status == 200 || results1.status == 201){
 
                 Notiflix.Loading.Remove();
 
@@ -187,7 +206,11 @@ class EmailVerification extends React.Component {
                 localStorage.removeItem("CustormerRegister");
                 window.location.href = "/";
 
-               
+                // else{
+                //     Notiflix.Loading.Remove()
+                //     Notiflix.Notify.Success('Something went wrong, please try again later.');
+                //     window.location.href= "/"
+                // }
               } else {
                 Notiflix.Loading.Remove();
                 Notiflix.Notify.Success(
@@ -197,7 +220,11 @@ class EmailVerification extends React.Component {
               }
             })
           );
-         
+          // }
+          // else
+          // {
+          //     Notiflix.Notify.Failure('Email Address Already Registered.');
+          // }
         } else {
           Notiflix.Loading.Remove();
           Notiflix.Notify.Success(
@@ -223,7 +250,7 @@ class EmailVerification extends React.Component {
         },
         "VerifyMailMailer"
       ).then((results2) =>
-     
+        // const objs = JSON.parse(result._bodyText)
         results2.json().then((obj2) => {
           if (results2.status == 200 || results2.status == 201) {
             this.setState({
@@ -246,7 +273,7 @@ class EmailVerification extends React.Component {
               <div class="col-lg-4 col-md-3 col-sm-3"></div>
               <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="login-section">
-             
+                  {/* <h3>Enter OTP</h3> */}
                   <h3>Enter One Time Password (OTP)</h3>
                   <h5>
                     One Time Password (OTP) has been sent to your <br />
@@ -264,7 +291,7 @@ class EmailVerification extends React.Component {
                         }
                         value={this.state.EnteredOtp}
                         numInputs={6}
-                 
+                        //   separator={<span>-<span>}
                         inputStyle={{
                           width: "5rem",
                         }}

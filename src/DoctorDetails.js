@@ -24,12 +24,12 @@ class DoctorDetails extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
- 
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("Please wait...");
 
-  
+    //  console.log(this.props.match.params.doctorid.split('-')[0])
 
     PostApiCall.postRequest(
       {
@@ -39,12 +39,12 @@ class DoctorDetails extends React.Component {
     ).then((results) =>
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
-  
+          // console.log(obj.data[0]);
           this.setState({
             Doctor: obj.data[0],
           });
 
-
+          // Notiflix.Loading.Remove()
         }
       })
     );
@@ -68,7 +68,9 @@ class DoctorDetails extends React.Component {
   
     GetApiCall.getRequest("GetSocialPosts").then((resultdes) =>
       resultdes.json().then((obj) => {
-  
+        //  Notiflix.Loading.Remove()
+
+        //         }
 
         var x = Math.floor(Math.random() * obj.data.length);
         var y = Math.floor(Math.random() * obj.data.length);
@@ -82,7 +84,7 @@ class DoctorDetails extends React.Component {
           SocialPosts2: obj.data[y].fld_imageurl,
         });
 
-
+        //    console.log(obj.data[x])
       })
     );
 
@@ -100,7 +102,28 @@ class DoctorDetails extends React.Component {
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
           <div class="container">
             <ol class="breadcrumb">
+              {/* <li class="breadcrumb-item">
+                <a href="/">
+                  <i class="icon-home"></i>
+                </a>
+              </li>
+              <li class="breadcrumb-item" aria-current="page">
+                Doctor
+              </li>
               
+              {this.state.BreadCrumCity == null || this.state.BreadCrumCity == '' ? '' :
+              <li class="breadcrumb-item" aria-current="page">
+                {this.state.BreadCrumCity}
+              </li>}
+             
+             {this.state.Doctor.Spec == null || this.state.Doctor.Spec == '' ? '' :
+                <li class="breadcrumb-item" aria-current="page">
+                  {  this.state.Doctor.Spec.split(",")[0]}
+                </li>}
+             
+              <li class="breadcrumb-item active" aria-current="page">
+                {this.state.Doctor.fld_name}
+              </li> */}
             </ol>
         
           </div>
@@ -146,9 +169,10 @@ class DoctorDetails extends React.Component {
                         <div></div>
                       )}
 
-                   
+                      {/* <span><p>Dentist</p></span>
+                                            <span><p>Orthodontist</p></span> */}
                     </div>
-                   
+                    {/* <div class="clearfix"></div> */}
                     <div class="clearfix"></div>
 
                     {this.state.Doctor.fld_overallexperience == undefined || this.state.Doctor.fld_overallexperience == 0
@@ -159,7 +183,10 @@ class DoctorDetails extends React.Component {
                          {this.state.Doctor.fld_overallexperience}{" "}
                       years of experience
                     </p>}
-                
+                    {/* <p>
+                      <i class="fas fa-angle-double-right"></i> 20 years of
+                      Diabetes Experience
+                    </p> */}
                     <p>
                       <i class="fas fa-check-circle"></i> Medical Registration
                       Id Verified
@@ -229,7 +256,20 @@ class DoctorDetails extends React.Component {
                       )}
                     </div>
                   </div>
-                 
+                  {/* <div class="col-md-3 doctors-details doctor-contact-details doctor-details-inner contactdetails-align">
+                                        <p><a href={"mailto:"+this.state.Doctor.fld_email} style={{textTransform:"lowercase"}}><i class="fas fa-envelope"></i> {this.state.Doctor.fld_email}</a></p>
+                                        <p><a href={"tel:(+91)" + this.state.Doctor.fld_mobile} style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> +91 {this.state.Doctor.fld_mobile}</a></p>
+                                        <ul class="doctor-social-media">
+                                    {(this.state.Doctor.fld_facebooklink == null || this.state.Doctor.fld_facebooklink == '') ? '' : <li><a href={this.state.Doctor.fld_facebooklink}><i class="icon-facebook"></i></a></li> } 
+                                    {(this.state.Doctor.fld_instagramlink == null || this.state.Doctor.fld_instagramlink == '') ? '' : <li><a href={this.state.Doctor.fld_instagramlink}><i class="icon-instagram"></i></a></li> }  
+                                    {(this.state.Doctor.fld_twitterlink == null || this.state.Doctor.fld_twitterlink == '') ? '' :  <li><a href={this.state.Doctor.fld_twitterlink}><i class="icon-twitter"></i></a></li> }  
+                                    {(this.state.Doctor.fld_linkedinlink == null || this.state.Doctor.fld_linkedinlink == '') ? '' :  <li><a href={this.state.Doctor.fld_linkedinlink}><i class="icon-linkedin"></i></a></li>}  
+                                       
+                                           
+                                          
+                                        </ul>
+                                      
+                                    </div> */}
                 </div>
               </div>
 
@@ -247,7 +287,7 @@ class DoctorDetails extends React.Component {
 
                   {this.state.DoctorHealthCenter.map((doc, index) => (
                     <div class="col-md-3">
-           
+                      {/* <p><b>{doc.fld_healthcentertype}</b></p> */}
                       <p>
                         <b>
                           {doc.fld_city}, {doc.fld_state}
@@ -267,7 +307,12 @@ class DoctorDetails extends React.Component {
                           <td></td>
                           <td>{doc.fld_address}</td>
                         </tr>
-                      
+                        {/* <tr>
+                                                <td></td>
+                                                <td>
+                                                        Sai Baba Temple Road, Silver Springs Layout,
+                                                </td>
+                                            </tr> */}
                         <tr>
                           <td></td>
                           <td>Landmark: {doc.fld_landmark}</td>
@@ -275,36 +320,238 @@ class DoctorDetails extends React.Component {
 
                         <tr>
                           <td></td>
-                        
+                          {/* <td>
+                                                    <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> {doc.fld_phone}</a></p>
+                                                    </td> */}
                         </tr>
                         <tr>
                           <td></td>
                           <td>
-                       
+                            {/* <b>Timings</b> */}
                           </td>
                         </tr>
                         <tr>
                           <td></td>
-                      
+                          {/* <td>Mon - Sat</td> */}
                         </tr>
                         <tr>
                           <td>
-                          
+                            {/* <i class="fas fa-clock"></i> */}
                           </td>
-                          
+                          {/* <td>
+                            {doc.fld_fromtime.split(":")[0] +
+                              ":" +
+                              doc.fld_fromtime.split(":")[1] +
+                              " " +
+                              doc.fld_fromtime.split(" ")[1]}{" "}
+                            -{" "}
+                            {doc.fld_totime.split(":")[0] +
+                              ":" +
+                              doc.fld_totime.split(":")[1] +
+                              " " +
+                              doc.fld_totime.split(" ")[1]}
+                          </td> */}
                         </tr>
-                        
+                        {/* <tr>
+                                                    <td></td>
+                                                    <td>
+                                                    <p><a href="#" ><i class="fa fa-user"> </i> {doc.fld_contactpersonname}</a></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                    <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-envelope"></i> {doc.fld_contactpersonemail}</a></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                    <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> {doc.fld_contactpersonmobile}</a></p>
+                                                    </td>
+                                                </tr> */}
+                        {/* <tr class="location">
+                                                            <td><i class="fas fa-map-marked-alt margin-space"></i></td>
+                                                            <td><a href="">Get Location</a></td>
+                                                        </tr> */}
                       </table>
                     </div>
                   ))}
+                  {/* <div class="col-md-3">
+                                    <p><b>Mount Road, Chennai</b></p>
+                                    <table>
+                                    <tr>
+                                        <td> <i class="fas fa-map-marker-alt margin-space"></i></td>
+                                        <td>
+                                               <span>32 Smiles Multispeciality Dental Clinic</span> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                            <td></td>
+                                            <td>
+                                                    130, Green Garden Layout, 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td></td>
+                                                <td>
+                                                        Sai Baba Temple Road, Silver Springs Layout,
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                    <td></td>
+                                                    <td>
+                                                            Landmark: Near Pavani Prestige,
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+    
+                                                    </td>
+                                                    <td>
+                                                        <b>Timings</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
                 
+                                                        </td>
+                                                        <td>
+                                                                Mon - Sun
+                
+                                                                
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i class="fas fa-clock"></i></td>
+                                                        <td>09:00 AM - 09:00 PM</td>
+                                                    </tr>
+                                                    <tr class="location">
+                                                            <td><i class="fas fa-map-marked-alt margin-space"></i></td>
+                                                            <td><a href="">Get Location</a></td>
+                                                        </tr>
+                                    </table>
+                               
+                               </div> */}
+                  {/* <div class="col-md-3">
+                                    <p><b>Marathahalli, Bangalore</b></p>
+                                    <table>
+                                    <tr>
+                                        <td> <i class="fas fa-map-marker-alt margin-space"></i></td>
+                                        <td>
+                                               <span>32 Smiles Multispeciality Dental Clinic</span> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                            <td></td>
+                                            <td>
+                                                    130, Green Garden Layout,
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td></td>
+                                                <td>
+                                                        Sai Baba Temple Road, Silver Springs Layout,
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                    <td></td>
+                                                    <td>
+                                                            Landmark: Near Pavani Prestige,
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+    
+                                                    </td>
+                                                    <td>
+                                                        <b>Timings</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+                
+                                                        </td>
+                                                        <td>
+                                                                Mon - Sun
+                
+                                                                
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i class="fas fa-clock"></i></td>
+                                                        <td>09:00 AM - 09:00 PM</td>
+                                                    </tr>
+                                                    <tr class="location">
+                                                            <td><i class="fas fa-map-marked-alt margin-space"></i></td>
+                                                            <td><a href="">Get Location</a></td>
+                                                        </tr>
+                                    </table>
+                               
+                               </div> */}
+                  {/* <div class="col-md-3">
+                                    <p><b>Mount Road, Chennai</b></p>
+                                    <table>
+                                    <tr>
+                                        <td> <i class="fas fa-map-marker-alt margin-space"></i></td>
+                                        <td>
+                                               <span>32 Smiles Multispeciality Dental Clinic</span> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                            <td></td>
+                                            <td>
+                                                    130, Green Garden Layout, 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td></td>
+                                                <td>
+                                                        Sai Baba Temple Road, Silver Springs Layout,
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                    <td></td>
+                                                    <td>
+                                                            Landmark: Near Pavani Prestige,
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+    
+                                                    </td>
+                                                    <td>
+                                                        <b>Timings</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>
+                
+                                                        </td>
+                                                        <td>
+                                                                Mon - Sun
+                
+                                                                
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i class="fas fa-clock"></i></td>
+                                                        <td>09:00 AM - 09:00 PM</td>
+                                                    </tr>
+                                                    <tr class="location">
+                                                            <td><i class="fas fa-map-marked-alt margin-space"></i></td>
+                                                            <td><a href="">Get Location</a></td>
+                                                        </tr>
+                                    </table>
+                               
+                               </div> */}
                 </div>
               </div>
             </div>
 
             <div
               class="col-md-3"
-          
+              //    class="col-lg-4 col-md-6 col-sm-6 col-12"
             >
              <div style={{marginTop: '0px',marginBottom:"30px",padding:"20px",background:"#fff"}}>
     <div id="blogbanner"></div>

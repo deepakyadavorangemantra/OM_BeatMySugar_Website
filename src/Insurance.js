@@ -44,7 +44,7 @@ class Insurance extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
   }
 
@@ -116,7 +116,7 @@ class Insurance extends React.Component {
       },
       "AddInsurance"
     ).then((results) =>
-
+      //    const objs = JSON.parse(result._bodyText)
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
           this.props.setclearinsurance();
@@ -134,7 +134,8 @@ class Insurance extends React.Component {
   };
 
   SaveInsurance() {
-    
+    // console.log(this.props.InsuranceCredentials)
+
     if (this.props.InsuranceCredentials.InsuredName != "") {
       if (this.props.InsuranceCredentials.DOB != "") {
         if (this.props.InsuranceCredentials.Email != "") {
@@ -292,7 +293,7 @@ class Insurance extends React.Component {
                     }}
                   >
                     <h1 class="light-title">Fill in your Details</h1>
-              
+                    {/* <form action="#"> */}
                     <div class="row">
                       <div class="form-group required-field col-md-6">
                         <label for="contact-name">Name Of The Insured</label>
@@ -307,7 +308,21 @@ class Insurance extends React.Component {
                       <div class="form-group required-field col-md-6">
                         <label for="contact-name">Date Of Birth</label>
                         <div class="input-group required-field">
-                                              
+                                                {/* <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span> */}
+                                                    {/* <input 
+                                                     
+                                                    class="form-control" 
+                                                    type="text" 
+                                                    id="datepicker"
+                                                    // name="acc-name"
+                                                    placeholder="DD/MM/YYYY"
+                                                    value={this.props.InsuranceCredentials.DOB}
+                                                    // max={moment().format('DD/MM/YYYY')}
+                                                    onKeyDown={(e) => e.preventDefault()} 
+                                                    onChange={this.onChangeDOB.bind(this)}
+                                                    /> */}
 
                                                           <DatePicker
                                                               
@@ -316,11 +331,20 @@ class Insurance extends React.Component {
                                                               onChange={this.onChangeDOB.bind(this)}
                                                               clearIcon={null}
                                                               maxDate={new Date()}
-                                                                         
+                                                                              // maxDetail={"year"}
+                                                                // format={'dd/MM/yy'}
                                                               />
                                           
                                                 </div>
-                      
+                        {/* <input
+                          type="date"
+                          class="form-control"
+                          value={this.props.InsuranceCredentials.DOB}
+                          max={moment().format("YYYY-MM-DD")}
+                          onKeyDown={(e) => e.preventDefault()}
+                          onChange={this.onChangeDOB.bind(this)}
+                          required=""
+                        /> */}
                       </div>
                       <div class="form-group col-md-12">
                         <label for="contact-message">
@@ -524,7 +548,7 @@ class Insurance extends React.Component {
                         Submit
                       </button>
                     </div>
-        
+                    {/* </form> */}
                   </div>
                 </div>
 

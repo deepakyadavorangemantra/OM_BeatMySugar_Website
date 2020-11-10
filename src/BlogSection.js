@@ -24,7 +24,7 @@ class DoctorDetails extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("Please wait...");
@@ -82,6 +82,11 @@ class DoctorDetails extends React.Component {
                                      onClick={()=>{this.onBlogView(blog)}}
                                 src={blog.fld_previewimage}/>
                             
+                                {/* <span class="grid-item-date">
+                              <span class="grid-item-day">{moment(blog.fld_publishdate).format('ll').split(' ')[1].split(',')[0]}</span>
+                                        <span class="grid-item-month">{moment(blog.fld_publishdate).format('ll').split(' ')[0]} ' {moment(blog.fld_publishdate).format("YY")}</span>
+                                       
+                                    </span> */}
                                 <div class="content-box">
                                 <a  
                                 onClick={()=>{this.onBlogView(blog)}}

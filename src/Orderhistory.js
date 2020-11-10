@@ -5,7 +5,7 @@ import logo from './logo.svg';
 
 import Header from './Header'
 import Footer from './Footer'
-// // import News from './News';
+import News from './News';
 import PostApiCall from "./Api";
 import Notiflix from "notiflix-react";
 import moment from 'moment'
@@ -33,6 +33,7 @@ class Orderhistory extends React.Component {
 
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
+            //  #507dc0'
           });
 
         var log = localStorage.getItem('CustomerLoginDetails')
@@ -48,10 +49,12 @@ class Orderhistory extends React.Component {
             PostApiCall.postRequest({
     
                 customer_id : login.fld_userid,
+                // customer_id : 13,
 
             
             },"GetOrderHistoryWebsite").then((results) => 
             
+              // const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
 
                 console.log(obj.data)
@@ -71,10 +74,12 @@ class Orderhistory extends React.Component {
 
                 for(var i = 0 ;i<Object.keys(obj.data).length;i++){
 
+                    // console.log(obj.data[i].OrderDet.split('#'))
                     c= c +1
 
                     for(var j=0;j<obj.data[i].OrderDet.split('#').length;j++){
 
+                        // console.log(obj.data[i].OrderDet.split('#')[j])
                         cs= obj.data[i].OrderDet.split('#').length
 
                         if(obj.data[i].OrderDet.split('#')[j].split('^')[2] == 'Food'){
@@ -89,11 +94,13 @@ class Orderhistory extends React.Component {
                          
                          },"GetFoodOrderDetail").then((results2) => 
                          
+                           // const objs = JSON.parse(result._bodyText)
                            results2.json().then(obj2 => {
                         
                          
                            if(results2.status == 200 || results2.status==201){
 
+                            // console.log(obj2.data)
                            
                             infData.push(obj2.data)
                             this.setState({
@@ -125,11 +132,13 @@ class Orderhistory extends React.Component {
                          
                          },"GetFootwearOrderDetail").then((results2) => 
                          
+                           // const objs = JSON.parse(result._bodyText)
                            results2.json().then(obj2 => {
                         
                          
                            if(results2.status == 200 || results2.status==201){
 
+                            // console.log(obj2.data)
                            
                             infData.push(obj2.data)
                             this.setState({
@@ -161,11 +170,13 @@ class Orderhistory extends React.Component {
                          
                          },"GetSocksOrderDetail").then((results2) => 
                          
+                           // const objs = JSON.parse(result._bodyText)
                            results2.json().then(obj2 => {
                         
                          
                            if(results2.status == 200 || results2.status==201){
 
+                            // console.log(obj2.data)
                            
                             infData.push(obj2.data)
                             this.setState({
@@ -190,7 +201,9 @@ class Orderhistory extends React.Component {
 
                     }
 
-                 
+                    // if(c== Object.keys(obj.data).length){
+                    //     Notiflix.Loading.Remove()
+                    // }
                        
                 }
 
@@ -199,7 +212,10 @@ class Orderhistory extends React.Component {
                     Notiflix.Loading.Remove()
                 }
                 
-             
+                // this.setState({
+                //     OrderHistoryData : obj.data,
+                //     OrderHistoryRef : obj.data,
+                // })
 
                
               }
@@ -223,6 +239,7 @@ class Orderhistory extends React.Component {
         for(var i =0 ; i<this.state.ProdData.length;i++){
 
             if(this.state.ProdData[i][0].fld_orderid == info.fld_orderid){
+                // console.log(this.state.ProdData[i])
 
                 if(this.state.ProdData[i][0].fld_category == 'Food'){
 
@@ -240,6 +257,7 @@ class Orderhistory extends React.Component {
                       },
                       "AddShoppingCart"
                     ).then((results) =>
+                      // const objs = JSON.parse(result._bodyText)
                       results.json().then((obj) => {
                         if (results.status == 200 || results.status == 201 ) {
 
@@ -255,7 +273,8 @@ class Orderhistory extends React.Component {
         
 
                         } else {
-      
+                        //   Notiflix.Loading.Remove();
+                        //   Notiflix.Notify.Failure( "Something went wrong, try again later.");
                         }
 
                       }))
@@ -274,6 +293,7 @@ class Orderhistory extends React.Component {
                         },
                         "AddShoppingCart"
                       ).then((results) =>
+                        // const objs = JSON.parse(result._bodyText)
                         results.json().then((obj) => {
                           if (results.status == 200 || results.status == 201 ) {
   
@@ -289,7 +309,8 @@ class Orderhistory extends React.Component {
           
   
                           } else {
-              
+                          //   Notiflix.Loading.Remove();
+                          //   Notiflix.Notify.Failure( "Something went wrong, try again later.");
                           }
   
                         }))
@@ -307,6 +328,7 @@ class Orderhistory extends React.Component {
                         },
                         "AddShoppingCart"
                       ).then((results) =>
+                        // const objs = JSON.parse(result._bodyText)
                         results.json().then((obj) => {
                           if (results.status == 200 || results.status == 201 ) {
   
@@ -322,7 +344,8 @@ class Orderhistory extends React.Component {
           
   
                           } else {
-                          
+                          //   Notiflix.Loading.Remove();
+                          //   Notiflix.Notify.Failure( "Something went wrong, try again later.");
                           }
   
                         }))
@@ -362,7 +385,17 @@ class Orderhistory extends React.Component {
                             <div class="dashboard-content">
                             
                             <div class="row order-filter-section">
-                               
+                                {/* <div class="col-md-6 order-filter-section">
+                                    <h3 class="orders-placed">Orders placed in the last</h3>
+                                    <select class="order-placed-select form-control">
+                                        <option>All Orders</option>
+                                        <option>1 month</option>
+                                        <option>3 months</option>
+                                        <option>6 months</option>
+                                        <option>12 months</option>
+                                    </select>
+                                    
+                                </div> */}
                                 <div class="col-md-6 order-filter-section">
                                 <div class="input-group order-search-box">
             <input
@@ -423,6 +456,7 @@ class Orderhistory extends React.Component {
              onClick={()=>{
                 this.OnOrderAgain(info)
             }} >Order Again</button>
+            {/* <a href="/returnorder" class="card-edit">Return Order</a> */}
         </div>
 
         <div class="card-body order-history" style={{    font:"normal 400 1.4rem / 17px 'Open Sans',sans-serif"}}>
@@ -473,6 +507,7 @@ class Orderhistory extends React.Component {
 <button class="btn btn-primary card-edit"
 style={{color:'white'}}
 onClick={()=>{
+//  console.log(dt[0].fld_orderdetailid)
 localStorage.setItem('ReturnMainOrder',JSON.stringify(info))
  localStorage.setItem('ReturnOrderData',JSON.stringify(dt[0]))
  window.location.href = '/returnitem'
@@ -488,6 +523,7 @@ style={{color:'white'}}
 >
 Return Requested
 </button>
+    {/* <a href="/trackorder" class="track-item">Track Item</a> */}
 </div>
 
                 </div>
@@ -507,7 +543,79 @@ Return Requested
                                
                             </div>
                            
-                           
+                            {/* <form action="#">
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group required-field">
+                                                    <label for="acc-name">First Name</label>
+                                                    <input type="text" class="form-control" id="acc-name" name="acc-name" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="acc-mname">First Name</label>
+                                                    <input type="text" class="form-control" id="acc-mname" name="acc-mname"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group required-field">
+                                                    <label for="acc-lastname">Last Name</label>
+                                                    <input type="text" class="form-control" id="acc-lastname" name="acc-lastname" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="acc-email">Email</label>
+                                    <input type="email" class="form-control" id="acc-email" name="acc-email" required/>
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="acc-password">Password</label>
+                                    <input type="password" class="form-control" id="acc-password" name="acc-password" required/>
+                                </div>
+
+                                <div class="mb-2"></div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="change-pass-checkbox" value="1"/>
+                                    <label class="custom-control-label" for="change-pass-checkbox">Change Password</label>
+                                </div>
+
+                                <div id="account-chage-pass">
+                                    <h3 class="mb-2">Change Password</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass2">Password</label>
+                                                <input type="password" class="form-control" id="acc-pass2" name="acc-pass2"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass3">Confirm Password</label>
+                                                <input type="password" class="form-control" id="acc-pass3" name="acc-pass3"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="required text-right">* Required Field</div>
+                                <div class="form-footer">
+                                    <a href="#"><i class="icon-angle-double-left"></i>Back</a>
+
+                                    <div class="form-footer-right">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </form> */}
                         </div>
                         </div>
                         <aside class="sidebar col-lg-3">

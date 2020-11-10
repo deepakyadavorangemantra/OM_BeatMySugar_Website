@@ -26,14 +26,14 @@ class BlogCategorySection extends React.Component {
 
 
 
- 
+      // console.log(this.divElement.clientHeight)
      
 
 
         GetApiCall.getRequest("GetBlogCategoryWebsite").then(resultdes =>
                 resultdes.json().then(obj => {
                 
-
+      //  console.log(obj.data)
 this.setState({
 BlogCategory : obj.data
 })
@@ -59,7 +59,7 @@ BlogCategory : obj.data
                     resultdes.json().then(obj => {
                     
     
-       
+                      // console.log(obj.data)
                    this.setState({
                        BlogTags: obj.data
                    })
@@ -84,10 +84,44 @@ BlogCategory : obj.data
                                           
                                             <h2 class="sidebar-title ">Categories</h2>
 
-                                           
+                                            {/* <div class="gw-sidebar">
+                                                    <div id="gw-sidebar" class="gw-sidebar">
+                                                      <div class="nano-content">
+                                                        <ul class="gw-nav gw-nav-list">
+                                                         
+                                                    
+                                                          
+                                                        
+                                                    
+                                                           {this.state.BlogCategory.map((cat,index)=>(
+                                                            cat.fld_subcategory=='' ? 
+                                                            <li>  <a href={'/healthknowledge/'+cat.fld_category.replace( / /g,'-')} id="tabs">{cat.fld_category}</a> </li>
+                                                            :
+                                                            <li class="init-arrow-down" > 
+                                                               <a href="javascript:void(0)" > 
+                                                               <span class="gw-menu-text" >{cat.fld_category}</span> 
+                                                               <b class="gw-arrow icon-arrow-up8"></b>
+                                                               </a>
+                                                       
+                                                               <ul class="gw-submenu" >
+                                                               {cat.fld_subcategory.split(',').map((sub,index)=>(
+                                                          sub == '' ? ' ':
+                                                           <li>  <a href={'/healthknowledge/'+cat.fld_category.replace( / /g,'-')+"/"+sub.trim().replace( / /g,'-')} id="tabs">{sub}</a> </li>
+                                                           ))}
+                                                              
+                                                            </ul>
+                                                        </li>
+                                                               ))}
+                                                        
+                                                         
+                                                        
+                                                        </ul>
+                                                      </div>
+                                                    </div>
+                                                  </div> */}
 
 {this.state.BlogCategory.map((cat,index)=>(
-
+  // console.log(cat.fld_subcategory)
                                                             cat.fld_subcategory=='' || cat.fld_subcategory==null  ? 
 
                                                             <div 
@@ -149,14 +183,14 @@ style={{float: 'right',    paddingTop: '7px', display:this.state.isOpen == index
 
 
                                                  <div>
-                                             
+                                                  {/* <h2 class="sidebar-title margin-top-20">Tags</h2> */}
                                                   <div>
                                                   <div class="specialist-tag row" style={{    padding: '15px'}} >  
                                                   {this.state.BlogTags != undefined ? this.state.BlogTags.map(
                               (tag,index1) => (
                                   <div >
                                
-                                  
+                                    {/* <span><p >{tag.fld_tag}</p></span> */}
                                 </div>
                                )): '' } </div>
                                            </div>

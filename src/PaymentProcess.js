@@ -42,11 +42,13 @@ class PaymentProcess extends React.Component {
 
     Notiflix.Loading.Init({
         svgColor: "#507dc0",
+        //  #507dc0'
       });
 
 
       Notiflix.Loading.Dots('')
 
+    //   window.location.href= `/orderprocess/${this.props.match.params.txnid}`;
 
     var arr = []
         var subt = 0
@@ -60,6 +62,7 @@ class PaymentProcess extends React.Component {
         },
         "UpdateOrderConfirmationStatus"
       ).then((results1) =>
+        // const objs = JSON.parse(result._bodyText)
         results1.json().then((obj) => {
           if (results1.status == 200 || results1.status == 201) {
 
@@ -71,11 +74,13 @@ class PaymentProcess extends React.Component {
                 var c = 0
                 var c1 = 0
 
+                // console.log(obj.data[0])
           
        
 
                 for(var j=0;j<obj.data[0].OrderDet.split('#').length;j++){
 
+                    // console.log(obj.data[i].OrderDet.split('#')[j])
 
                     if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Food'){
 
@@ -88,11 +93,13 @@ class PaymentProcess extends React.Component {
                      
                      },"GetFoodOrderDetail").then((results2) => 
                      
+                       // const objs = JSON.parse(result._bodyText)
                        results2.json().then(obj2 => {
                     
                      
                        if(results2.status == 200 || results2.status==201){
 
+                        // console.log(obj2.data)
                        
                         infData.push(obj2.data[0])
                         this.setState({
@@ -101,6 +108,8 @@ class PaymentProcess extends React.Component {
                         c1 = c1 +1
 
                         if(c1== obj.data[0].OrderDet.split('#').length){
+                            // Notiflix.Loading.Remove()
+                            // console.log('nidhi')
                             this.SendMailers()
                         }
 
@@ -118,11 +127,13 @@ class PaymentProcess extends React.Component {
                      
                      },"GetFootwearOrderDetail").then((results2) => 
                      
+                       // const objs = JSON.parse(result._bodyText)
                        results2.json().then(obj2 => {
                     
                      
                        if(results2.status == 200 || results2.status==201){
 
+                        // console.log(obj2.data)
                        
                         infData.push(obj2.data[0])
                         this.setState({
@@ -131,6 +142,8 @@ class PaymentProcess extends React.Component {
                         c1 = c1 +1
 
                         if(c1== obj.data[0].OrderDet.split('#').length){
+                            // Notiflix.Loading.Remove()
+                            // console.log('nidhi')
                             this.SendMailers()
                         }
                        }
@@ -148,11 +161,13 @@ class PaymentProcess extends React.Component {
                      
                      },"GetSocksOrderDetail").then((results2) => 
                      
+                       // const objs = JSON.parse(result._bodyText)
                        results2.json().then(obj2 => {
                     
                      
                        if(results2.status == 200 || results2.status==201){
 
+                        // console.log(obj2.data)
                        
                         infData.push(obj2.data[0])
                         this.setState({
@@ -161,6 +176,8 @@ class PaymentProcess extends React.Component {
                         c1 = c1 +1
 
                         if(c1== obj.data[0].OrderDet.split('#').length){
+                            // Notiflix.Loading.Remove()
+                            // console.log('nidhi')
                             this.SendMailers()
                         }
                        }
@@ -184,9 +201,11 @@ class PaymentProcess extends React.Component {
 
 
   SendMailers(){
+    //   console.log(this.state.OrderData)
+    //   console.log(this.state.ProdData)
 
     fetch(
-        "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
+        "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
         this.state.OrderData.fld_mobile +
           "&msg=Hi " +
           this.state.OrderData.fld_name +
@@ -235,6 +254,7 @@ class PaymentProcess extends React.Component {
             "CustomerOrderMailer"
           ).then((results2) => 
                      
+          // const objs = JSON.parse(result._bodyText)
           results2.json().then(obj2 => {
        
         
@@ -253,7 +273,13 @@ class PaymentProcess extends React.Component {
     "CustomerLoginDetails",
     JSON.stringify(data)
   );
-            window.location.href =  `/paymentsuccess/${this.state.OrderData.fld_txnid}`;
+  if(this.state.OrderData.fld_paymentmode == 'COD'){
+    window.location.href =  `/ordersuccess/${this.state.OrderData.fld_txnid}`;
+  }else
+  {
+    window.location.href =  `/paymentsuccess/${this.state.OrderData.fld_txnid}`;
+  }
+          
           }
         }))
 

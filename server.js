@@ -10,14 +10,14 @@ const axios = require('axios')
 const Parser = require('html-react-parser')
 
 
-// const urlString = "https://api.beatmysugar.com/BackofficeApi/";
+const urlString = "https://api.beatmysugar.com/BackofficeApi/";
 
-const urlString = "http://localhost:8080/BackofficeApi/";
-
+// const urlString = "http://localhost:7000/BackofficeApi/";
 
 const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
 
 app.get('/', function(request, response) {
+//   console.log('Home page visited!');
   const filePath = path.resolve(__dirname, './build', 'index.html');
   fs.readFile(filePath, 'utf8', function (err,data) {
     if (err) {
@@ -35,6 +35,7 @@ app.get('/', function(request, response) {
 
 
 app.get('/healthknowledge', function(request, response) {
+    //   console.log('Home page visited!');
       const filePath = path.resolve(__dirname, './build', 'index.html');
       fs.readFile(filePath, 'utf8', function (err,data) {
         if (err) {
@@ -52,6 +53,7 @@ app.get('/healthknowledge', function(request, response) {
 
 
     app.get('/healthknowledge/:category', function(request, response) {
+        //   console.log('Home page visited!');
           const filePath = path.resolve(__dirname, './build', 'index.html');
           fs.readFile(filePath, 'utf8', function (err,data) {
             if (err) {
@@ -69,6 +71,7 @@ app.get('/healthknowledge', function(request, response) {
 
 
         app.get('/healthknowledge/:category/:sub', function(request, response) {
+            //   console.log('Home page visited!');
               const filePath = path.resolve(__dirname, './build', 'index.html');
               fs.readFile(filePath, 'utf8', function (err,data) {
                 if (err) {
@@ -86,8 +89,10 @@ app.get('/healthknowledge', function(request, response) {
 
 
 app.get('/healthknowledge/:category/:sub/:blogid', function(request, response) {
+//   console.log('About page visited!');
   const filePath = path.resolve(__dirname, './build', 'index.html')
   fs.readFile(filePath, 'utf8', function (err,data2) {
+    //   console.log(request.params.blogid)
     if (err) {
       return console.log(err);
     }
@@ -107,6 +112,7 @@ app.get('/healthknowledge/:category/:sub/:blogid', function(request, response) {
             blog_id: request.params.blogid.split("-")[0]
         }
       }).then((resp) => {
+        // console.log(response.data.data[0]);
           data2 = data2.replace(/\$OG_TITLE/g, resp.data.data[0].fld_title);
           data2 = data2.replace(/\$OG_URL/g, 'https://www/beatmysugar.com/healthknowledge/'+request.params.category+'/'+request.params.sub+'/'+request.params.blogid);
           // data2 = data2.replace(/\$OG_TYPE/g, 'BeatMySugar');
@@ -123,6 +129,7 @@ app.get('/healthknowledge/:category/:sub/:blogid', function(request, response) {
 
 
 app.get('/doctor', function(request, response) {
+    //   console.log('Home page visited!');
       const filePath = path.resolve(__dirname, './build', 'index.html');
       fs.readFile(filePath, 'utf8', function (err,data) {
         if (err) {
@@ -141,8 +148,10 @@ app.get('/doctor', function(request, response) {
 
 
         app.get('/doctor/:doctorid', function(request, response) {
+            //   console.log('About page visited!');
               const filePath = path.resolve(__dirname, './build', 'index.html')
               fs.readFile(filePath, 'utf8', function (err,data2) {
+                //   console.log(request.params.blogid)
                 if (err) {
                   return console.log(err);
                 }
@@ -162,6 +171,7 @@ app.get('/doctor', function(request, response) {
                     doctor_id: request.params.doctorid.split("-")[0]
                     }
                   }).then((resp) => {
+                    // console.log(response.data.data[0]);
                       data2 = data2.replace(/\$OG_TITLE/g, 'Dr. '+resp.data.data[0].fld_name+' - BeatMySugar | Buy Diabetic Products and Healthcare Services');
                       data2 = data2.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/doctor/'+request.params.doctorid);
                       // data2 = data2.replace(/\$OG_TYPE/g, 'BeatMySugar');
@@ -179,8 +189,10 @@ app.get('/doctor', function(request, response) {
             });
 
             app.get('/contributors/:contributorid', function(request, response) {
+                //   console.log('About page visited!');
                   const filePath = path.resolve(__dirname, './build', 'index.html')
                   fs.readFile(filePath, 'utf8', function (err,data2) {
+                    //   console.log(request.params.blogid)
                     if (err) {
                       return console.log(err);
                     }
@@ -200,6 +212,7 @@ app.get('/doctor', function(request, response) {
                         id: request.params.contributorid.split("-")[0]
                         }
                       }).then((resp) => {
+                        // console.log(response.data.data[0]);
                           data2 = data2.replace(/\$OG_TITLE/g, resp.data.data[0].fld_title+' '+resp.data.data[0].fld_name+' - BeatMySugar | Buy Diabetic Products and Healthcare Services');
                           data2 = data2.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/contributors/'+request.params.contributorid);
                           // data2 = data2.replace(/\$OG_TYPE/g, 'BeatMySugar');
@@ -219,6 +232,7 @@ app.get('/doctor', function(request, response) {
 
 
             app.get('/dietitian', function(request, response) {
+                //   console.log('Home page visited!');
                   const filePath = path.resolve(__dirname, './build', 'index.html');
                   fs.readFile(filePath, 'utf8', function (err,data) {
                     if (err) {
@@ -237,8 +251,10 @@ app.get('/doctor', function(request, response) {
             
             
                     app.get('/dietitian/:nutritionistid', function(request, response) {
+                        //   console.log('About page visited!');
                           const filePath = path.resolve(__dirname, './build', 'index.html')
                           fs.readFile(filePath, 'utf8', function (err,data2) {
+                            //   console.log(request.params.blogid)
                             if (err) {
                               return console.log(err);
                             }
@@ -258,6 +274,7 @@ app.get('/doctor', function(request, response) {
                                 id: request.params.nutritionistid.split("-")[0]
                                 }
                               }).then((resp) => {
+                                // console.log(response.data.data[0]);
                                   data2 = data2.replace(/\$OG_TITLE/g, resp.data.data[0].fld_name+' - BeatMySugar | Buy Diabetic Products and Healthcare Services');
                                   data2 = data2.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/dietitian/'+request.params.nutritionistid);
                                   // data2 = data2.replace(/\$OG_TYPE/g, 'BeatMySugar');
@@ -276,6 +293,7 @@ app.get('/doctor', function(request, response) {
             
 
 app.get('/socks', function(request, response) {
+    //   console.log('Home page visited!');
       const filePath = path.resolve(__dirname, './build', 'index.html');
       fs.readFile(filePath, 'utf8', function (err,data) {
         if (err) {
@@ -293,8 +311,10 @@ app.get('/socks', function(request, response) {
 
 
 app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
+    //   console.log('About page visited!');
       const filePath = path.resolve(__dirname, './build', 'index.html')
       fs.readFile(filePath, 'utf8', function (err,data2) {
+        //   console.log(request.params.blogid)
         if (err) {
           return console.log(err);
         }
@@ -314,6 +334,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
               id: request.params.varid
             }
           }).then((resp) => {
+            // console.log(response.data.data[0]);
               data2 = data2.replace(/\$OG_TITLE/g, resp.data.data[0].fld_titlebar);
               data2 = data2.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/socks/'+request.params.socksid+'/'+request.params.varid+'/'+request.params.socksname);
               // data2 = data2.replace(/\$OG_TYPE/g, 'Socks');
@@ -331,6 +352,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
     app.get('/footwear', function(request, response) {
+        //   console.log('Home page visited!');
           const filePath = path.resolve(__dirname, './build', 'index.html');
           fs.readFile(filePath, 'utf8', function (err,data) {
             if (err) {
@@ -347,8 +369,10 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
         });
 
     app.get('/footwear/:footid/:varid/:footname', function(request, response) {
+        //   console.log('About page visited!');
           const filePath = path.resolve(__dirname, './build', 'index.html')
           fs.readFile(filePath, 'utf8', function (err,data2) {
+            //   console.log(request.params.blogid)
             if (err) {
               return console.log(err);
             }
@@ -368,6 +392,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                   id: request.params.varid
                 }
               }).then((resp) => {
+                // console.log(response.data.data[0]);
                   data2 = data2.replace(/\$OG_TITLE/g, resp.data.data[0].fld_titlebar);
                   data2 = data2.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/footwear/'+request.params.footid+'/'+request.params.varid+'/'+request.params.footname);
                   // data2 = data2.replace(/\$OG_TYPE/g, 'Footwear');
@@ -385,6 +410,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
         app.get('/food/:category/:foodid/:varid/:foodname', function(request, response) {
+            // console.log('About page visited!'); 
             const filePath = path.resolve(__dirname, './build', 'index.html')
             fs.readFile(filePath, 'utf8', function (err,data2) {
               if (err) {
@@ -394,6 +420,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
               process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
       
+              // console.log(request.params.category)
           
               axios({
                   method: 'post',
@@ -408,6 +435,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                     id: request.params.varid
                   }
                 }).then((resp) => {
+                  console.log(resp.data.data[0]);
                     data2 = data2.replace(/\$OG_TITLE/g, resp.data.data[0].fld_titlebar);
                     data2 = data2.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/food/'+request.params.foodid+'/'+request.params.varid+'/'+request.params.foodname);
                     // data2 = data2.replace(/\$OG_TYPE/g, 'Food');
@@ -425,6 +453,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
         app.get('/food/:id/:category', function(request, response) {
+              // console.log('Home page visited!');
               const filePath = path.resolve(__dirname, './build', 'index.html');
               fs.readFile(filePath, 'utf8', function (err,data) {
                 if (err) {
@@ -449,6 +478,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
     
             app.get('/selectaddress', function(request, response) {
+                //   console.log('Home page visited!');
                   const filePath = path.resolve(__dirname, './build', 'index.html');
                   fs.readFile(filePath, 'utf8', function (err,data) {
                     if (err) {
@@ -467,6 +497,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
             app.get('/placeorder', function(request, response) {
+                //   console.log('Home page visited!');
                   const filePath = path.resolve(__dirname, './build', 'index.html');
                   fs.readFile(filePath, 'utf8', function (err,data) {
                     if (err) {
@@ -485,6 +516,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                 app.get('/Orders', function(request, response) {
+                    //   console.log('Home page visited!');
                       const filePath = path.resolve(__dirname, './build', 'index.html');
                       fs.readFile(filePath, 'utf8', function (err,data) {
                         if (err) {
@@ -502,6 +534,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                     app.get('/Login', function(request, response) {
+                        //   console.log('Home page visited!');
                           const filePath = path.resolve(__dirname, './build', 'index.html');
                           fs.readFile(filePath, 'utf8', function (err,data) {
                             if (err) {
@@ -519,6 +552,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                         app.get('/Register', function(request, response) {
+                            //   console.log('Home page visited!');
                               const filePath = path.resolve(__dirname, './build', 'index.html');
                               fs.readFile(filePath, 'utf8', function (err,data) {
                                 if (err) {
@@ -536,6 +570,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                             app.get('/profile', function(request, response) {
+                                //   console.log('Home page visited!');
                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                     if (err) {
@@ -553,6 +588,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                 app.get('/newaddress', function(request, response) {
+                                    //   console.log('Home page visited!');
                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                         if (err) {
@@ -570,6 +606,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                     app.get('/recoverpassword', function(request, response) {
+                                        //   console.log('Home page visited!');
                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                             if (err) {
@@ -587,6 +624,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                         app.get('/results/:title', function(request, response) {
+                                            //   console.log('Home page visited!');
                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                 if (err) {
@@ -604,6 +642,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                             app.get('/verifymobile', function(request, response) {
+                                                //   console.log('Home page visited!');
                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                     if (err) {
@@ -620,6 +659,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                 });
 
                                                 app.get('/contactus', function(request, response) {
+                                                    //   console.log('Home page visited!');
                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                         if (err) {
@@ -636,6 +676,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                     });
 
                                                     app.get('/aboutus', function(request, response) {
+                                                        //   console.log('Home page visited!');
                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                             if (err) {
@@ -652,6 +693,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                         });
 
                                                         app.get('/privacypolicy', function(request, response) {
+                                                            //   console.log('Home page visited!');
                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                 if (err) {
@@ -669,6 +711,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                             app.get('/disclaimer', function(request, response) {
+                                                                //   console.log('Home page visited!');
                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                     if (err) {
@@ -686,6 +729,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                 app.get('/termsandcondition', function(request, response) {
+                                                                    //   console.log('Home page visited!');
                                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                                         if (err) {
@@ -703,7 +747,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                     app.get('/careers', function(request, response) {
-                                                                        
+                                                                        //   console.log('Home page visited!');
                                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                                             if (err) {
@@ -720,7 +764,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                         });
 
                                                                         app.get('/careers/:id/:title', function(request, response) {
-                                                                            
+                                                                            //   console.log('Home page visited!');
                                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                 if (err) {
@@ -737,7 +781,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                             });
 
                                                                             app.get('/sellwithus', function(request, response) {
-                                                                                
+                                                                                //   console.log('Home page visited!');
                                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                     if (err) {
@@ -755,7 +799,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                 app.get('/insurance', function(request, response) {
-                                                                                    
+                                                                                    //   console.log('Home page visited!');
                                                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                         if (err) {
@@ -772,7 +816,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                     });
 
                                                                                     app.get('/cart', function(request, response) {
-                                                                                        
+                                                                                        //   console.log('Home page visited!');
                                                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                             if (err) {
@@ -789,7 +833,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                         });
 
                                                                                         app.get('/account', function(request, response) {
-                                                                                            
+                                                                                            //   console.log('Home page visited!');
                                                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                 if (err) {
@@ -807,7 +851,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                             app.get('/editprofile', function(request, response) {
-                                                                                                
+                                                                                                //   console.log('Home page visited!');
                                                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                     if (err) {
@@ -825,7 +869,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                 app.get('/addressbook', function(request, response) {
-                                                                                                    
+                                                                                                    //   console.log('Home page visited!');
                                                                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                         if (err) {
@@ -843,7 +887,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                     app.get('/addressbook', function(request, response) {
-                                                                                                        
+                                                                                                        //   console.log('Home page visited!');
                                                                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                             if (err) {
@@ -861,7 +905,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
             
 
                                                                                                         app.get('/addnewaddress', function(request, response) {
-                                                                                                            
+                                                                                                            //   console.log('Home page visited!');
                                                                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                 if (err) {
@@ -879,7 +923,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                             app.get('/editaddress', function(request, response) {
-                                                                                                                
+                                                                                                                //   console.log('Home page visited!');
                                                                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                     if (err) {
@@ -898,7 +942,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                             app.get('/orderhistory', function(request, response) {
-                                                                                                                
+                                                                                                                //   console.log('Home page visited!');
                                                                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                     if (err) {
@@ -915,7 +959,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                 });
 
                                                                                                                 app.get('/wishlist', function(request, response) {
-                                                                                                                    
+                                                                                                                    //   console.log('Home page visited!');
                                                                                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                         if (err) {
@@ -933,7 +977,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                                     app.get('/returnorder', function(request, response) {
-                                                                                                                        
+                                                                                                                        //   console.log('Home page visited!');
                                                                                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                             if (err) {
@@ -952,7 +996,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                                         app.get('/diabeticprofile', function(request, response) {
-                                                                                                                            
+                                                                                                                            //   console.log('Home page visited!');
                                                                                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                 if (err) {
@@ -971,7 +1015,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                                             app.get('/intellectual', function(request, response) {
-                                                                                                                                
+                                                                                                                                //   console.log('Home page visited!');
                                                                                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                     if (err) {
@@ -988,7 +1032,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                                 });
     
                                                                                                                                 app.get('/Returnpolicy', function(request, response) {
-                                                                                                                                    
+                                                                                                                                    //   console.log('Home page visited!');
                                                                                                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                         if (err) {
@@ -1005,7 +1049,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                                     });
     
                                                                                                                                     app.get('/Shippingpolicy', function(request, response) {
-                                                                                                                                        
+                                                                                                                                        //   console.log('Home page visited!');
                                                                                                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                             if (err) {
@@ -1023,7 +1067,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                                                         app.get('/paymentsuccess/:txnid', function(request, response) {
-                                                                                                                                            
+                                                                                                                                            //   console.log('Home page visited!');
                                                                                                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                                 if (err) {
@@ -1039,8 +1083,26 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                                               });
                                                                                                                                             });
 
+
+                                                                                                                                            app.get('/ordersuccess/:txnid', function(request, response) {
+                                                                                                                                              //   console.log('Home page visited!');
+                                                                                                                                                const filePath = path.resolve(__dirname, './build', 'index.html');
+                                                                                                                                                fs.readFile(filePath, 'utf8', function (err,data) {
+                                                                                                                                                  if (err) {
+                                                                                                                                                    return console.log(err);
+                                                                                                                                                  }
+                                                                                                                                                  data = data.replace(/\$OG_TITLE/g, 'Order Success  - BeatMySugar | Buy Diabetic Products and Healthcare Services');
+                                                                                                                                                  data = data.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/paymentsuccess/'+request.params.txnid);
+                                                                                                                                                  // data = data.replace(/\$OG_TYPE/g, 'BeatMySugar');
+                                                                                                                                                  data = data.replace(/\$OG_DESCRIPTION/g, 'BeatMySugar.com - Simplifying Diabetes Management is an Ecommerce Marketplace for Diabetic Products, Healthcare Services, Diabetic related Services & we provide Diabetic Health Knowledge suggested by Professional Doctors & Nutritionists.');
+                                                                                                                                                  data = data.replace(/\$KEYWORDS/g, 'Diabetes, Health Knowledge, Diabetic Care, Health Care, Diabetic Products, Diabetic Food, Health Food, Keto Food, Diabetic Foot Care, Diabetic Devices, Healthcare Devices, Doctors, Nutritionists, Health Insurance, Beverages/Drinks, Diabetes Friendly Food, Diabetes Friendly Sweets, Diabetes Supplements, Health Supplements, Immunity Boosters, Keto Food, Kids Nutrition, Sugar Substitutes, Superfoods');
+                                                                                                                                                  var result = data.replace(/\$OG_IMAGE/g, ImgUrl);
+                                                                                                                                                  response.send(result);
+                                                                                                                                                });
+                                                                                                                                              });
+
                                                                                                                                             app.get('/paymentprocess/:txnid', function(request, response) {
-                                                                                                                                                
+                                                                                                                                                //   console.log('Home page visited!');
                                                                                                                                                   const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                                   fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                                     if (err) {
@@ -1059,7 +1121,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                                                                 app.get('/paymentfail/:txnid', function(request, response) {
-                                                                                                                                                    
+                                                                                                                                                    //   console.log('Home page visited!');
                                                                                                                                                       const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                                       fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                                         if (err) {
@@ -1076,7 +1138,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                                                     });
 
                                                                                                                                                     app.get('/search/:key', function(request, response) {
-                                                                                                                                                        
+                                                                                                                                                        //   console.log('Home page visited!');
                                                                                                                                                           const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                                           fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                                             if (err) {
@@ -1094,7 +1156,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
 
 
                                                                                                                                                         app.get('/verifyemail/:email', function(request, response) {
-                                                                                                                                                            
+                                                                                                                                                            //   console.log('Home page visited!');
                                                                                                                                                               const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                                               fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                                                 if (err) {
@@ -1111,7 +1173,7 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                                                             });
 
                                                                                                                                                             app.get('/Termsmarketplace', function(request, response) {
-                                                                                                                                                              
+                                                                                                                                                              //   console.log('Home page visited!');
                                                                                                                                                                 const filePath = path.resolve(__dirname, './build', 'index.html');
                                                                                                                                                                 fs.readFile(filePath, 'utf8', function (err,data) {
                                                                                                                                                                   if (err) {
@@ -1126,6 +1188,25 @@ app.get('/socks/:socksid/:varid/:socksname', function(request, response) {
                                                                                                                                                                   response.send(result);
                                                                                                                                                                 });
                                                                                                                                                               });
+
+
+                                                                                                                                                              app.get('/festive-offers', function(request, response) {
+                                                                                                                                                                //   console.log('Home page visited!');
+                                                                                                                                                                  const filePath = path.resolve(__dirname, './build', 'index.html');
+                                                                                                                                                                  fs.readFile(filePath, 'utf8', function (err,data) {
+                                                                                                                                                                    if (err) {
+                                                                                                                                                                      return console.log(err);
+                                                                                                                                                                    }
+                                                                                                                                                                    data = data.replace(/\$OG_TITLE/g, 'Festive Offers - BeatMySugar | Buy Diabetic Products and Healthcare Services');
+                                                                                                                                                                    data = data.replace(/\$OG_URL/g, 'https://www.beatmysugar.com/festive-offers');
+                                                                                                                                                                    // data = data.replace(/\$OG_TYPE/g, 'BeatMySugar');
+                                                                                                                                                                    data = data.replace(/\$OG_DESCRIPTION/g, 'BeatMySugar.com - Simplifying Diabetes Management is an Ecommerce Marketplace for Diabetic Products, Healthcare Services, Diabetic related Services & we provide Diabetic Health Knowledge suggested by Professional Doctors & Nutritionists.');
+                                                                                                                                                                    data = data.replace(/\$KEYWORDS/g, 'Diabetes, Health Knowledge, Diabetic Care, Health Care, Diabetic Products, Diabetic Food, Health Food, Keto Food, Diabetic Foot Care, Diabetic Devices, Healthcare Devices, Doctors, Nutritionists, Health Insurance, Beverages/Drinks, Diabetes Friendly Food, Diabetes Friendly Sweets, Diabetes Supplements, Health Supplements, Immunity Boosters, Keto Food, Kids Nutrition, Sugar Substitutes, Superfoods');
+                                                                                                                                                                    var result = data.replace(/\$OG_IMAGE/g, ImgUrl);
+                                                                                                                                                                    response.send(result);
+                                                                                                                                                                  });
+                                                                                                                                                                });
+  // app.use(cors())
 // app.use(cors())
 app.use(express.static(path.resolve(__dirname, './build')));
 

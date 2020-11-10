@@ -3,7 +3,7 @@ import logo from './logo.svg';
 
 import Header from './Header'
 import Footer from './Footer'
-// // import News from './News';
+import News from './News';
 import PostApiCall from "./Api";
 import Notiflix from "notiflix-react";
 import GetApiCall from "./GetApi";
@@ -37,6 +37,7 @@ class Returnorder extends React.Component {
     componentDidMount() {
         Notiflix.Loading.Init({
           svgColor: "#507dc0",
+          //  #507dc0'
         });
     
         var log = localStorage.getItem("CustomerLoginDetails");
@@ -52,6 +53,7 @@ class Returnorder extends React.Component {
             ReturnOrderData : rt,
             MainOrderData : rt1
         })
+        // console.log(this.state.LoginData.fld_userid)
      } 
 
 
@@ -72,6 +74,7 @@ class Returnorder extends React.Component {
         Notiflix.Loading.Dots()
        
         const form = new FormData();
+        // console.log(this.state.LoginData.fld_userid)
 
         form.append("file", this.state.ProductImageData);
         form.append("foldername", "CustomerReturn");
@@ -88,6 +91,7 @@ class Returnorder extends React.Component {
                                                                       
         var log = localStorage.getItem("CustomerLoginDetails");
         var login = JSON.parse(log);
+        // console.log(res.data)
           PostApiCall.postRequest(
            {
          orderdetailid : this.state.ReturnOrderData.fld_orderdetailid,
@@ -119,6 +123,7 @@ class Returnorder extends React.Component {
     }
 
     SaveReturnOrder(){
+    //   console.log(this.state.LoginData.fld_userid)
 
         if(JSON.stringify(this.state.ProductImageData) != '[]'){
             if(this.state.SelectReturn!=''){
@@ -225,6 +230,7 @@ class Returnorder extends React.Component {
                                                  ))}
                                                    </select>
                                                    <div 
+                                                //    style={{display: this.state.SelectReturn == 'Any Other' ? '' : 'none'}}
                                                    >
                                                    <h4>Comments</h4>
                                                    <textarea class="form-control" placeholder="Comments" style={{height:"100px"}}
@@ -233,7 +239,7 @@ class Returnorder extends React.Component {
                                                    
                                                 </div>  
                                                 <a 
-                                                   onClick={this.SaveReturnOrder.bind(this)} class="btn return-btn">Return</a>
+                                                   onClick={this.SaveReturnOrder.bind(this)} class="btn return-btn">Cancel/Return</a>
                                                 </div>
                                                
                                                 <div class="col-md-3">
@@ -248,7 +254,79 @@ class Returnorder extends React.Component {
                               
                             </div>
                            
-                           
+                            {/* <form action="#">
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group required-field">
+                                                    <label for="acc-name">First Name</label>
+                                                    <input type="text" class="form-control" id="acc-name" name="acc-name" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="acc-mname">First Name</label>
+                                                    <input type="text" class="form-control" id="acc-mname" name="acc-mname"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group required-field">
+                                                    <label for="acc-lastname">Last Name</label>
+                                                    <input type="text" class="form-control" id="acc-lastname" name="acc-lastname" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="acc-email">Email</label>
+                                    <input type="email" class="form-control" id="acc-email" name="acc-email" required/>
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="acc-password">Password</label>
+                                    <input type="password" class="form-control" id="acc-password" name="acc-password" required/>
+                                </div>
+
+                                <div class="mb-2"></div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="change-pass-checkbox" value="1"/>
+                                    <label class="custom-control-label" for="change-pass-checkbox">Change Password</label>
+                                </div>
+
+                                <div id="account-chage-pass">
+                                    <h3 class="mb-2">Change Password</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass2">Password</label>
+                                                <input type="password" class="form-control" id="acc-pass2" name="acc-pass2"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass3">Confirm Password</label>
+                                                <input type="password" class="form-control" id="acc-pass3" name="acc-pass3"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="required text-right">* Required Field</div>
+                                <div class="form-footer">
+                                    <a href="#"><i class="icon-angle-double-left"></i>Back</a>
+
+                                    <div class="form-footer-right">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </form> */}
                         </div>
                         </div>
                         <aside class="sidebar col-lg-3">

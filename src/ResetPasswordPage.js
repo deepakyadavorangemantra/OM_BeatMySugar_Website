@@ -29,7 +29,9 @@ class ResetPasswordPage extends React.Component
         var customer = JSON.parse(data)
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
+            //  #507dc0'
           });
+// console.log(customer)
 if(customer != null){
     this.setState({
         MailerOtp : customer.otp,
@@ -55,6 +57,7 @@ if(customer != null){
          
          },"ForgotPasswordMailer").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
     
          
@@ -131,7 +134,71 @@ if(customer != null){
                     OTPView : false
                 })
     
-               
+                // Notiflix.Loading.Dots('Please wait...');
+    
+                //             PostApiCall.postRequest({
+    
+                //                     name : this.state.CustomerData.name,
+                //                     email : this.state.CustomerData.email,
+                //                     mobile : this.state.CustomerData.mobile,
+                //                     password : this.state.CustomerData.password,
+                //                     gender : this.state.CustomerData.gender,
+                //                     dob : this.state.CustomerData.dob,
+                //                     age : this.state.CustomerData.age,
+                //                     source :this.state.CustomerData.source,
+                //                     login_type : this.state.CustomerData.login_type,
+                //                     updated_on : this.state.CustomerData.updated_on,
+                //                     updated_by : this.state.CustomerData.updated_by
+                                 
+                //                  },"RegisterCustomer").then((results) => 
+                                 
+                //                    // const objs = JSON.parse(result._bodyText)
+                //                    results.json().then(obj => {
+                 
+                                 
+                //                    if(results.status == 200 || results.status == 201){
+    
+    
+                //                     // console.log(JSON.parse(JSON.stringify(obj.data[0])).Result)
+                //                     // console.log((JSON.parse(JSON.stringify(obj.data[0]))).Result)
+    
+                //                     // if(((JSON.parse(JSON.stringify(obj.data[0]))).Result) == 'Successfully Registered'){
+    
+                //                         PostApiCall.postRequest({
+    
+                //                             name : this.state.CustomerData.name,
+                //                             email : this.state.CustomerData.email,
+                                          
+                                         
+                //                          },"CustomerRegistraionMailer").then((results1) => 
+                                         
+                //                            // const objs = JSON.parse(result._bodyText)
+                //                            results1.json().then(obj1 => {
+                         
+                                         
+                //                            if(results1.status == 200 || results1.status == 201){
+    
+                //                             Notiflix.Loading.Remove()
+    
+                //                             Notiflix.Notify.Success('You are successfully registered with BeatMySugar.');
+    
+                //                             window.location.href= "/"
+                                        
+                                    
+    
+                                 
+                                        
+                //                         }
+                //                     }))
+                //                     // }
+                //                     // else
+                //                     // {
+                //                     //     Notiflix.Notify.Failure('Email Address Already Registered.');
+                //                     // }
+                //        }
+    
+    
+                //     }))
     
             }else
             {
@@ -171,6 +238,7 @@ if(customer != null){
     })}
     value = {this.state.EnteredOtp}
     numInputs={6}
+    //   separator={<span>-<span>}
     inputStyle={{
     width : '5rem'
     }}
@@ -215,11 +283,13 @@ if(customer != null){
                   <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="login-section">
                           <h3>Reset your Password</h3>
+                          {/* <h5>Enter your new password twice<br/> so we can verify you typed it in correctly.</h5> */}
 
                          
     
                           
                           <div class="input-boxes-login">
+                            {/* <label for="reset-email">New Password</label> */}
                             <input  
                             type={this.state.isVisiblePass ? 'text' : "Password"}
                             placeholder="Enter New Password" 
@@ -237,6 +307,8 @@ if(customer != null){
                                                         }}></i></span>
                         
 
+                        {/* <div class="form-group required-field"> */}
+                            {/* <label for="reset-email">Confirm New Password</label> */}
                             <input placeholder="Reenter Password"
                             type={this.state.isVisibleCon ? 'text' : "Password"} 
                              value={this.state.conPass}
@@ -257,8 +329,13 @@ if(customer != null){
                                                                 isVisibleCon : !this.state.isVisibleCon
                                                             })
                                                         }}></i></span>
+                        {/* </div> */}
+
+                        {/* <div class="form-footer"> */}
                             <button class="login-page-btn" onClick={this.ResetPass.bind(this)}>Save</button>
+                        {/* </div> */}
                         </div>
+                    {/* </form> */}
                         </div>
                     </div>
                    

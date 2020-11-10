@@ -4,7 +4,7 @@ import React from 'react';
 import logo from './logo.svg';
 import Header from './Header'
 import Footer from './Footer'
-// // import News from './News';
+import News from './News';
 
 import GetApiCall from "./GetApi";
 import PostApiCall from "./Api";
@@ -45,6 +45,7 @@ class Tabs extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("");
@@ -56,6 +57,7 @@ class Tabs extends React.Component {
 
     this.setState({
       LoginData: details,
+      // CategorySelected : this.props.match.params.category
     });
 
     var search = this.props.match.params.key
@@ -63,6 +65,7 @@ class Tabs extends React.Component {
     this.setState({
       SearchText : search
     })
+    // console.log(this.props.match.params.category)
     PostApiCall.postRequest(
       {
         category: 0,
@@ -73,6 +76,7 @@ class Tabs extends React.Component {
         if (results.status == 200 || results.status == 201) {
 
 
+          // console.log(obj.data)
 
           var srDt= []
           if(search != null){
@@ -93,16 +97,19 @@ class Tabs extends React.Component {
 
             var cou = 0 
             for (var i = 0; i < Object.keys(srDt).length; i++) {
+              // console.log(dtar[i].SelectedVar)
               if (srDt[i].Variant != null) {
                 dtar[i].SelectedVar = srDt[i].Variant.split("^")[0];
                 dtar[i].Selectdd = srDt[i].Variant.split("^")[0].split('#')[1]+' '+srDt[i].Variant.split("^")[0].split('#')[2]+' - ₹'+srDt[i].Variant.split("^")[0].split('#')[3]
               }else{
+                // dtar.splice(obj.data[i])
               }
               cou = cou +1 
               if(cou == Object.keys(srDt).length){
                 
               }
             }
+            // console.log(dtar)
             var finlar = []
             for (var i = 0; i < dtar.length; i++) {
               if(dtar[i].Variant != null){
@@ -145,6 +152,7 @@ class Tabs extends React.Component {
           }))
           .then((res) => {
     
+            // console.log(res.data.data)
   
             var srDtfoot= []
             if(search != null){
@@ -152,6 +160,7 @@ class Tabs extends React.Component {
               res.data.data.filter(item => {
                 if (item.fld_name.toLowerCase().includes(search.toLowerCase())
                 || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                // || item.fld_description.toLowerCase().includes(search.toLowerCase())
                 ) {
                   srDtfoot.push(item)
                   
@@ -193,6 +202,7 @@ class Tabs extends React.Component {
                   res.data.data.filter(item => {
                     if (item.fld_name.toLowerCase().includes(search.toLowerCase())
                     || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                    // || item.fld_description.toLowerCase().includes(search.toLowerCase())
                     ) {
                       srDtsocks.push(item)
                       
@@ -210,6 +220,7 @@ class Tabs extends React.Component {
               
               });
       
+                // Notiflix.Loading.Remove();
               });
 
 
@@ -222,6 +233,7 @@ class Tabs extends React.Component {
                             
                 
                     
+                                    // console.log(obj.data)
     
                 obj.data.filter(item => {
                   if (item.fld_title.toLowerCase().includes(search.toLowerCase())
@@ -235,6 +247,7 @@ class Tabs extends React.Component {
                 this.setState({
                   BlogDetails: srDtblog
                 })
+                // Notiflix.Loading.Remove()
             }))
             }
       
@@ -243,6 +256,7 @@ class Tabs extends React.Component {
     
 
     truncate(source, size) {
+      // console.log(source)
       if (source != null) {
         return source.length > size ? source.slice(0, size - 1) + "…" : source;
       }
@@ -264,7 +278,12 @@ class Tabs extends React.Component {
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                         <div class="container">
                             <ol class="breadcrumb">
-                               
+                                {/* <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                                <li class="breadcrumb-item" aria-current="page">Disclaimer</li> */}
+                                {/* <li class="breadcrumb-item" aria-current="page">Diabetes</li>
+                                <li class="breadcrumb-item" aria-current="page">Type 1 Diabetes</li>
+                                <li class="breadcrumb-item active" aria-current="page">Type 1 diabetes causes and risk factors */}
+                                    {/* </li> */}
                             </ol>
                         </div>
                         {/* <!-- End .container --> */}
@@ -311,6 +330,7 @@ class Tabs extends React.Component {
                  
                   ) : (
                     <div class="col-md-12">
+                      {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
                     </div>
                   )}
                   <ul class="search-products-list">
@@ -373,6 +393,7 @@ class Tabs extends React.Component {
                               {info.SelectedVar.split("#")[0]}
                             </a>
                           </p>
+                          {/* {book.fld_discountpercent == 0.0 ? ( */}
                           <p class="food-height">
                             <p class="small-desc item-name">
                               <span
@@ -395,6 +416,7 @@ class Tabs extends React.Component {
                                   var dr = [...this.state.Food];
                                   for (var i = 0;i < info.Variant.split("^").length;i++) {
                                     if ( dt.target.value ==info.Variant.split("^")[i].split("#")[1] + " " +info.Variant.split("^")[i].split("#")[2] + " - ₹" + info.Variant.split("^")[i].split("#")[3]) {
+                                      // console.log(info.Variant.split(',')[i])
                                       dr[index].SelectedVar = info.Variant.split("^")[i];
                                       dr[index].Selectdd = info.Variant.split("^")[i].split("#")[1] + " " +info.Variant.split("^")[i].split("#")[2] + " - ₹" + info.Variant.split("^")[i].split("#")[3]
                                     }
@@ -403,6 +425,7 @@ class Tabs extends React.Component {
                                   this.setState({
                                     Food: dr,
                                   });
+                                  // console.log(dt.target.value)
                                 }}
                               >
                                 {info.VariantDropDown.split(",").map(
@@ -481,6 +504,7 @@ class Tabs extends React.Component {
                                     PostApiCall.postRequest(
                                       {
                                         customer_id: login.fld_userid,
+                                        // customer_id : 13,
                                         variant_id: info.SelectedVar.split(
                                           "#"
                                         )[7],
@@ -488,9 +512,11 @@ class Tabs extends React.Component {
                                         quantity: 1,
                                         updated_on: moment().format("lll"),
                                         updated_by: login.fld_userid,
+                                        // updated_by :13
                                       },
                                       "AddWishlist"
                                     ).then((results) =>
+                                      // const objs = JSON.parse(result._bodyText)
                                       results.json().then((obj) => {
                                         if (
                                           results.status == 200 ||
@@ -500,6 +526,7 @@ class Tabs extends React.Component {
                                           Notiflix.Notify.Info(
                                             "Product added to Wishlist."
                                           );
+                                          // window.location.reload()
                                         } else {
                                           Notiflix.Loading.Remove();
                                           Notiflix.Notify.Failure(
@@ -509,6 +536,7 @@ class Tabs extends React.Component {
                                       })
                                     );
                                   } else {
+                                    // console.log('please login first')
                                     Notiflix.Notify.Failure(
                                       "Please Login to add products to your wishlist."
                                     );
@@ -518,6 +546,7 @@ class Tabs extends React.Component {
                                 <i class="fas fa-heart"></i>
                               </button>{" "}
                             </li>
+                            {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
                           </ul>
                         </div>
                       </div>
@@ -567,7 +596,10 @@ class Tabs extends React.Component {
                         </a>
                       </p>
                       <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Brand:</span> {info.fld_brand}</p>
-                   
+                      {/* <p>
+                      <p class="price"> &#8377;{foot.fld_productprice}</p>
+                      <p class="extrapheight"></p>
+                    </p> */}
                       <p class="discount-height">
                       {info.fld_discountpercent == 0 ? 
     
@@ -621,14 +653,17 @@ class Tabs extends React.Component {
                                   PostApiCall.postRequest({
                           
                                       customer_id : login.fld_userid,
+                                      // customer_id : 13,
                                       variant_id : info.fld_id,
                                       product_category : 'Footwear',
                                       quantity :1,
                                      updated_on : moment().format('lll'),
                                      updated_by : login.fld_userid
+                                  // updated_by :13
                                   
                                   },"AddWishlist").then((results) => 
                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     results.json().then(obj => {
                          
                                   
@@ -637,6 +672,7 @@ class Tabs extends React.Component {
                                       
                                       Notiflix.Loading.Remove()
                                       Notiflix.Notify.Info('Product added to Wishlist.')
+                                      // window.location.reload()
                                      
                          
                                     }else{
@@ -647,6 +683,7 @@ class Tabs extends React.Component {
                                  }))
                       
                               }else{
+                              // console.log('please login first')
                                   Notiflix.Notify.Failure('Please Login to add products to your wishlist.')
                               }
                       
@@ -657,6 +694,7 @@ class Tabs extends React.Component {
                             <i class="fas fa-heart"></i>
                           </button>{" "}
                         </li>
+                        {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
                       </ul>
                     </div>
                   </div>
@@ -710,7 +748,10 @@ class Tabs extends React.Component {
       </a>
     </p>
     <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Brand:</span> {info.fld_brand}</p>
-   
+    {/* <p>
+    <p class="price"> &#8377;{foot.fld_productprice}</p>
+    <p class="extrapheight"></p>
+  </p> */}
     <p class="discount-height">
 
     {info.fld_discountpercent == 0 ? 
@@ -764,14 +805,17 @@ class Tabs extends React.Component {
               PostApiCall.postRequest({
       
                   customer_id : login.fld_userid,
+                  // customer_id : 13,
                   variant_id : info.fld_id,
                   product_category : 'Socks',
                   quantity :1,
                  updated_on : moment().format('lll'),
                  updated_by : login.fld_userid
+              // updated_by :13
               
               },"AddWishlist").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
      
               
@@ -780,6 +824,7 @@ class Tabs extends React.Component {
                   
                   Notiflix.Loading.Remove()
                   Notiflix.Notify.Info('Product added to Wishlist.')
+                  // window.location.reload()
                  
      
                 }else{
@@ -790,6 +835,7 @@ class Tabs extends React.Component {
              }))
   
           }else{
+          // console.log('please login first')
               Notiflix.Notify.Failure('Please Login to add products to your wishlist.')
           }
   
@@ -800,6 +846,7 @@ class Tabs extends React.Component {
           <i class="fas fa-heart"></i>
         </button>{" "}
       </li>
+      {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
     </ul>
   </div>
 </div>
@@ -830,7 +877,11 @@ class Tabs extends React.Component {
                        <img 
                        onClick={()=>{this.onBlogView(blog)}}
                        src={blog.fld_previewimage} />
-                      
+                       {/* <span class="grid-item-date">
+                              <span class="grid-item-day">{moment(blog.fld_publishdate).format('ll').split(' ')[1].split(',')[0]}</span>
+                                        <span class="grid-item-month">{moment(blog.fld_publishdate).format('ll').split(' ')[0]} ' {moment(blog.fld_publishdate).format("YY")}</span>
+                                       
+                                    </span> */}
                        <div class="blog-masonry-textbox content-box">
                          <a onClick={()=>{this.onBlogView(blog)}}>  <h3 class="blog-masonry-title" style={{overflow : 'hidden'}}>{blog.fld_title}</h3></a>
                            <p class="name-title"><span>By</span> {blog.fld_writtenby}</p>
@@ -898,9 +949,11 @@ class Tabs extends React.Component {
                                                    .replace(/\//g, "-")
                                                    .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
                                                }`
+                                               // updated_by :13
                                              },
                                              "AddShoppingCart"
                                            ).then((results) =>
+                                             // const objs = JSON.parse(result._bodyText)
                                              results.json().then((obj) => {
                                                if (
                                                  results.status == 200 ||
@@ -913,6 +966,7 @@ class Tabs extends React.Component {
                                                  Notiflix.Notify.Info(
                                                    "Product added to Cart."
                                                  );
+                                                 // window.location.reload();
  
                                                  this.props.setcartitemcount(obj.data.length)
                                                  this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -932,6 +986,7 @@ class Tabs extends React.Component {
  
                                            var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
    
+                                           // console.log(cart_info)
                                            var newCart = cart_info != null ? cart_info : []
    
                                            if(cart_info != null){
@@ -939,12 +994,14 @@ class Tabs extends React.Component {
                                          
                                              var item = newCart.filter(val => val.fld_variantid == info.SelectedVar.split("#")[7].split('$')[0] && val.fld_productcategory == 'Food')
    
+                                             // console.log(item)
                                              if(item[0] != undefined){
    
                                                var newIndex = newCart.indexOf(item[0])
    
                                                newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
    
+                                               // console.log(newCart)
    
                                                localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)
@@ -977,6 +1034,7 @@ class Tabs extends React.Component {
                                                }
    
                                                newCart.push(addNewCartData)
+                                               // console.log(newCart.length)
                                               
                                                localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)
@@ -1054,9 +1112,11 @@ class Tabs extends React.Component {
                                                    "-"
                                                  )
                                              }`
+                                              // updated_by :13
                                             },
                                             "AddShoppingCart"
                                           ).then((results) =>
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then((obj) => {
                                               if (
                                                 results.status == 200 ||
@@ -1069,6 +1129,7 @@ class Tabs extends React.Component {
                                                 Notiflix.Notify.Info(
                                                   "Product added to Cart."
                                                 );
+                                                // window.location.reload();
  
                                                 this.props.setcartitemcount(obj.data.length)
                                                 this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1088,6 +1149,7 @@ class Tabs extends React.Component {
  
                                          var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
  
+                                         // console.log(cart_info)
                                          var newCart = cart_info != null ? cart_info : []
  
                                          if(cart_info != null){
@@ -1095,12 +1157,14 @@ class Tabs extends React.Component {
                                        
                                            var item = newCart.filter(val => val.fld_variantid == info.fld_id && val.fld_productcategory == 'Footwear')
  
+                                           // console.log(item)
                                            if(item[0] != undefined){
  
                                              var newIndex = newCart.indexOf(item[0])
  
                                              newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
  
+                                             // console.log(newCart)
  
                                              localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                this.props.setcartitemcount(newCart.length)
@@ -1216,9 +1280,11 @@ class Tabs extends React.Component {
                                                    "-"
                                                  )
                                              }`
+                                              // updated_by :13
                                             },
                                             "AddShoppingCart"
                                           ).then((results) =>
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then((obj) => {
                                               if (
                                                 results.status == 200 ||
@@ -1231,6 +1297,7 @@ class Tabs extends React.Component {
                                                 Notiflix.Notify.Info(
                                                   "Product added to Cart."
                                                 );
+                                                // window.location.reload();
  
                                                 this.props.setcartitemcount(obj.data.length)
                                                 this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1250,6 +1317,7 @@ class Tabs extends React.Component {
  
                                          var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
  
+                                         // console.log(cart_info)
                                          var newCart = cart_info != null ? cart_info : []
  
                                          if(cart_info != null){
@@ -1257,12 +1325,14 @@ class Tabs extends React.Component {
                                        
                                            var item = newCart.filter(val => val.fld_variantid == info.fld_id && val.fld_productcategory == 'Socks')
  
+                                           // console.log(item)
                                            if(item[0] != undefined){
  
                                              var newIndex = newCart.indexOf(item[0])
  
                                              newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
  
+                                             // console.log(newCart)
  
                                              localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                              this.props.setcartitemcount(newCart.length)
