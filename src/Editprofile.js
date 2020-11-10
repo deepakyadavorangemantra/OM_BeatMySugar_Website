@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 
 import Header from "./Header";
 import Footer from "./Footer";
-// import News from "./News";
+import News from "./News";
 import PostApiCall from "./Api";
 import GetApiCall from "./GetApi";
 import Notiflix from "notiflix-react";
@@ -94,7 +94,7 @@ class Editprofile extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("");
@@ -104,7 +104,7 @@ class Editprofile extends React.Component {
     var login = localStorage.getItem("CustomerLoginDetails");
     var ProfileData = JSON.parse(login);
 
-    
+    //  console.log(ProfileData.fld_userid)
     this.setState({
       ProfileData: ProfileData,
     });
@@ -136,7 +136,9 @@ class Editprofile extends React.Component {
           this.props.setprofileemail(obj.data[0].fld_email);
           this.props.setprofilegender(obj.data[0].fld_gender);
           this.props.setprofiledob(new Date(obj.data[0].fld_dob));
-        
+          // this.props.setprofiledob(
+          //   moment(obj.data[0].fld_dob).format("dd/mm/yy")
+          // );
           this.props.setprofilemarital(obj.data[0].fld_maritalstatus);
           this.props.setprofilemobile(obj.data[0].fld_mobile);
           this.props.setprofileoccupation(obj.data[0].fld_occupation);
@@ -146,7 +148,12 @@ class Editprofile extends React.Component {
       })
     );
 
-   
+    //  this.setState({
+    //      Name:Data.fld_name
+
+    //     // imagePreviewUrl :Data.fld_profileimage,
+    //     // profileid:ProfileData.fld_userid
+    //     })
   }
 
   photoUpload = (e) => {
@@ -186,9 +193,9 @@ class Editprofile extends React.Component {
     }
   }
   onChangeDOB(dob) {
-
+    // console.log(dob)
     this.props.setprofiledob(new Date(dob));
-  
+    // console.log(dob.target.value)
   }
   onChangeGender(gender) {
     this.props.setprofilegender(gender.target.value);
@@ -211,7 +218,8 @@ class Editprofile extends React.Component {
   }
 
   Saveprofile() {
-
+    // console.log(this.props.ProfileCredentials)
+    // console.log(this.state.Data.fld_userid)
 
     if (this.props.ProfileCredentials.Title != "") {
       if (this.props.ProfileCredentials.Name != "") {
@@ -221,7 +229,8 @@ class Editprofile extends React.Component {
               if (this.props.ProfileCredentials.Mobile.length == 10) {
                 if (this.props.ProfileCredentials.DOB != "") {
                   if (this.props.ProfileCredentials.Gender != "") {
-             
+                    // if(this.props.ProfileCredentials.Marital!=''){
+                    //     if(this.props.ProfileCredentials.Occupation!=''){
 
                     var log = localStorage.getItem("CustomerLoginDetails");
                     var login = JSON.parse(log);
@@ -246,7 +255,7 @@ class Editprofile extends React.Component {
                       },
                       "UpdateUserInfoBasic"
                     ).then((results) =>
-                     
+                      //    const objs = JSON.parse(result._bodyText)
                       results.json().then((obj) => {
                         if (results.status == 200 || results.status == 201) {
                           if (JSON.stringify(this.state.ImageData) != "[]") {
@@ -317,7 +326,7 @@ class Editprofile extends React.Component {
                                 });
                             });
                           } else {
-                   
+                            //  this.props.setclearprofile()
 
                             var login = JSON.parse(
                               localStorage.getItem("CustomerLoginDetails")
@@ -347,7 +356,15 @@ class Editprofile extends React.Component {
                       })
                     );
 
-                  
+                    //     }
+                    //     else{
+                    //         Notiflix.Notify.Failure('Please select occupation.')
+                    //       }
+
+                    // }
+                    // else{
+                    //     Notiflix.Notify.Failure('Please select marital status.')
+                    //   }
                   } else {
                     Notiflix.Notify.Failure("Please select gender.");
                   }
@@ -386,7 +403,27 @@ class Editprofile extends React.Component {
                 <div class="col-lg-9 order-lg-last ">
                   <div class="dashboard-content">
                     <h2>Basic Information</h2>
-                   
+                    {/* <div class="row">
+                                <div class="col-md-6">
+                                <div class="card">
+                                        <div class="card-header">
+                                            Contact Information
+                                            <a href="#" class="card-edit">Edit your Account Details</a>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <p>
+                                            <i class="fas fa-user" style={{fontSize:"12px",marginRight:"7px"}}></i> Saravan Kumar</p>
+                                            <p><i class="fas fa-envelope" style={{fontSize:"12px",marginRight:"7px"}}></i> saravan@globaltrendz.com</p>
+                                            <p><i class="fas fa-phone-volume" style={{fontSize:"12px",marginRight:"7px"}}></i> 9500027017
+                                                
+                                            </p>
+                                            <a href="#">Change Password</a>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                            </div> */}
 
                     <form
                       onSubmit={(e) => {
@@ -423,7 +460,7 @@ class Editprofile extends React.Component {
                               <button class="btn btn-primary">
                                 Edit My Profile
                               </button>
-                              
+                              {/* <a ><i class=""></i>Edit</a> */}
                             </div>
                           </div>
                           <div class="row">
@@ -505,14 +542,24 @@ class Editprofile extends React.Component {
                             <div class="col-md-6">
                               <label for="acc-name">Date of Birth</label>
                               <div class="input-group required-field">
-                               
+                                {/* <input
+                                  disabled={this.state.isVisible}
+                                  class="form-control"
+                                  type="text"
+                                  id="datepicker"
+                                  name="acc-name"
+                                  value={this.props.ProfileCredentials.DOB}
+                                  max={moment().format("DD/MM/YYYY")}
+                                  onKeyDown={(e) => e.preventDefault()}
+                                  onChange={this.onChangeDOB.bind(this)}
+                                /> */}
 
                                 <DatePicker
                                   disabled={this.state.isVisible}
                                   onKeyDown={(e) => e.preventDefault()}
                                   onChange={this.onChangeDOB.bind(this)}
                                   value={this.props.ProfileCredentials.DOB}
-                          
+                                  // format={'dd/MM/yy'}
                                   clearIcon={null}
                                   maxDate={new Date()}
                                 />
@@ -597,11 +644,45 @@ class Editprofile extends React.Component {
 
                       <div class="mb-2"></div>
 
-                    
+                      {/* <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="change-pass-checkbox" value="1"/>
+                                    <label class="custom-control-label" for="change-pass-checkbox">Change Password</label>
+                                                     </div>
+
+                                <div id="account-chage-pass">
+                                    <h3 class="mb-2">Change Password</h3>
+                                    <div class="row">
+                                    <div class="col-md-4">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass2">Old Password</label>
+                                                <input type="password" class="form-control" id="acc-pass2" name="acc-pass2"
+                                                value={this.props.ProfileCredentials.ChangeoldPassword}
+                                                onChange={this.onChangePassword.bind(this)}/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass2">New Password</label>
+                                                <input type="password" class="form-control" id="acc-pass2" name="acc-pass2"
+                                                value={this.props.ProfileCredentials.ChangenewPassword}
+                                                onChange={this.onChangeNewPswrd.bind(this)} />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass3">Confirm Password</label>
+                                                <input type="password" class="form-control" id="acc-pass3" name="acc-pass3"
+                                                value={this.props.ProfileCredentials.ChangeconfirmPassword}
+                                                onChange={this.onChangeConfirmpswrd.bind(this)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                                    </div> */}
 
                       <div class="required text-right">* Required Field</div>
                       <div class="form-footer">
-           
+                        {/* <a href="#"><i class=""></i>Edit</a> */}
 
                         <div class="form-footer-right">
                           <button

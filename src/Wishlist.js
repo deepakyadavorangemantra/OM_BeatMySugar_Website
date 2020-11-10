@@ -51,6 +51,7 @@ class Wishlist extends React.Component {
     componentDidMount(){
         Notiflix.Loading.Init({
             svgColor: "#507dc0",
+            //  #507dc0'
           });
       this.getUpdatedCart()
 
@@ -84,7 +85,9 @@ class Wishlist extends React.Component {
                         arr.push(obj.data)
 
 
-                        
+                        // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                        //     subt = subt + obj.data[i].fld_discountprice
+                        // }
 
                     }
 
@@ -108,7 +111,9 @@ class Wishlist extends React.Component {
                                 if(obj.data.length > 0){
                                     arr.push(obj.data)
             
-                               
+                                    // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                    //     subt = subt + obj.data[i].fld_discountprice
+                                    // }
                                 }
                                
                                 this.setState({
@@ -131,7 +136,9 @@ class Wishlist extends React.Component {
                                            if(obj.data.length > 0){
                                                 arr.push(obj.data)
                         
-                                             
+                                                // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                                //     subt = subt + obj.data[i].fld_discountprice
+                                                // }
                                             }
                         
                                             this.setState({
@@ -141,7 +148,7 @@ class Wishlist extends React.Component {
                                             ()=>{
                                                 cn = cn +1
                         
-                                               
+                                                // console.log(this.state.Cart)
 
                                                 Notiflix.Loading.Remove()
                                                 this.setState({
@@ -228,6 +235,7 @@ class Wishlist extends React.Component {
            
             ) : (
               <div class="col-md-12">
+                {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
               </div>
             )}
 
@@ -237,6 +245,7 @@ class Wishlist extends React.Component {
                                             <div class="row" style={{    border: '1px solid #dcdcdc',
                                                 margin: '10px'}}>
                                                 <div class="col-md-2">
+                                                    {/* {info.VariantImage == undefined ? '' : info.VariantImage.split('#')[0]} */}
                                                     <img src={info.VariantImage == undefined ? '' : info.VariantImage.split('#')[0]} style={{    width: "150px"}}></img>
                                                 </div>
                                                 <div class="col-md-6">
@@ -263,14 +272,17 @@ class Wishlist extends React.Component {
                                                             PostApiCall.postRequest({
                                                     
                                                                 customer_id : login.fld_userid,
+                                                                // customer_id : 13,
                                                                 variant_id : info.fld_id[1],
                                                                 product_category : info.fld_productcategory,
                                                                 quantity :1,
                                                                updated_on : moment().format('lll'),
                                                                updated_by : login.fld_userid
+                                                            // updated_by :13
                                                             
                                                             },"AddShoppingCart").then((results) => 
                                                             
+                                                              // const objs = JSON.parse(result._bodyText)
                                                               results.json().then(obj => {
                                                    
                                                             
@@ -284,6 +296,7 @@ class Wishlist extends React.Component {
                                                                 
                                                                 },"DeleteItemWishlist").then((results1) => 
                                                                 
+                                                                  // const objs = JSON.parse(result._bodyText)
                                                                   results1.json().then(obj1 => {
                                                         
                                                                 
@@ -312,6 +325,7 @@ class Wishlist extends React.Component {
                                                            }))
                                                 
                                                         }else{
+                                                        // console.log('please login first')
                                                             Notiflix.Notify.Failure('Please Login to add products to your cart.')
                                                         }
                                                 
@@ -330,6 +344,7 @@ class Wishlist extends React.Component {
                                                         
                                                         },"DeleteItemWishlist").then((results) => 
                                                         
+                                                          // const objs = JSON.parse(result._bodyText)
                                                           results.json().then(obj => {
                                                 
                                                         
@@ -337,6 +352,7 @@ class Wishlist extends React.Component {
                                                 
                                                             
                                                             window.location.reload()
+                                                            // this.getUpdatedCart()
                                                 
                                                           }else{
                                                             Notiflix.Loading.Remove()
@@ -369,7 +385,79 @@ class Wishlist extends React.Component {
                               
                             </div>
                            
-                           
+                            {/* <form action="#">
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group required-field">
+                                                    <label for="acc-name">First Name</label>
+                                                    <input type="text" class="form-control" id="acc-name" name="acc-name" required/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="acc-mname">First Name</label>
+                                                    <input type="text" class="form-control" id="acc-mname" name="acc-mname"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group required-field">
+                                                    <label for="acc-lastname">Last Name</label>
+                                                    <input type="text" class="form-control" id="acc-lastname" name="acc-lastname" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="acc-email">Email</label>
+                                    <input type="email" class="form-control" id="acc-email" name="acc-email" required/>
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="acc-password">Password</label>
+                                    <input type="password" class="form-control" id="acc-password" name="acc-password" required/>
+                                </div>
+
+                                <div class="mb-2"></div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="change-pass-checkbox" value="1"/>
+                                    <label class="custom-control-label" for="change-pass-checkbox">Change Password</label>
+                                </div>
+
+                                <div id="account-chage-pass">
+                                    <h3 class="mb-2">Change Password</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass2">Password</label>
+                                                <input type="password" class="form-control" id="acc-pass2" name="acc-pass2"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group required-field">
+                                                <label for="acc-pass3">Confirm Password</label>
+                                                <input type="password" class="form-control" id="acc-pass3" name="acc-pass3"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="required text-right">* Required Field</div>
+                                <div class="form-footer">
+                                    <a href="#"><i class="icon-angle-double-left"></i>Back</a>
+
+                                    <div class="form-footer-right">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </form> */}
                         </div>
                         </div>
                         <aside class="sidebar col-lg-3">

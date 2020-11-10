@@ -35,7 +35,7 @@ componentDidMount(){
 
     Notiflix.Loading.Init({
         svgColor : '#507dc0'
-
+        //  #507dc0'
       });
   
       Notiflix.Loading.Dots('Please wait...');
@@ -47,20 +47,20 @@ componentDidMount(){
           status: results.status
       })
   ).then(res => {
-
+    //   console.log(res.data.data.Spec)
 
 
     this.setState({
         Doctor: res.data.data,
         DoctorRef : res.data.data,
-    
+        // DocSpecialization : res.data.data.Spec.split(',')
     })
 
     var sp = []
     var data =[]
   
     for(var i =0 ; i<Object.keys(res.data.data).length ;i++){
-  
+        // sp.push(res.data.data[i].fld_specialization)
 
         data = res.data.data[i].Spec != undefined ?  res.data.data[i].Spec.split(',') : ''
         for(var j =0 ; j<data.length;j++)
@@ -71,10 +71,10 @@ componentDidMount(){
  
     }
 
-
+    // console.log(sp)
     const unique = [... new Set(sp.map(un => un))]
 
-
+    // console.log(unique)
 
     this.setState({
         DocSpecialization : unique
@@ -97,7 +97,7 @@ componentDidMount(){
   ).then(res => {
 
     const uniqueArr = [... new Set(res.data.data.map(un => un.fld_city))]
-   
+    // console.log(uniqueArr)
     this.setState({
         HealthCenterCity : uniqueArr,
         HealthCenterMapping : res.data.data
@@ -118,12 +118,12 @@ onViewDetails(doc){
 
 OnFilterSpec(){
 
-  
+    // console.log('in spec')
 
     var cn = 0
     var doc = []
 
-    
+    // console.log(this.state.SelectedSpecialisation)
 
     if(this.state.SelectedSpecialisation != 'All' && this.state.SelectedSpecialisation !=  'Select Specialization'){
 
@@ -131,6 +131,7 @@ OnFilterSpec(){
             for(var i = 0 ;i <Object.keys(this.state.DoctorRef).length;i++){
 
 
+                // console.log(this.state.DoctorRef[i].Spec.includes(this.state.SelectedSpecialisation))
                            
                                     if((this.state.DoctorRef[i].Spec != null ? this.state.DoctorRef[i].Spec.includes(this.state.SelectedSpecialisation) : '')){
 
@@ -167,7 +168,7 @@ OnFilterSpec(){
 
 OnFilterLocation(doc){
 
-
+    // console.log(doc)
     var doc1 = [] 
 
     if(this.state.SelectedLocation != 'All' && this.state.SelectedLocation != 'Select Location'){
@@ -178,12 +179,12 @@ OnFilterLocation(doc){
 
             if(this.state.HealthCenterMapping[i].fld_city == this.state.SelectedLocation){
 
-        
+                // console.log(this.state.HealthCenterMapping[i].fld_doctorid)
                 for(var j = 0 ;j <doc.length;j++){
 
                     if(this.state.HealthCenterMapping[i].fld_doctorid == doc[j].fld_id){
 
-
+                        // console.log(this.state.DoctorRef[j])
                         doc1.push(doc[j])
                        
                     }
@@ -194,7 +195,7 @@ OnFilterLocation(doc){
 
         }
 
-
+     //    console.log(doc)
 
         var resArr = [];
         doc1.forEach(function(item){
@@ -210,7 +211,7 @@ OnFilterLocation(doc){
     }
     else{
 
-      
+        // console.log(doc)
 
         this.setState({
             Doctor : doc
@@ -243,7 +244,7 @@ OnFilterLocation(doc){
                                     value={this.state.HeaderText}
                                     onChange={(text)=>{
 
-                            
+                                        // console.log(text.target.value)
                                                 this.setState({
                                                 
                                              Doctor : text.target.value == '' ? this.state.DoctorRef :this.state.DoctorRef.filter(item  => 
@@ -252,13 +253,15 @@ OnFilterLocation(doc){
                                         
                            
                                             if ( item.fld_name.toLowerCase().includes(text.target.value.toLowerCase())  
-                                                
+                                                // ||  item.fld_specialization.toLowerCase().includes(text.target.value.toLowerCase()) 
+                                                // || item.Spec != undefined && item.Spec !== null ? item.Spec.includes(text.target.value.toLowerCase()) : ''
+                                                // || item.HealthCenterCity != undefined ? item.HealthCenterCity.toLowerCase().includes(text.target.value.toLowerCase()) : ''
                                             
                                             ){
                                               return true
                                             }
                                           
-                                   
+                                            //   // item.oyo_id.includes(text.toUpperCase())
                                             }
                                             )
                                                 })
@@ -266,7 +269,13 @@ OnFilterLocation(doc){
                                               }}
                                     name="q" id="q" placeholder="Search by Doctor Name..." required/>
                                     
+                                    {/* <button
                                     
+                                    class="btn" type="submit"><i class="icon-magnifier"></i></button> */}
+                                 
+                                    {/* <button class="btn" type="submit"><i class="icon-magnifier"
+                                    // onClick={this.Results.bind(this)}
+                                    ></i></button> */}
                                 </div>
                             </div>
                             <div class="col-md-6 " >
@@ -280,7 +289,7 @@ OnFilterLocation(doc){
                             <select 
                             value={this.state.SelectedSpecialisation}
                             onChange={(spec)=>{
-                               
+                                // doc = []
 
                                 this.setState({
                                     SelectedSpecialisation : spec.target.value
@@ -290,7 +299,77 @@ OnFilterLocation(doc){
 
                              
 
-                            
+                            //     if(spec.target.value != 'All' && spec.target.value !=  'Select Specialization'){
+
+                                
+                                
+                            //     for(var i = 0 ;i <Object.keys(this.state.DoctorRef).length;i++){
+
+                            //         // console.log(spec.target.value )
+                            //         if((this.state.DoctorRef[i].Spec != null ? this.state.DoctorRef[i].Spec.includes(spec.target.value) : '')){
+
+              
+                            //                 doc.push(this.state.DoctorRef[i])
+                                    
+                    
+                            //             // console.log(this.state.HealthCenterMapping[i].fld_doctorid)
+                            //             // for(var j = 0 ;j < this.state.DoctorRef[i].Spec != undefined ? Object.keys(this.state.DoctorRef[i].Spec.split(',')).length : 0;j++){
+
+                            //             //     if(this.state.DoctorRef[i].Spec[j] == spec.target.value ){
+
+                            //             //         // console.log(this.state.DoctorRef[j])
+                            //             //         doc.push(this.state.DoctorRef[j])
+                                               
+                            //             //     }
+
+                            //             // }
+
+                            //         }
+
+                            //     }
+
+
+                            //     if(this.state.SelectedLocation != 'All' && this.state.SelectedLocation != 'Select Location'){
+
+
+                            //         for(var j = 0 ;j <Object.keys(this.state.HealthCenterMapping).length;j++){
+
+
+                            //             if(this.state.HealthCenterMapping[j].fld_city == this.state.SelectedLocation){
+
+
+                            //                 for(var k = 0 ;k <doc.length;k++){
+
+                            //                     if(this.state.HealthCenterMapping[j].fld_doctorid == doc[k].fld_id){
+         
+                            //                         // console.log(this.state.DoctorRef[j])
+                            //                         doc.push(doc[k])
+
+                            //                         this.setState({
+                            //                             Doctor : doc
+                            //                         })
+                                                   
+                            //                     }
+         
+                            //                 }
+
+                            //             }
+
+
+                            //         }
+
+                            //     }else{
+                            //         this.setState({
+                            //             Doctor : doc
+                            //         })
+                            //     }
+                               
+                            // }
+                            // else{
+                            //     this.setState({
+                            //         Doctor : this.state.DoctorRef
+                            //     })  
+                            // }
                                
 
                             }}
@@ -316,7 +395,7 @@ OnFilterLocation(doc){
                        <select 
                        value={this.state.SelectedLocation}
                        onChange={(city)=>{
-          
+                        //    doc = []
                            this.setState({
                                SelectedLocation : city.target.value
                            },()=>{
@@ -324,7 +403,50 @@ OnFilterLocation(doc){
                            })
                            
 
-                   
+                    //        if(city.target.value != 'All' && city.target.value != 'Select Location'){
+
+                           
+                           
+                    //        for(var i = 0 ;i <Object.keys(this.state.HealthCenterMapping).length;i++){
+
+                    //            if(this.state.HealthCenterMapping[i].fld_city == city.target.value){
+
+                    //                // console.log(this.state.HealthCenterMapping[i].fld_doctorid)
+                    //                for(var j = 0 ;j <Object.keys(this.state.DoctorRef).length;j++){
+
+                    //                    if(this.state.HealthCenterMapping[i].fld_doctorid == this.state.DoctorRef[j].fld_id){
+
+                    //                        // console.log(this.state.DoctorRef[j])
+                    //                        doc.push(this.state.DoctorRef[j])
+                                          
+                    //                    }
+
+                    //                }
+
+                    //            }
+
+                    //        }
+
+                    //     //    console.log(doc)
+
+                    //        var resArr = [];
+                    //        doc.forEach(function(item){
+                    //        var i = resArr.findIndex(x => x.fld_id == item.fld_id);
+                    //        if(i <= -1){
+                    //          resArr.push(item);
+                    //        }
+                    //      });
+
+                    //        this.setState({
+                    //            Doctor : resArr
+                    //        })
+                    //    }
+                    //    else{
+                    //        this.setState({
+                    //            Doctor : this.state.DoctorRef
+                    //        })  
+                    //    }
+                          
 
                        }}
                        >
@@ -388,7 +510,7 @@ OnFilterLocation(doc){
                                     <div class="clearfix"></div>
                                     {doc.fld_overallexperience == 0 ? <p style={{    height: '20px'}}></p> : 
                               <p style={{    height: '20px'}}>Overall {doc.fld_overallexperience} years of experience 
-                            
+                              {/* <br/> {doc.fld_diabetesexperience == 0 ? '' : doc.fld_diabetesexperience+' years of Diabetic experience' */}
                                 </p>
                               } 
                                    
@@ -400,7 +522,17 @@ OnFilterLocation(doc){
                                     {doc.HealthCenterCity == null ?  <br/> :  <p class="doctors-location"><i class="fas fa-map-marker-alt"></i> {doc.HealthCenterCity == null ? '' : doc.HealthCenterCity}</p>}
                                     <a  class="btn view-profile-btn" onClick={()=>{this.onViewDetails(doc)}}>View Profile</a>
                                 </div>
-                                
+                                {/* <div class="col-md-4 doctors-details doctor-contact-details"> */}
+                                    {/* <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-envelope"></i> {doc.fld_email}</a></p> */}
+                                    {/* <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> {doc.fld_mobile}</a></p> */}
+                                    {/* <ul class="doctor-social-media">
+                                    {(doc.fld_facebooklink == null || doc.fld_facebooklink == '') ? '' : <li><a href={doc.fld_facebooklink}><i class="icon-facebook"></i></a></li> } 
+                                    {(doc.fld_instagramlink == null || doc.fld_instagramlink == '') ? '' : <li><a href={doc.fld_instagramlink}><i class="icon-instagram"></i></a></li> }  
+                                    {(doc.fld_twitterlink == null || doc.fld_twitterlink == '') ? '' :  <li><a href={doc.fld_twitterlink}><i class="icon-twitter"></i></a></li> }  
+                                    {(doc.fld_linkedinlink == null || doc.fld_linkedinlink == '') ? '' :  <li><a href={doc.fld_linkedinlink}><i class="icon-linkedin"></i></a></li>}  
+                            
+                                    </ul> */}
+                                {/* </div> */}
                             </div>
                        </div>
                    </div>

@@ -35,6 +35,7 @@ class Nutritionist extends React.Component
 
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
+            //  #507dc0'
           });
       
           Notiflix.Loading.Dots('Please wait...');
@@ -47,6 +48,7 @@ class Nutritionist extends React.Component
               status: results.status
           })
       ).then(res => {
+        //   console.log(res.data.data)
     
      
     
@@ -75,6 +77,7 @@ class Nutritionist extends React.Component
   ).then(res => {
 
     const uniqueArr = [... new Set(res.data.data.map(un => un.fld_city))]
+    // console.log(res.data.data)
     this.setState({
         HealthCenterCity : uniqueArr,
         HealthCenterMapping : res.data.data
@@ -91,6 +94,7 @@ class Nutritionist extends React.Component
 
 
     handleKeyDown = (e) => {
+        // e.target.blur(); 
         if(e.keyCode === 40) { //up or down
             document.activeElement.blur();
             return false;
@@ -112,6 +116,7 @@ class Nutritionist extends React.Component
                    <div class="container ad-banner">
           <div id="myTarget"></div>
         </div>
+                {/* <main class="main"> */}
             <div class="container doctors-section">
             <h3 class="section-title custom-size" style={{color : '000',marginBottom : '30px'}}>Find a Nutritionist / Dietician Near You</h3>
             <div >
@@ -132,6 +137,7 @@ class Nutritionist extends React.Component
                                     value={this.state.HeaderText}
                                     onChange={(text)=>{
 
+                                        // console.log(text.target.value)
                                                 this.setState({
                                                 
                                              Doctor : text.target.value == '' ? this.state.DoctorRef :this.state.DoctorRef.filter(item  => 
@@ -140,11 +146,15 @@ class Nutritionist extends React.Component
                                         
                            
                                             if ( item.fld_name.toLowerCase().includes(text.target.value.toLowerCase())  
+                                                // ||  item.fld_specialization.toLowerCase().includes(text.target.value.toLowerCase()) 
+                                                // || item.Spec != undefined && item.Spec !== null ? item.Spec.includes(text.target.value.toLowerCase()) : ''
+                                                // || item.HealthCenterCity != undefined ? item.HealthCenterCity.toLowerCase().includes(text.target.value.toLowerCase()) : ''
                                             
                                             ){
                                               return true
                                             }
                                           
+                                            //   // item.oyo_id.includes(text.toUpperCase())
                                             }
                                             )
                                                 })
@@ -152,7 +162,11 @@ class Nutritionist extends React.Component
                                               }}
                                     name="q" id="q" placeholder="Search by Nutritionist / Dietitian Name..." required/>
                                     
-                                   
+                                    {/* <button class="btn" type="submit"><i class="icon-magnifier"></i></button> */}
+                                 
+                                    {/* <button class="btn" type="submit"><i class="icon-magnifier"
+                                    // onClick={this.Results.bind(this)}
+                                    ></i></button> */}
                                 </div>
                             </div>
                             <div class="col-md-4" >
@@ -177,11 +191,14 @@ class Nutritionist extends React.Component
 
                                if(this.state.HealthCenterMapping[i].fld_city == city.target.value){
 
+                                   // console.log(this.state.HealthCenterMapping[i].fld_doctorid)
                                    for(var j = 0 ;j <Object.keys(this.state.DoctorRef).length;j++){
 
+                                    // console.log(this.state.HealthCenterMapping[i])
 
                                        if(this.state.HealthCenterMapping[i].fld_dietitianid == this.state.DoctorRef[j].fld_id){
 
+                                        //    console.log(this.state.DoctorRef[j])
                                            doc.push(this.state.DoctorRef[j])
 
                                           
@@ -268,6 +285,8 @@ class Nutritionist extends React.Component
                                     <p>{doc1}</p>
                               ))}
                                     </div>
+                                    {/* <div class="clearfix"></div> */}
+                                  {/* <p >{Parser(('<p>'+doc.fld_medicalassociation+'</p>').replace(/font-family/g, '').replace(/color/g, ''))}</p> */}
                                     <div class="clearfix"></div>
                                     
                                     {doc.fld_overallexperience == 0 ? <p style={{    height: '20px'}}></p> : 
@@ -282,7 +301,17 @@ class Nutritionist extends React.Component
                                    onClick={()=>{this.onViewDetails(doc)}}
                                     >View Profile</a>
                                 </div>
-                             
+                                {/* <div class="col-md-4 doctors-details doctor-contact-details">
+                                    <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-envelope"></i> {doc.fld_email}</a></p>
+                                    <p><a href="#" style={{textTransform:"lowercase"}}><i class="fas fa-phone-volume"></i> +91 {doc.fld_mobile}</a></p>
+                                    <ul class="doctor-social-media">
+                                    {(doc.fld_facebooklink == null || doc.fld_facebooklink == '') ? '' : <li ><a href=""><i class="icon-facebook"></i></a></li> }
+                                        {(doc.fld_linkedinlink == null || doc.fld_linkedinlink == '') ? '' :   <li ><a href=""><i class="icon-linkedin"></i></a></li> }
+                                      {(doc.fld_twitterlink == null || doc.fld_twitterlink == '') ? '' :  <li><a href=""><i class="icon-twitter"></i></a></li> }
+                                      
+                                    
+                                    </ul>
+                                </div> */}
                             </div>
                        </div>
                    </div>
@@ -297,6 +326,7 @@ class Nutritionist extends React.Component
       
       </div>
       </div>
+                   {/* </main> */}
                    <div class="container">
                        <div class="container-box container-box-lg info-boxes ">
                                         <div class="row">

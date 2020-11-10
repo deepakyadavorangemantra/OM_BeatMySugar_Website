@@ -2,36 +2,36 @@ import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import App from "./App";
-// import AllopathyDetails from "./AllopathyDetails";
-// import AllopathyListing from "./AllopathyListing";
-// import AyurvedaListing from "./AyurvedaListing";
-// import AyurvedaDetails from "./AyurvedaDetails";
-// import BookDetails from "./BookDetails";
-// import BookListing from "./BookListing";
+import AllopathyDetails from "./AllopathyDetails";
+import AllopathyListing from "./AllopathyListing";
+import AyurvedaListing from "./AyurvedaListing";
+import AyurvedaDetails from "./AyurvedaDetails";
+import BookDetails from "./BookDetails";
+import BookListing from "./BookListing";
 import Checkout from "./Checkout";
-// import Cart from "./Cart";
-// import DeviceDetails from "./DeviceDetails";
+import Cart from "./Cart";
+import DeviceDetails from "./DeviceDetails";
 import DoctorDetails from "./DoctorDetails";
 import DoctorListing from "./DoctorListing";
 import FootcareListing from "./FootcareListing";
 import FootcareDetails from "./FootcareDetails";
-// import HealthcareDeviceListing from "./HealthcareDeviceListing";
-// import LabDetails from "./LabDetais";
+import HealthcareDeviceListing from "./HealthcareDeviceListing";
+import LabDetails from "./LabDetais";
 import Orderplace from "./Orderplace";
-// import Orders from "./Orders";
+import Orders from "./Orders";
 import Nutritionist from "./NutritionistListing";
-// import Yoga from "./Yoga";
-// import LabListing from "./LabListing";
+import Yoga from "./Yoga";
+import LabListing from "./LabListing";
 import NutritionistDetails from "./NutritionistDetails";
 import Login from "./Login";
 import Register from "./RegistrationPage";
-// import Profile from "./Profile";
+import Profile from "./Profile";
 import Logout from "./Logout";
 
 import Newaddress from "./Newaddress";
-// import Prescription from "./Prescription";
-// import PrescriptionForm from "./PrescriptionForm";
-// import PrescriptionAddress from "./PrescriptionAddress";
+import Prescription from "./Prescription";
+import PrescriptionForm from "./PrescriptionForm";
+import PrescriptionAddress from "./PrescriptionAddress";
 import FoodListing from "./FoodListing";
 import FoodDetails from "./FoodDetails";
 import Contact from "./Contact";
@@ -47,12 +47,12 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import Disclaimer from "./Disclaimer";
 import TermsCondition from "./TermsCondition";
 import Careers from "./Careers";
-// import AboutUsDummy from "./AboutUsDummy";
-// import CareersDummy from "./CareersDummy";
-// import TermsDummy from "./TermsDummy";
-// import DisclaimerDummy from "./DisclaimerDummy";
-// import PrivacyPolicyDummy from "./PrivacyPolicyDummy";
-// import ContactUsDummy from "./ContactUsDummy";
+import AboutUsDummy from "./AboutUsDummy";
+import CareersDummy from "./CareersDummy";
+import TermsDummy from "./TermsDummy";
+import DisclaimerDummy from "./DisclaimerDummy";
+import PrivacyPolicyDummy from "./PrivacyPolicyDummy";
+import ContactUsDummy from "./ContactUsDummy";
 import MobileVerification from "./MobileVerification";
 import Contributors from "./Contributors";
 import ContributorDetails from "./ContributorDetails";
@@ -68,9 +68,9 @@ import Addressbook from "./Addressbook";
 import Editaddress from "./Editaddress";
 import Orderhistory from "./Orderhistory";
 import Wishlist from "./Wishlist";
-// import Trackorder from "./Trackorder";
+import Trackorder from "./Trackorder";
 import Returnorder from "./Returnorder";
-// import Returnorderpayment from "./Returnorderpayment";
+import Returnorderpayment from "./Returnorderpayment";
 import Diabeticprofile from "./Diabeticprofile";
 import PaymentSuccess from "./PaymentSuccess";
 import PaymentFail from "./PaymentFail";
@@ -81,9 +81,12 @@ import Shippingpolicy from './Shippingpolicy';
 import AlterCustomerAddress from "./AlterCustomerAddress";
 import Tabs from './Tabs';
 import PaymentProcess from "./PaymentProcess";
-// import OrderProcess from "./OrderProcess";
+import OrderProcess from "./OrderProcess";
 import VerifyEmailSuccess from "./VerifyEmailSuccess";
 import Termsmarketplace from './Termsmarketplace';
+import OrderSuccess from "./OrderSuccess";
+import NotFound from "./NotFound";
+import DiwalioffersListing from "./DiwalioffersListing";
 
 class Routing extends Component {
   render() {
@@ -92,30 +95,31 @@ class Routing extends Component {
         <div>
           <Route exact path={"/"} component={App} />
 
-          {/* <Route
+          <Route
             exact
             path={"/allopathy/:allopathyid"}
             component={AllopathyDetails}
-          /> */}
+          />
 
-          {/* <Route exact path={"/allopathy"} component={AllopathyListing} /> */}
+          <Route exact path={"/allopathy"} component={AllopathyListing} />
 
-          {/* <Route exact path={"/ayurveda"} component={AyurvedaListing} /> */}
+          <Route exact path={"/ayurveda"} component={AyurvedaListing} />
 
-          {/* <Route
+          <Route
             exact
             path={"/ayurveda/:ayurvedaid"}
             component={AyurvedaDetails}
-          /> */}
+          />
 
-          {/* <Route exact path={"/book/:bookid"} component={BookDetails} /> */}
+          <Route exact path={"/book/:bookid"} component={BookDetails} />
 
-          {/* <Route exact path={"/book"} component={BookListing} /> */}
+          <Route exact path={"/book"} component={BookListing} />
 
+          {/* <Route exact path={"/cart"} component={Cart} /> */}
 
           <Route exact path={"/selectaddress"} component={Checkout} />
 
-          {/* <Route exact path={"/device/:deviceid"} component={DeviceDetails} /> */}
+          <Route exact path={"/device/:deviceid"} component={DeviceDetails} />
 
           <Route exact path={"/doctor/:doctorid"} component={DoctorDetails} />
 
@@ -129,19 +133,19 @@ class Routing extends Component {
 
           <Route exact path={"/socks/:socksid/:varid/:socksname"} component={SocksDetails} />
 
-          {/* <Route exact path={"/device"} component={HealthcareDeviceListing} /> */}
+          <Route exact path={"/device"} component={HealthcareDeviceListing} />
 
-          {/* <Route exact path={"/lab/:labid"} component={LabDetails} /> */}
+          <Route exact path={"/lab/:labid"} component={LabDetails} />
 
           <Route exact path={"/placeorder"} component={Orderplace} />
 
-          {/* <Route exact path={"/Orders"} component={Orders} /> */}
+          <Route exact path={"/Orders"} component={Orders} />
 
           <Route exact path={"/dietitian"} component={Nutritionist} />
 
-          {/* <Route exact path={"/yoga"} component={Yoga} /> */}
+          <Route exact path={"/yoga"} component={Yoga} />
 
-          {/* <Route exact path={"/lab"} component={LabListing} /> */}
+          <Route exact path={"/lab"} component={LabListing} />
 
           <Route
             exact
@@ -153,25 +157,25 @@ class Routing extends Component {
 
           <Route exact path={"/Register"} component={Register} />
 
-          {/* <Route exact path={"/profile"} component={Profile} /> */}
+          <Route exact path={"/profile"} component={Profile} />
 
           <Route exact path={"/Logout"} component={Logout} />
 
           <Route exact path={"/newaddress"} component={Newaddress} />
 
-          {/* <Route exact path={"/personalinformation"} component={Prescription} /> */}
+          <Route exact path={"/personalinformation"} component={Prescription} />
 
-          {/* <Route
+          <Route
             exact
             path={"/uploadprescription"}
             component={PrescriptionForm}
-          /> */}
+          />
 
-          {/* <Route
+          <Route
             exact
             path={"/PrescriptionAddress"}
             component={PrescriptionAddress}
-          /> */}
+          />
 
           <Route exact path={"/food/:id/:category"} component={FoodListing} />
 
@@ -179,6 +183,7 @@ class Routing extends Component {
 
           <Route exact path={"/healthknowledge"} component={Blog} />
 
+          {/* <Route exact path={'/healthknowledge/:category/:blogid'} component={BlogInner}/> */}
 
           <Route
             exact
@@ -186,6 +191,7 @@ class Routing extends Component {
             component={BlogInner}
           />
 
+          {/* <Route exact path={'/recoverpassword'} component={ResetPassword}/> */}
 
           <Route
             exact
@@ -195,6 +201,7 @@ class Routing extends Component {
 
           <Route exact path={"/results/:title"} component={Results} />
 
+          {/* <Route exact path={'/contact'} component={Contact}/> */}
 
           <Route
             exact
@@ -225,17 +232,17 @@ class Routing extends Component {
 
           <Route exact path={"/careers/:id/:title"} component={Careers} />
 
-          {/* <Route exact path={"/aboutusdummy"} component={AboutUsDummy} /> */}
+          <Route exact path={"/aboutusdummy"} component={AboutUsDummy} />
 
-          {/* <Route exact path={"/careersdummy"} component={CareersDummy} /> */}
-          {/* <Route exact path={"/termsdummy"} component={TermsDummy} /> */}
-          {/* <Route exact path={"/disclaimerdummy"} component={DisclaimerDummy} /> */}
-          {/* <Route
+          <Route exact path={"/careersdummy"} component={CareersDummy} />
+          <Route exact path={"/termsdummy"} component={TermsDummy} />
+          <Route exact path={"/disclaimerdummy"} component={DisclaimerDummy} />
+          <Route
             exact
             path={"/privacypolicydummy"}
             component={PrivacyPolicyDummy}
-          /> */}
-          {/* <Route exact path={"/contactusdummy"} component={ContactUsDummy} /> */}
+          />
+          <Route exact path={"/contactusdummy"} component={ContactUsDummy} />
           <Route
             exact
             path={"/contributors/:contributorid"}
@@ -306,11 +313,11 @@ class Routing extends Component {
             component={Wishlist}
           />
 
-{/* <Route
+<Route
             exact
             path={"/trackorder"}
             component={Trackorder}
-          /> */}
+          />
 
 <Route
             exact
@@ -318,11 +325,11 @@ class Routing extends Component {
             component={Returnorder}
           />
           
-{/* <Route
+<Route
             exact
             path={"/returnorderpayment"}
             component={Returnorderpayment}
-          /> */}
+          />
 
 <Route
             exact
@@ -350,9 +357,11 @@ class Routing extends Component {
 
 <Route exact path={"/paymentsuccess/:txnid"} component={PaymentSuccess}/>
 
+<Route exact path={"/ordersuccess/:txnid"} component={OrderSuccess}/>
+
 <Route exact path={"/paymentprocess/:txnid"} component={PaymentProcess}/>
 
-{/* <Route exact path={"/orderprocess/:txnid"} component={OrderProcess}/> */}
+<Route exact path={"/orderprocess/:txnid"} component={OrderProcess}/>
           
 <Route exact path={"/paymentfail/:txnid"} component={PaymentFail} />
 
@@ -366,8 +375,25 @@ class Routing extends Component {
             component={Termsmarketplace}
           />
 
-          
+
+
+<Route
+            exact
+            path={"/pagenotfound"}
+            component={NotFound}
+          />
+
+          {/* <Route
+            exact
+            path={"/ContributorDetails"}
+            component={ContributorDetails}
+          /> */}
         </div>
+        <Route
+            exact
+            path={"/festive-offers"}
+            component={DiwalioffersListing}
+          />
       </BrowserRouter>
     );
   }

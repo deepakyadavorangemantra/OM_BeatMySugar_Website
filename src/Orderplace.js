@@ -7,7 +7,10 @@ import Notiflix from "notiflix-react";
 import GetApiCall from "./GetApi";
 import moment from "moment";
 
-
+// const payu = require('payu-sdk')({
+//   key: this.state.MerKey,
+//   salt: this.state.MerSalt, // should be on server side only
+// })
 
 class Orderplace extends React.Component {
   constructor(props) {
@@ -57,7 +60,9 @@ class Orderplace extends React.Component {
     var crdt = [];
     for (var i = 0; i < Object.keys(cartdt).length; i++) {
       for (var j = 0; j < Object.keys(cartdt[i]).length; j++) {
+        // subt = subt + this.state.Cart[i][j].fld_discountprice*this.state.Cart[i][j].fld_quantity
         crdt.push(cartdt[i][j]);
+        // console.log(crdt)
         this.setState({
           CartData: crdt,
         });
@@ -70,6 +75,7 @@ class Orderplace extends React.Component {
     this.setState({
       CustomerLoginData: login,
     });
+    // console.log(login)
 
     PostApiCall.postRequest(
       {
@@ -80,16 +86,18 @@ class Orderplace extends React.Component {
       },
       "AddTransactionLog"
     ).then((results) =>
+      // const objs = JSON.parse(result._bodyText)
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
           this.setState({
             TxnId: JSON.parse(JSON.stringify(obj.data[0])).Txnid,
           });
 
-           const payu = require('payu-sdk')({
+          const payu = require("payu-sdk")({
             key: this.state.MerKey,
             salt: this.state.MerSalt, // should be on server side only
-          })
+          });
+          //  var payu;
 
           const hash = payu.hasher.generateHash({
             txnid: JSON.parse(JSON.stringify(obj.data[0])).Txnid,
@@ -103,6 +111,7 @@ class Orderplace extends React.Component {
               CustomerHash: hash,
             },
             () => {
+              // Notiflix.Loading.Remove();
               this.PlaceOrder();
             }
           );
@@ -127,7 +136,7 @@ class Orderplace extends React.Component {
         orderdate: moment().format("lll"),
         ordervalue: parseFloat(this.state.SummaryData.SubTotalAmt).toFixed(2),
         netcost: parseFloat(this.state.SummaryData.TotalAmt).toFixed(2),
-        paymentmode: this.state.SummaryData.CodAmt == 0 ? "Online" : "COD",
+        paymentmode: this.state.SummaryData.PayMode,
         numofitems: this.state.CartData.length,
         customerid: login.fld_userid,
         billingaddress: this.state.BillingAddress.fld_address,
@@ -153,14 +162,64 @@ class Orderplace extends React.Component {
         billingpincode: this.state.BillingAddress.fld_pincode,
         billingmobile: this.state.BillingAddress.fld_mobile,
         txnid: this.state.TxnId,
-        offercode : this.state.SummaryData.OfferCode,
-        yousave : this.state.SummaryData.YouSaved
+        offercode: this.state.SummaryData.OfferCode,
+        yousave: this.state.SummaryData.YouSaved,
       },
       "AddOrder"
     ).then((results) =>
+      // const objs = JSON.parse(result._bodyText)
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
-          
+          // PostApiCall.postRequest(
+          //   {
+          //     ordernumber: JSON.parse(JSON.stringify(obj.data[0])).OrderNumber,
+          //     offeramount: this.state.SummaryData.OfferAmt,
+          //     offerpercent: this.state.SummaryData.OfferPercent,
+          //     shippingcharges: this.state.SummaryData.ShippngAmt,
+          //     coddeliverycharges: this.state.SummaryData.CodAmt,
+          //     orderdate: moment().format("ll"),
+          //     ordervalue: parseFloat(
+          //       this.state.SummaryData.SubTotalAmt
+          //     ).toFixed(2),
+          //     netcost: parseFloat(this.state.SummaryData.TotalAmt).toFixed(2),
+          //     paymentmode:
+          //       this.state.SummaryData.CodAmt == 0 ? "Online" : "COD",
+          //     numofitems: this.state.CartData.length,
+          //     customeremail: login.fld_email,
+          //     customername: login.fld_name,
+          //     customermobile: login.fld_mobile,
+          //     billingaddress: this.state.BillingAddress.fld_address,
+          //     deliveryaddress: this.state.ShippingAddress.fld_address,
+          //     shippingname: this.state.ShippingAddress.fld_name,
+          //     shippingstreet: this.state.ShippingAddress.fld_street,
+          //     shippinglandmark: this.state.ShippingAddress.fld_landmark,
+          //     shippingcountry: this.state.ShippingAddress.fld_country,
+          //     shippingstate: this.state.ShippingAddress.fld_state,
+          //     shippingcity: this.state.ShippingAddress.fld_city,
+          //     shippingpincode: this.state.ShippingAddress.fld_pincode,
+          //     shippingmobile: this.state.ShippingAddress.fld_mobile,
+          //     billingname: this.state.BillingAddress.fld_name,
+          //     billingstreet: this.state.BillingAddress.fld_street,
+          //     billinglandmark: this.state.BillingAddress.fld_landmark,
+          //     billingcountry: this.state.BillingAddress.fld_country,
+          //     billingstate: this.state.BillingAddress.fld_state,
+          //     billingcity: this.state.BillingAddress.fld_city,
+          //     billingpincode: this.state.BillingAddress.fld_pincode,
+          //     billingmobile: this.state.BillingAddress.fld_mobile,
+          //     orderdata: this.state.CartData,
+          //   },
+          //   "CustomerOrderMailer"
+          // );
+
+          // fetch(
+          //   "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
+          //     login.fld_mobile +
+          //     "&msg=Hi " +
+          //     login.fld_name +
+          //     ", Your Order - " +
+          //     JSON.parse(JSON.stringify(obj.data[0])).OrderNumber +
+          //     " has been successfully placed. A Team BeatMySugar"
+          // ).then((response) => response.json());
 
           for (var i = 0; i < this.state.CartData.length; i++) {
             PostApiCall.postRequest(
@@ -174,11 +233,15 @@ class Orderplace extends React.Component {
                 updated_on: moment().format("lll"),
                 updated_by: login.fld_userid,
                 status: "Placed",
-                mrp : this.state.CartData[i].fld_price,
-                vendorsellingprice : this.state.CartData[i].fld_vendorsellingprice == null ? 0 : this.state.CartData[i].fld_vendorsellingprice
+                mrp: this.state.CartData[i].fld_price,
+                vendorsellingprice:
+                  this.state.CartData[i].fld_vendorsellingprice == null
+                    ? 0
+                    : this.state.CartData[i].fld_vendorsellingprice,
               },
               "AddOrderDetail"
             ).then((results1) =>
+              // const objs = JSON.parse(result._bodyText)
               results1.json().then((obj1) => {
                 if (results1.status == 200 || results1.status == 201) {
                   cn = cn + 1;
@@ -186,6 +249,8 @@ class Orderplace extends React.Component {
                   if (cn == this.state.CartData.length) {
                     Notiflix.Loading.Remove();
 
+                    // Notiflix.Notify.Info("Your Order has been Placed!");
+                    // window.location.href = "/";
                   }
                 } else {
                   cn = cn + 1;
@@ -194,6 +259,7 @@ class Orderplace extends React.Component {
             );
           }
         } else {
+          // Notiflix.Notify.Failure("Something went wrong, try again later.");
         }
       })
     );
@@ -206,7 +272,7 @@ class Orderplace extends React.Component {
         <div class="container checkout-section">
           <div class="container-box">
             <ul class="checkout-progress-bar mt-2">
-              <li>
+              <li class="completed">
                 <span>Shipping</span>
               </li>
               <li class="active">
@@ -318,7 +384,13 @@ class Orderplace extends React.Component {
                     >
                       {moment().format("ll")}
                     </td>
-          
+                    {/* <td colspan="3"
+     style={{textAlign: 'left',
+       paddingLeft: '1%',
+       paddingTop: '1%',
+       paddingBottom: '1%'}}>
+     <span style={{fontWeight: 'bold', fontSize: '16px'}}></span>
+   </td> */}
                     <td
                       colspan="4"
                       style={{
@@ -494,7 +566,9 @@ class Orderplace extends React.Component {
                         paddingBottom: "1%",
                       }}
                     >
-                      <span style={{ fontWeight: "bold" }}>Offer Discount *</span>
+                      <span style={{ fontWeight: "bold" }}>
+                        Offer Discount *
+                      </span>
                     </td>
 
                     <td
@@ -538,7 +612,9 @@ class Orderplace extends React.Component {
                         paddingBottom: "1%",
                       }}
                     >
-                      <span style={{ fontWeight: "bold" }}>Total Amount(INR)</span>
+                      <span style={{ fontWeight: "bold" }}>
+                        Total Amount(INR)
+                      </span>
                     </td>
                   </tr>
 
@@ -570,7 +646,8 @@ class Orderplace extends React.Component {
                         }}
                       >
                         {" "}
-                        {info.fld_name }<br/> <b>{info.fld_brand}</b>
+                        {info.fld_name}
+                        <br /> <b>{info.fld_brand}</b>
                       </td>
                       <td
                         style={{
@@ -588,7 +665,10 @@ class Orderplace extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                        {parseFloat((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))).toFixed(2)}
+                        {parseFloat(
+                          (info.fld_discountprice * info.fld_quantity) /
+                            (1 + info.fld_gstpercent / 100)
+                        ).toFixed(2)}
                       </td>
                       <td
                         style={{
@@ -597,7 +677,15 @@ class Orderplace extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                          {this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : parseFloat(((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100).toFixed(2)}
+                        {this.state.SummaryData.OfferPercent == "" ||
+                        this.state.SummaryData.OfferPercent == null
+                          ? '-'
+                          : '₹'+parseFloat(
+                              (((info.fld_discountprice * info.fld_quantity) /
+                                (1 + info.fld_gstpercent / 100)) *
+                                this.state.SummaryData.OfferPercent) /
+                                100
+                            ).toFixed(2)}
                       </td>
                       <td
                         style={{
@@ -606,7 +694,18 @@ class Orderplace extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                        ₹{parseFloat((((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))-(this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : ((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100)))).toFixed(2)}{" "}
+                        ₹
+                        {parseFloat(
+                          (info.fld_discountprice * info.fld_quantity) /
+                            (1 + info.fld_gstpercent / 100) -
+                            (this.state.SummaryData.OfferPercent == "" ||
+                            this.state.SummaryData.OfferPercent == null
+                              ? 0
+                              : (((info.fld_discountprice * info.fld_quantity) /
+                                  (1 + info.fld_gstpercent / 100)) *
+                                  this.state.SummaryData.OfferPercent) /
+                                100)
+                        ).toFixed(2)}{" "}
                       </td>
                       <td
                         style={{
@@ -626,7 +725,18 @@ class Orderplace extends React.Component {
                         }}
                       >
                         ₹{" "}
-                        {parseFloat((((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))-(this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : ((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100)))*(info.fld_gstpercent/100)).toFixed(2)}
+                        {parseFloat(
+                          ((info.fld_discountprice * info.fld_quantity) /
+                            (1 + info.fld_gstpercent / 100) -
+                            (this.state.SummaryData.OfferPercent == "" ||
+                            this.state.SummaryData.OfferPercent == null
+                              ? 0
+                              : (((info.fld_discountprice * info.fld_quantity) /
+                                  (1 + info.fld_gstpercent / 100)) *
+                                  this.state.SummaryData.OfferPercent) /
+                                100)) *
+                            (info.fld_gstpercent / 100)
+                        ).toFixed(2)}
                       </td>
 
                       <td
@@ -637,12 +747,31 @@ class Orderplace extends React.Component {
                         }}
                       >
                         ₹{" "}
-                        {parseFloat((((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))-(this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : ((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100)))+((((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))-(this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : ((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100)))*(info.fld_gstpercent/100))).toFixed(2)}
+                        {parseFloat(
+                          (info.fld_discountprice * info.fld_quantity) /
+                            (1 + info.fld_gstpercent / 100) -
+                            (this.state.SummaryData.OfferPercent == "" ||
+                            this.state.SummaryData.OfferPercent == null
+                              ? 0
+                              : (((info.fld_discountprice * info.fld_quantity) /
+                                  (1 + info.fld_gstpercent / 100)) *
+                                  this.state.SummaryData.OfferPercent) /
+                                100) +
+                            ((info.fld_discountprice * info.fld_quantity) /
+                              (1 + info.fld_gstpercent / 100) -
+                              (this.state.SummaryData.OfferPercent == "" ||
+                              this.state.SummaryData.OfferPercent == null
+                                ? 0
+                                : (((info.fld_discountprice *
+                                    info.fld_quantity) /
+                                    (1 + info.fld_gstpercent / 100)) *
+                                    this.state.SummaryData.OfferPercent) /
+                                  100)) *
+                              (info.fld_gstpercent / 100)
+                        ).toFixed(2)}
                       </td>
                     </tr>
-                  
                   ))}
-
                 </tbody>
               </table>
               <table
@@ -661,6 +790,7 @@ class Orderplace extends React.Component {
                 cellpadding="0"
               >
                 <tbody>
+                  {/* <tr class="success" ><td colspan="4"><p style={{fontWeight : '700' }}>You have saved a total of ₹500.</p></td></tr> */}
 
                   <tr>
                     <td
@@ -693,9 +823,7 @@ class Orderplace extends React.Component {
                           </a>{" "}
                           for detailed terms and conditions{" "}
                         </li>
-                        <li>
-                          *Promo Code Based Discount
-                        </li>
+                        <li>*Promo Code Based Discount</li>
                       </ul>
                     </td>
                   </tr>
@@ -712,10 +840,40 @@ class Orderplace extends React.Component {
                     </td>
                     <td style={{ textAlign: "right", padding: "1%" }}>
                       &#8377;{" "}
-                      {this.state.CartData.length > 0 ? parseFloat(this.state.CartData.map(info => ((((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))-(this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : ((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100)))+((((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100))-(this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : ((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100)))*(info.fld_gstpercent/100)))).reduce((prev, next) => parseFloat(prev) + parseFloat(next))).toFixed(2) : 0}
+                      {this.state.CartData.length > 0
+                        ? parseFloat(
+                            this.state.CartData.map(
+                              (info) =>
+                                (info.fld_discountprice * info.fld_quantity) /
+                                  (1 + info.fld_gstpercent / 100) -
+                                (this.state.SummaryData.OfferPercent == "" ||
+                                this.state.SummaryData.OfferPercent == null
+                                  ? 0
+                                  : (((info.fld_discountprice *
+                                      info.fld_quantity) /
+                                      (1 + info.fld_gstpercent / 100)) *
+                                      this.state.SummaryData.OfferPercent) /
+                                    100) +
+                                ((info.fld_discountprice * info.fld_quantity) /
+                                  (1 + info.fld_gstpercent / 100) -
+                                  (this.state.SummaryData.OfferPercent == "" ||
+                                  this.state.SummaryData.OfferPercent == null
+                                    ? 0
+                                    : (((info.fld_discountprice *
+                                        info.fld_quantity) /
+                                        (1 + info.fld_gstpercent / 100)) *
+                                        this.state.SummaryData.OfferPercent) /
+                                      100)) *
+                                  (info.fld_gstpercent / 100)
+                            ).reduce(
+                              (prev, next) =>
+                                parseFloat(prev) + parseFloat(next)
+                            )
+                          ).toFixed(2)
+                        : 0}
                     </td>
                   </tr>
-                
+
                   <tr>
                     <td
                       colspan="4"
@@ -768,7 +926,7 @@ class Orderplace extends React.Component {
                       <span style={{ fontWeight: "bold" }}>Payment Mode</span>
                     </td>
                     <td style={{ textAlign: "right", padding: "1%" }}>
-                      {this.state.SummaryData.CodAmt == 0 ? "Online" : "COD"}
+                      {this.state.SummaryData.PayMode}
                     </td>
                   </tr>
                   <tr>
@@ -776,12 +934,24 @@ class Orderplace extends React.Component {
                       colspan="5"
                       style={{ textAlign: "right", padding: "1%" }}
                     >
-                      <span style={{ fontWeight: "bold" }}>Total Discount on Order  <br/>
-                        {this.state.CartData.length > 0 ?  ' ₹'+ parseFloat(this.state.SummaryData.YouSaved).toFixed(2) : 0} </span>
+                      <span style={{ fontWeight: "bold" }}>
+                        Total Discount on Order <br />
+                        {this.state.CartData.length > 0
+                          ? " ₹" +
+                            parseFloat(this.state.SummaryData.YouSaved).toFixed(
+                              2
+                            )
+                          : 0}{" "}
+                      </span>
                     </td>
-                
+                    {/* <td style={{ textAlign: "right", padding: "1%" }}>
+                      &#8377;{" "}
+                      {this.state.CartData.length > 0 ? parseFloat(this.state.CartData.map(info => (this.state.SummaryData.OfferPercent == '' || this.state.SummaryData.OfferPercent == null ? 0 : parseFloat(((info.fld_discountprice*info.fld_quantity)/(1+(info.fld_gstpercent/100)))*this.state.SummaryData.OfferPercent/100).toFixed(2))).reduce((prev, next) => parseFloat(prev) + parseFloat(next))).toFixed(2) : 0}
+
+                    </td> */}
                   </tr>
-              
+                  {/* </td> */}
+                  {/* </tr> */}
                 </tbody>
               </table>
               <table
@@ -831,8 +1001,6 @@ class Orderplace extends React.Component {
                   </tr>
                 </tbody>
               </table>
-         
-         
             </div>
             <form
               action="https://secure.payu.in/_payment"
@@ -846,22 +1014,19 @@ class Orderplace extends React.Component {
                   type="hidden"
                   id="surl"
                   name="surl"
-                  // value="https://api.beatmysugar.com/BackofficeApi/Response"
-                  value="http://localhost:8080/BackofficeApi/Response"
+                  value="https://api.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
                   id="furl"
                   name="furl"
-                  // value="https://api.beatmysugar.com/BackofficeApi/Response"
-                  value="http://localhost:8080/BackofficeApi/Response"
+                  value="https://api.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
                   id="curl"
                   name="curl"
-                  // value="https://api.beatmysugar.com/BackofficeApi/Response"
-                  value="http://localhost:8080/BackofficeApi/Response"
+                  value="https://api.beatmysugar.com/BackofficeApi/Response"
                 />
                 <input
                   type="hidden"
@@ -976,7 +1141,12 @@ class Orderplace extends React.Component {
                   </span>
                 </div>
 
-               
+                {/* <div class="dv">
+      <span class="text"><label>PG:</label></span>
+      <span>
+
+    <input type="text" id="Pg" name="Pg" placeholder="PG" value="CC" /></span>
+      </div> */}
 
                 <div class="dv">
                   <span class="text">
@@ -999,9 +1169,11 @@ class Orderplace extends React.Component {
                   width: "70%",
                   margin: "auto",
                   marginTop: "50px",
-                  display: this.state.SummaryData.CodAmt == 0 ? "" : "none",
+                  display:
+                    this.state.SummaryData.PayMode == "Online" ? "" : "none",
                 }}
                 class="btn btn-block btn-sm btn-primary"
+                // onClick={this.PlaceOrder.bind(this)}
               >
                 Pay & Place Order
               </button>
@@ -1012,10 +1184,13 @@ class Orderplace extends React.Component {
                 width: "70%",
                 margin: "auto",
                 marginTop: "50px",
-                display: this.state.SummaryData.CodAmt != 0 ? "" : "none",
+                display: this.state.SummaryData.PayMode == "COD" ? "" : "none",
               }}
               class="btn btn-block btn-sm btn-primary"
-              onClick={this.PlaceOrder.bind(this)}
+              // onClick={this.PlaceOrder.bind(this)}
+              onClick={() => {
+                window.location.href = `/paymentprocess/${this.state.TxnId}`;
+              }}
             >
               Place Order
             </button>

@@ -33,7 +33,7 @@ componentDidMount(){
                                           
                                           },"AddUserLoginSession").then((results) => 
                                           
-                     
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then(obj => {
                                 
                                 

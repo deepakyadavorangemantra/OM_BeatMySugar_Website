@@ -82,6 +82,7 @@ class Newaddress extends React.Component
                       },
                       "GetCity"
                     ).then(results =>
+                      // const objs = JSON.parse(result._bodyText)
                       results.json().then(objcity => {
                         if (results.status == 200 || results.status == 201) {
                      
@@ -110,7 +111,10 @@ class Newaddress extends React.Component
         this.setState({
           CountryId: country.target.value
         });
-        
+        // console.log(this.props.masterDetails.CountryData[country.target.value - 1]);
+        // this.props.countryDiag(
+        //   this.state.CountryData[country.target.value - 1].label
+        // );
         this.setState({
             Country : this.state.CountryData[country.target.value - 1].label
         })
@@ -123,8 +127,10 @@ class Newaddress extends React.Component
           },
           "GetState"
         ).then(results =>
+          // const objs = JSON.parse(result._bodyText)
           results.json().then(obj => {
             if (results.status == 200 || results.status == 201) {
+            //   this.props.stateDataDiag(obj.data);
               this.setState({
                   StateData : obj.data
               })
@@ -135,9 +141,11 @@ class Newaddress extends React.Component
                 },
                 "GetCity"
               ).then(results =>
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objcity => {
                   if (results.status == 200 || results.status == 201) {
-                    
+                    // this.props.cityDataDiag(objcity.data);
+                    // this.props.stateDiag(obj.data[0].label);
                     this.setState({ City: objcity.data[0].value ,
                     State : obj.data[0].label,
                     CityData : objcity.data
@@ -164,6 +172,7 @@ class Newaddress extends React.Component
           if (
             this.state.StateData[i].value == state.target.value
           ) {
+            // this.props.stateDiag(this.props.diagnosticReducer.StateData[i].label);
             this.setState({
                 State : this.state.StateData[i].label
             })
@@ -178,11 +187,14 @@ class Newaddress extends React.Component
           },
           "GetCity"
         ).then(results =>
+          // const objs = JSON.parse(result._bodyText)
           results.json().then(obj => {
             if (results.status == 200 || results.status == 201) {
+            //   this.props.cityDataDiag(obj.data);
             this.setState({
                 CityData : obj.data,
                 City : obj.data[0].label,
+                // CityId : obj.data[0].value
             })
       
 
@@ -192,6 +204,7 @@ class Newaddress extends React.Component
         );
       }
       onChangeCity(city) {
+        // this.props.setstaffpermanentcity(city.target.value);
         this.setState({
           CityId: city.target.value
         });
@@ -202,6 +215,7 @@ class Newaddress extends React.Component
           i++
         ) {
           if (this.state.CityData[i].value == city.target.value) {
+            // this.props.cityDiag(this.state.CityData[i].label);
             this.setState({
                 City : this.state.CityData[i].label
             })
@@ -232,6 +246,7 @@ class Newaddress extends React.Component
 
                                     if(this.state.Pincode != ''){
 
+                                        // console.log(this.state)
                                         Notiflix.Loading.Dots('Please wait...');
                                         var log = localStorage.getItem('CustomerLoginDetails')
                                         var login = JSON.parse(log)
@@ -253,9 +268,11 @@ class Newaddress extends React.Component
                                             },
                                             "AddUserAddressMapping"
                                           ).then(results =>
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then(obj => {
                                               if (results.status == 200 || results.status == 201) {
 
+                                                // this.props.history.goBack();
                                                 window.location.href = '/selectaddress'
                                              
                                               }
@@ -309,6 +326,7 @@ class Newaddress extends React.Component
                                     
                                     </div>
                                 <div class="col-md-6 white-bg" >
+                                {/* <form class="white-bg"> */}
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h3>New Address</h3>
@@ -362,6 +380,7 @@ class Newaddress extends React.Component
                                     <div class="form-group required-field">
                                         <label for="acc-email">Area, Colony, Street, Sector, Village</label>
                                         <input 
+                                        // type="email" 
                                          value={this.state.Street}
                                          onChange={(text)=>{
                                              this.setState({
@@ -470,6 +489,7 @@ class Newaddress extends React.Component
                                             >Save</button>
                                         </div>
                                     </div>
+                                {/* </form> */}
                                 </div>
                                
                                 <div class="col-md-3">

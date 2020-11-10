@@ -29,13 +29,13 @@ class MobileVerification extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-   
+      //  #507dc0'
     });
 
     var data = localStorage.getItem("CustormerRegister");
     var customer = JSON.parse(data);
 
-  
+    //    console.log(customer)
 
     if (customer != null) {
       this.setState({
@@ -73,10 +73,13 @@ class MobileVerification extends React.Component {
           },
           "RegisterCustomer"
         ).then((results) =>
-      
+          // const objs = JSON.parse(result._bodyText)
           results.json().then((obj) => {
             if (results.status == 200 || results.status == 201) {
-             
+              // console.log(JSON.parse(JSON.stringify(obj.data[0])).Result)
+              // console.log((JSON.parse(JSON.stringify(obj.data[0]))).Result)
+
+              // if(((JSON.parse(JSON.stringify(obj.data[0]))).Result) == 'Successfully Registered'){
 
               PostApiCall.postRequest(
                 {
@@ -85,7 +88,7 @@ class MobileVerification extends React.Component {
                 },
                 "CustomerRegistrationMailer"
               ).then((results1) =>
-        
+                // const objs = JSON.parse(result._bodyText)
                 results1.json().then((obj1) => {
                   if (results1.status == 200 || results1.status == 201) {
                     PostApiCall.postRequest(
@@ -130,7 +133,11 @@ class MobileVerification extends React.Component {
                   }
                 })
               );
-             
+              // }
+              // else
+              // {
+              //     Notiflix.Notify.Failure('Email Address Already Registered.');
+              // }
             } else {
               Notiflix.Loading.Remove();
               Notiflix.Notify.Success(
@@ -149,7 +156,67 @@ class MobileVerification extends React.Component {
         );
 
 
-       
+        // localStorage.setItem("CustormerRegister", JSON.stringify(data));
+
+        // window.location.href = "/verifyemail";
+
+        // Notiflix.Loading.Dots('Please wait...');
+
+        //             PostApiCall.postRequest({
+
+        //                     name : this.state.CustomerData.name,
+        //                     email : this.state.CustomerData.email,
+        //                     mobile : this.state.CustomerData.mobile,
+        //                     password : this.state.CustomerData.password,
+        //                     gender : this.state.CustomerData.gender,
+        //                     dob : this.state.CustomerData.dob,
+        //                     age : this.state.CustomerData.age,
+        //                     source :this.state.CustomerData.source,
+        //                     login_type : this.state.CustomerData.login_type,
+        //                     updated_on : this.state.CustomerData.updated_on,
+        //                     updated_by : this.state.CustomerData.updated_by
+
+        //                  },"RegisterCustomer").then((results) =>
+
+        //                    // const objs = JSON.parse(result._bodyText)
+        //                    results.json().then(obj => {
+
+        //                    if(results.status == 200 || results.status == 201){
+
+        //                     // console.log(JSON.parse(JSON.stringify(obj.data[0])).Result)
+        //                     // console.log((JSON.parse(JSON.stringify(obj.data[0]))).Result)
+
+        //                     // if(((JSON.parse(JSON.stringify(obj.data[0]))).Result) == 'Successfully Registered'){
+
+        //                         PostApiCall.postRequest({
+
+        //                             name : this.state.CustomerData.name,
+        //                             email : this.state.CustomerData.email,
+
+        //                          },"CustomerRegistraionMailer").then((results1) =>
+
+        //                            // const objs = JSON.parse(result._bodyText)
+        //                            results1.json().then(obj1 => {
+
+        //                            if(results1.status == 200 || results1.status == 201){
+
+        //                             Notiflix.Loading.Remove()
+
+        //                             Notiflix.Notify.Success('You are successfully registered with BeatMySugar.');
+
+        //                             localStorage.removeItem('CustormerRegister')
+        //                             window.location.href= "/"
+
+        //                         }
+        //                     }))
+        //                     // }
+        //                     // else
+        //                     // {
+        //                     //     Notiflix.Notify.Failure('Email Address Already Registered.');
+        //                     // }
+        //        }
+
+        //     }))
       } else {
         Notiflix.Notify.Failure("Invalid OTP.");
       }
@@ -168,10 +235,21 @@ class MobileVerification extends React.Component {
         MobileOtp: random,
       });
 
-     
+      // PostApiCall.postRequest({
+
+      //     name : this.state.CustomerData.name,
+      //     mobile : this.state.CustomerData.mobile,
+      //     otp : random
+
+      //  },"VerifyMobileOTP").then((results2) =>
+
+      //    // const objs = JSON.parse(result._bodyText)
+      //    results2.json().then(obj2 => {
+
+      //    if(results2.status == 200 || results2.status == 201){
 
       fetch(
-        "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
+        "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
           this.state.CustomerData.mobile +
           "&msg=Hi " +
           this.state.CustomerData.name +
@@ -198,6 +276,7 @@ class MobileVerification extends React.Component {
             <div class="col-lg-4 col-md-3 col-sm-3"></div>
               <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="login-section">
+                  {/* <h3>Enter OTP</h3> */}
                   <h3>Enter One Time Password (OTP)</h3>
                   <h5>
                     One Time Password (OTP) has been sent to your <br />
@@ -216,6 +295,7 @@ class MobileVerification extends React.Component {
                         }
                         value={this.state.EnteredOtp}
                         numInputs={6}
+                        //   separator={<span>-<span>}
                       />
                     </div>
 

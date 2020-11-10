@@ -9,7 +9,7 @@ import Notiflix from "notiflix-react";
 import Parser from "html-react-parser";
 import GetApiCall from './GetApi'
 import moment from 'moment'
-
+// import { array } from '../../../Library/Caches/typescript/3.6/node_modules/@types/prop-types';
 
 import { connect } from "react-redux";
 import {
@@ -52,7 +52,8 @@ class CartUpdated extends React.Component
 
             showoffer : false,
             Couponcode : '',
-            done : false
+            done : false,
+            CodMasterData : []
 
            
         }
@@ -62,8 +63,20 @@ class CartUpdated extends React.Component
     componentDidMount(){
         Notiflix.Loading.Init({
             svgColor: "#507dc0",
-  
+            //  #507dc0'
           });
+
+             GetApiCall.getRequest("GetCodMaster").then(resultdes =>
+            resultdes.json().then(obj => {
+                console.log(obj.data)
+                this.setState({
+                CodMasterData : obj.data[0],
+                  COD : obj.data[0].fld_amount
+              })
+
+            
+            }))
+
       this.getUpdatedCart()
 
     }
@@ -99,6 +112,11 @@ class CartUpdated extends React.Component
                         arr.push(obj.data)
 
 
+                        console.log(obj.data)
+                        // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                        //     subt = subt + obj.data[i].fld_discountprice
+                        // }
+
                     }
 
                     this.setState({
@@ -121,6 +139,9 @@ class CartUpdated extends React.Component
                                 if(obj.data.length > 0){
                                     arr.push(obj.data)
             
+                                    // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                    //     subt = subt + obj.data[i].fld_discountprice
+                                    // }
                                 }
                                
                                 this.setState({
@@ -143,7 +164,9 @@ class CartUpdated extends React.Component
                                            if(obj.data.length > 0){
                                                 arr.push(obj.data)
                         
-                                              
+                                                // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                                //     subt = subt + obj.data[i].fld_discountprice
+                                                // }
                                             }
                         
                                             this.setState({
@@ -153,7 +176,7 @@ class CartUpdated extends React.Component
                                             ()=>{
                                                 cn = cn +1
                         
-                                      
+                                                // console.log(this.state.Cart)
                                                 this.setState({
                                                     done : true
                                                 })
@@ -203,7 +226,7 @@ class CartUpdated extends React.Component
             GetApiCall.getRequest("GetExtraCharges").then(resultdes =>
                 resultdes.json().then(obj => {
                
-       
+                // console.log(obj.data)
                 for(var i =0 ; i<Object.keys(obj.data).length;i++){
 
                     if(obj.data[i].fld_type == 'Shipping'){
@@ -214,7 +237,7 @@ class CartUpdated extends React.Component
                     }
                     else  if(obj.data[i].fld_type == 'COD'){
                         this.setState({
-                            COD : obj.data[i].fld_price
+                            // COD : obj.data[i].fld_price
                         })
                     }
 
@@ -225,7 +248,7 @@ class CartUpdated extends React.Component
                   })
     
     
-      
+                  // Notiflix.Loading.Remove();
                 }))
 
 
@@ -234,16 +257,16 @@ class CartUpdated extends React.Component
                    
                       this.setState({
                           OfferData : obj.data,
-                      
+                        //   done: true
                       })
-                    
+                    //   Notiflix.Loading.Remove()
         
         
-             
+                      // Notiflix.Loading.Remove();
                     }))
     
          
-
+        //  Notiflix.Loading.Remove()
          
         }else
         {
@@ -293,7 +316,15 @@ class CartUpdated extends React.Component
                     results.json().then((obj) => {
                       if (results.status == 200 || results.status == 201) {
     
-                     
+                        // console.log(obj.data[0])
+    
+                        // this.setState(prevState => ({
+                        //     FoodData: [...prevState.FoodData, obj.data[0]]
+                        //   }));
+    
+                        //   this.setState(prevState => ({
+                        //     CartData: [...prevState.FoodData, obj.data[0]]
+                        //   }),()=>{
     
     
                         fdData.push(obj.data[0])
@@ -304,7 +335,7 @@ class CartUpdated extends React.Component
     
                             if(cn == cart_info.length){
                                 
-                               
+                                // console.log(this.state.)
                                 this.setState({
                                     done : true,
                                     CartData : crtData,
@@ -331,7 +362,7 @@ class CartUpdated extends React.Component
                                 
     
                             }
-                
+                        //   });
     
                         
     
@@ -362,7 +393,7 @@ class CartUpdated extends React.Component
             
                                     if(cn == cart_info.length){
                                         
-                               
+                                        // console.log(ftData)
                                         this.setState({
                                             done : true,
                                             CartData : crtData,
@@ -389,7 +420,7 @@ class CartUpdated extends React.Component
                                         
             
                                     }
-                         
+                                //   });
             
                                 
             
@@ -419,7 +450,7 @@ class CartUpdated extends React.Component
     
                             if(cn == cart_info.length){
                                 
-                                
+                                // console.log(this.state.)
                                 this.setState({
                                     done : true,
                                     CartData : crtData,
@@ -446,7 +477,7 @@ class CartUpdated extends React.Component
                                 
     
                             }
-                  
+                        //   });
     
                         
     
@@ -474,7 +505,7 @@ class CartUpdated extends React.Component
                 GetApiCall.getRequest("GetExtraCharges").then(resultdes =>
                     resultdes.json().then(obj => {
                    
-                  
+                    // console.log(obj.data)
                     for(var i =0 ; i<Object.keys(obj.data).length;i++){
     
                         if(obj.data[i].fld_type == 'Shipping'){
@@ -485,7 +516,7 @@ class CartUpdated extends React.Component
                         }
                         else  if(obj.data[i].fld_type == 'COD'){
                             this.setState({
-                                COD : obj.data[i].fld_price
+                                // COD : obj.data[i].fld_price
                             })
                         }
     
@@ -496,7 +527,7 @@ class CartUpdated extends React.Component
                       })
         
         
-               
+                      // Notiflix.Loading.Remove();
                     }))
     
     
@@ -505,16 +536,18 @@ class CartUpdated extends React.Component
                        
                           this.setState({
                               OfferData : obj.data,
-                        
+                            //   done: true
                           })
-                    
+                        //   Notiflix.Loading.Remove()
             
             
-                         
+                          // Notiflix.Loading.Remove();
                         }))
         
              
-      
+            //  Notiflix.Loading.Remove()
+             
+            // }
        
         
     }
@@ -534,7 +567,7 @@ class CartUpdated extends React.Component
                 </div>
             ) : (
               <div class="col-md-12">
-               
+                {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
               </div>
             )}
        
@@ -547,14 +580,14 @@ class CartUpdated extends React.Component
                                   
         
                                     <div class="cart-discount" style={{display : this.state.showoffer ? '' : 'none'}}>
-                                      
+                                        {/* <h4>Apply Discount Code</h4> */}
                                         <form onSubmit={(e)=>{
                                             e.preventDefault()
                                         }}>
                                             <div class="input-group">
-                                              
+                                                {/* <input type="text" class="form-control form-control-sm" placeholder="Enter discount code"  required /> */}
                                                 <div class="input-group-append">
-                                                    
+                                                    {/* <button class="btn btn-sm btn-primary" type="submit" data-toggle="modal" data-target="#exampleModal">Apply Discount</button> */}
                                                 </div>
 
                                               
@@ -602,7 +635,8 @@ class CartUpdated extends React.Component
                                                         
                                                                 })
                                                                 cn = 2
-                                                              
+                                                               //  console.log(dt)
+                                                                // Notiflix.Notify.Failure('Offer can be applied above '+this.state.OfferData[i].fld_minimumdiscountprice+'.')  
                                                             
                                                                 
                                                                 Notiflix.Report.Failure('Oops!','Offer can only be applied above '+this.state.OfferData[i].fld_minimumdiscountprice+'.',
@@ -629,7 +663,7 @@ class CartUpdated extends React.Component
                                                                      showoffer : false,
                                                                      Offer : this.state.BaseSubTotal*(dt.fld_pricepercent/100)
                                                                  })
-                                                        
+                                                                //  console.log(dt)
 
                                                                 var gstvl = 0
                                                                 var bse = 0
@@ -726,7 +760,145 @@ class CartUpdated extends React.Component
                                     </div>
                                 </div>
         
-                                
+                                {/* <div class="col-lg-4" style={{display : this.state.Cart.length > 0 ? '' : 'none'}}>
+                                    <div class="cart-summary">
+                                        <h3>Summary</h3>
+        
+                                    
+        
+                                        <table class="table table-totals">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Subtotal</td>
+                                            <td>&#8377;{parseFloat(this.state.SubTotal).toFixed(2)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-sm btn-primary" type="submit" data-toggle="modal" data-target="#exampleModal"
+                                                    onClick={()=>{
+                                                        this.setState({
+                                                            showoffer : true
+                                                        })
+                                                    }}
+                                                    >Apply Discount</button>
+                                                </div>
+                                                </td>
+                                               
+                                               {JSON.stringify(this.state.SelectedCouponData) == '[]' ? <td> </td>
+                                               : <td>-  &#8377; {
+                                            //     (parseFloat(this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)).toFixed(2)) 
+                                            //     > this.state.SelectedCouponData.fld_maximumdiscountprice ? 
+                                            //    (parseFloat(this.state.SelectedCouponData.fld_maximumdiscountprice).toFixed(2)) : 
+                                               (parseFloat(this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)).toFixed(2))} 
+                                               <br/> <span>{this.state.SelectedCouponData.fld_code}</span> </td>}
+                                               
+                                                </tr>
+        
+                                                <tr>
+                                                    <td>Shipping Charges</td>
+                                                        <td>&#8377; {(this.state.SubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td>Order Total</td>
+                                                    <td>&#8377;{
+                                                    JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
+                                                    (this.state.SubTotal) < this.state.ShippingTh ? 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal+this.state.ShippingCharge+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal+this.state.ShippingCharge).toFixed(2) : 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal).toFixed(2)
+                                                    :
+                                                    (this.state.SubTotal - (this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge).toFixed(2) : 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))).toFixed(2)
+                                                   }</td>
+                                                </tr>
+                                            </tfoot>
+                                            <tr>
+                                                <td><input type="checkbox"
+                                                checked={this.state.PayCod} 
+                                                onChange={()=>{
+                                                    if(this.state.PayCod){
+
+                                                        this.setState({
+                                                            PayCod : false
+                                                        })
+
+                                                    }else
+                                                    {
+                                                        this.setState({
+                                                            PayCod : true
+                                                        })
+
+                                                    }
+                                                }}
+                                                /><span style={{    margin: '5px'}}>Cash on Delivery</span></td>
+                                                <td>&#8377; {this.state.PayCod ? this.state.COD : 0.00}</td>
+                                            </tr> 
+                                        </table>
+        
+                                        <div class="checkout-methods">
+                                            <button onClick={()=>{
+                                                // console.log(this.state.Cart)
+
+                                                // for(var i = 0 ; i<Object.keys(this.state.Cart).length;i++){
+
+                                                //     if(this.state.Cart[i].fld_prescriptionrequired != undefined){
+                                                //         // console.log(this.state.Cart[i])
+                                                //         if(this.state.Cart[i].fld_prescriptionrequired){
+
+
+                                                //             Notiflix.Confirm.Show('Alert','You have added a prescribed medicine to your cart, please upload a valid prescription. Do you want to continue?','Yes','No',
+                                                //             function(){ 
+                                                //                 // Yes button callback
+                                                //                 window.location.href = '/checkout'
+                                                //                 },function(){
+                                                //                      // No button callback
+                                                //                      ;});
+
+
+                                                //         }
+
+                                                //     }
+
+                                                // }
+
+                                                const SummaryData ={
+                                                    SubTotalAmt : parseFloat(this.state.SubTotal).toFixed(2),
+                                                    OfferPercent : this.state.SelectedCouponData.fld_pricepercent,
+                                                    OfferAmt : JSON.stringify(this.state.SelectedCouponData) == '[]' ? 0.00 : parseFloat(((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))).toFixed(2),
+                                                    ShippngAmt : (this.state.SubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00,
+                                                    CodAmt : this.state.PayCod ? this.state.COD : 0.00,
+                                                    TotalAmt :
+                                                     JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
+                                                    (this.state.SubTotal ) < this.state.ShippingTh ? 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal+this.state.ShippingCharge+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal+this.state.ShippingCharge).toFixed(2) : 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal).toFixed(2)
+                                                    :
+                                                    (this.state.SubTotal - (this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge).toFixed(2) : 
+                                                    this.state.PayCod ? parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.COD).toFixed(2)
+                                                    : parseFloat(this.state.SubTotal-((this.state.SubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))).toFixed(2)
+                                                }
+                                                localStorage.setItem('CartData',JSON.stringify(this.state.Cart))
+                                                localStorage.setItem('OfferData',JSON.stringify(this.state.SelectedCouponData))
+                                                localStorage.setItem('SummaryData',JSON.stringify(SummaryData))
+                                                window.location.href = '/selectaddress'
+                                            }}
+                                            class="btn btn-block btn-sm btn-primary">Select Shipping Address</button>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                          */}
                             </div>
 
                             <div class="row">
@@ -772,7 +944,7 @@ class CartUpdated extends React.Component
                                     <div class="row ">
                                         <div 
                                         onClick={()=>{
-                                            
+                                            // console.log(info.fld_url)
                                             if(info.fld_url != '' && info.fld_url != null)
                                             {
                                                 window.location.href = info.fld_url
@@ -785,7 +957,7 @@ class CartUpdated extends React.Component
                                         <div class="col-md-4">
                                            <p 
                                            onClick={()=>{
-                                        
+                                            // console.log(info.fld_url)
                                             if(info.fld_url != '' && info.fld_url != null)
                                             {
                                                 window.location.href = info.fld_url
@@ -870,7 +1042,7 @@ class CartUpdated extends React.Component
                                     <div class="row ">
                                         <div 
                                         onClick={()=>{
-                               
+                                            // console.log(info.fld_url)
                                             if(info.fld_url != '' && info.fld_url != null)
                                             {
                                                 window.location.href = info.fld_url
@@ -883,7 +1055,7 @@ class CartUpdated extends React.Component
                                         <div class="col-md-4">
                                            <p 
                                            onClick={()=>{
-                                
+                                            // console.log(info.fld_url)
                                             if(info.fld_url != '' && info.fld_url != null)
                                             {
                                                 window.location.href = info.fld_url
@@ -970,7 +1142,7 @@ class CartUpdated extends React.Component
                                     <div class="row ">
                                         <div 
                                         onClick={()=>{
-                                       
+                                            // console.log(info.fld_url)
                                             if(info.fld_url != '' && info.fld_url != null)
                                             {
                                                 window.location.href = info.fld_url
@@ -983,7 +1155,7 @@ class CartUpdated extends React.Component
                                         <div class="col-md-4">
                                            <p 
                                            onClick={()=>{
-                                         
+                                            // console.log(info.fld_url)
                                             if(info.fld_url != '' && info.fld_url != null)
                                             {
                                                 window.location.href = info.fld_url
@@ -993,7 +1165,7 @@ class CartUpdated extends React.Component
                                            class="cart-product-name">{info.fld_name} 
                                             </p>
                                             <p><b>Brand</b> - {info.fld_brand}</p>
-                                          
+                                            {/* <p><b>Nett Weight</b> - {info.fld_productweight +" "+ info.fld_productunit}</p> */}
                                             <div class="cart-price">
                                                 {info.fld_discountpercent == 0 ?
                                                 <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice}</p>
@@ -1103,18 +1275,41 @@ class CartUpdated extends React.Component
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Coupon Discount Amount</td>
-                                                                    <td>{JSON.stringify(this.state.SelectedCouponData) == '[]' ? 0
-                                               : <p>-  ₹
-                                               {(parseFloat(this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)).toFixed(2))}</p> }</td>
+                                                                    <td>{JSON.stringify(this.state.SelectedCouponData) == '[]' ? '₹ 0'
+                                               : <p>-  ₹ 
+                                               {' '}{(parseFloat(this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)).toFixed(2))}</p> }</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <td>GST Value</td>
-                                                <td>{parseFloat(this.state.GstValue).toFixed(2)}</td>
+                                                <td>₹ {parseFloat(this.state.GstValue).toFixed(2)}</td>
                                                                     </tr>
                                                                     <tr>
                                                                     <td>Shipping Charges</td>
-                                                                    <td>{(this.state.BaseSubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00}</td>
+                                                                    <td>₹ {(this.state.BaseSubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge :'0.00'}</td>
                                                                     </tr>
+
+                                                                    <tr>
+                                                                <td><input type="checkbox"
+                                                                checked={this.state.PayCod} 
+                                                                onChange={()=>{
+                                                                    if(this.state.PayCod){
+
+                                                                        this.setState({
+                                                                            PayCod : false
+                                                                        })
+
+                                                                    }else
+                                                                    {
+                                                                        this.setState({
+                                                                            PayCod : true
+                                                                        })
+
+                                                                    }
+                                                                }}
+                                                                /><span style={{    margin: '5px'}}>Cash on Delivery</span></td>
+                                                                <td>&#8377; {this.state.PayCod ? this.state.COD : '0.00'}</td>
+                                                            </tr> 
+                                                            
                                                                     
                                                                     </tbody>
                                                                     
@@ -1139,10 +1334,11 @@ class CartUpdated extends React.Component
                                                                                     GstValue : parseFloat(this.state.GstValue).toFixed(2),
                                                                                     OfferPercent : this.state.SelectedCouponData.fld_pricepercent,
                                                                                     YouSaved : parseFloat((this.state.MrpSubTotal-this.state.SubTotal)+this.state.Offer).toFixed(2),
-                                                                                  
+                                                                                    // OfferPercent : '5',
                                                                                     OfferAmt : JSON.stringify(this.state.SelectedCouponData) == '[]' ? 0.00 : parseFloat(((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))).toFixed(2),
                                                                                     ShippngAmt : (this.state.BaseSubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00,
                                                                                     CodAmt : this.state.PayCod ? this.state.COD : 0.00,
+                                                                                    PayMode : this.state.PayCod ? 'COD' : 'Online',
                                                                                     TotalAmt :
                                                                                     JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
                                                                                     (this.state.BaseSubTotal) < this.state.ShippingTh ? 
@@ -1238,11 +1434,11 @@ class CartUpdated extends React.Component
                                                    updated_on: moment().format("lll"),
                                                    updated_by: login.fld_userid,
                                                    url : info.fld_url
-                                         
+                                                   // updated_by :13
                                                  },
                                                  "AddShoppingCart"
                                                ).then((results) =>
-                                              
+                                                 // const objs = JSON.parse(result._bodyText)
                                                  results.json().then((obj) => {
                                                    if (
                                                      results.status == 200 ||
@@ -1255,7 +1451,7 @@ class CartUpdated extends React.Component
                                                      Notiflix.Notify.Info(
                                                        "Product added to Cart."
                                                      );
-                                          
+                                                     // window.location.reload();
      
                                                      this.props.setcartitemcount(obj.data.length)
                                                      this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1276,7 +1472,7 @@ class CartUpdated extends React.Component
      
                                                var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
        
-                                            
+                                               // console.log(cart_info)
                                                var newCart = cart_info != null ? cart_info : []
        
                                                if(cart_info != null){
@@ -1284,14 +1480,14 @@ class CartUpdated extends React.Component
                                              
                                                  var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Food')
        
-                                             
+                                                 // console.log(item)
                                                  if(item[0] != undefined){
        
                                                    var newIndex = newCart.indexOf(item[0])
        
                                                    newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
        
-                                                
+                                                   // console.log(newCart)
        
                                                    localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                    this.props.setcartitemcount(newCart.length)
@@ -1332,11 +1528,11 @@ class CartUpdated extends React.Component
                                                    updated_on: moment().format("lll"),
                                                    updated_by: login.fld_userid,
                                                    url : info.fld_url
-                                             
+                                                   // updated_by :13
                                                  },
                                                  "AddShoppingCart"
                                                ).then((results) =>
-                             
+                                                 // const objs = JSON.parse(result._bodyText)
                                                  results.json().then((obj) => {
                                                    if (
                                                      results.status == 200 ||
@@ -1349,7 +1545,7 @@ class CartUpdated extends React.Component
                                                      Notiflix.Notify.Info(
                                                        "Product added to Cart."
                                                      );
-                                           
+                                                     // window.location.reload();
       
                                                      this.props.setcartitemcount(obj.data.length)
                                                      this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1370,7 +1566,7 @@ class CartUpdated extends React.Component
       
                                               var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
       
-                                         
+                                              // console.log(cart_info)
                                               var newCart = cart_info != null ? cart_info : []
       
                                               if(cart_info != null){
@@ -1378,14 +1574,14 @@ class CartUpdated extends React.Component
                                             
                                                 var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Footwear')
       
-                                      
+                                                // console.log(item)
                                                 if(item[0] != undefined){
       
                                                   var newIndex = newCart.indexOf(item[0])
       
                                                   newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
       
-                                              
+                                                  // console.log(newCart)
       
                                                   localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                     this.props.setcartitemcount(newCart.length)
@@ -1426,11 +1622,11 @@ class CartUpdated extends React.Component
                                                    updated_on: moment().format("lll"),
                                                    updated_by: login.fld_userid,
                                                    url : info.fld_url
-                                              
+                                                   // updated_by :13
                                                  },
                                                  "AddShoppingCart"
                                                ).then((results) =>
-                                             
+                                                 // const objs = JSON.parse(result._bodyText)
                                                  results.json().then((obj) => {
                                                    if (
                                                      results.status == 200 ||
@@ -1443,7 +1639,7 @@ class CartUpdated extends React.Component
                                                      Notiflix.Notify.Info(
                                                        "Product added to Cart."
                                                      );
-                                           
+                                                     // window.location.reload();
       
                                                      this.props.setcartitemcount(obj.data.length)
                                                      this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1464,7 +1660,7 @@ class CartUpdated extends React.Component
       
                                               var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
       
-                                            
+                                              // console.log(cart_info)
                                               var newCart = cart_info != null ? cart_info : []
       
                                               if(cart_info != null){
@@ -1472,14 +1668,14 @@ class CartUpdated extends React.Component
                                             
                                                 var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Socks')
       
-                                              
+                                                // console.log(item)
                                                 if(item[0] != undefined){
       
                                                   var newIndex = newCart.indexOf(item[0])
       
                                                   newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
       
-                                     
+                                                  // console.log(newCart)
       
                                                   localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                   this.props.setcartitemcount(newCart.length)
@@ -1518,7 +1714,7 @@ class CartUpdated extends React.Component
                                                     
                                                     },"DeleteItemShoppingCart").then((results) => 
                                                     
-                                             
+                                                      // const objs = JSON.parse(result._bodyText)
                                                       results.json().then(obj => {
                                             
                                                     
@@ -1545,23 +1741,23 @@ class CartUpdated extends React.Component
                                                     PostApiCall.postRequest({
                                             
                                                         customer_id : login.fld_userid,
-                                                  
+                                                        // customer_id : 13,
                                                         variant_id : info.fld_id,
                                                         product_category : 'Food',
                                                         quantity :1,
                                                        updated_on : moment().format('lll'),
                                                        updated_by : login.fld_userid
-                                             
+                                                    // updated_by :13
                                                     
                                                     },"DeductShoppingCart").then((results) => 
                                                     
-                                              
+                                                      // const objs = JSON.parse(result._bodyText)
                                                       results.json().then(obj => {
                                            
                                                     
                                                       if(results.status == 200 || results.status==201){
                                         
-                                                      
+                                                        // Notiflix.Loading.Remove()
                                                         Notiflix.Loading.Remove()
                                                         this.props.setcartitemcount(obj.data.length)
                                                         this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1585,7 +1781,7 @@ class CartUpdated extends React.Component
                                             {
                                                 var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-                                            
+                                                // console.log(cart_info)
                                                 var newCart = cart_info != null ? cart_info : []
                                         
                                                 if(info.fld_quantity - 1 == 0)
@@ -1612,14 +1808,14 @@ class CartUpdated extends React.Component
                                                 {
                                                     var item1 = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Food')
 
-                                   
+                                                    // console.log(item)
                                                     if(item1[0] != undefined){
                   
                                                       var newIndex1 = newCart.indexOf(item1[0])
                   
                                                       newCart[newIndex1].fld_quantity =  newCart[newIndex1].fld_quantity - 1
                   
-                                                
+                                                    //   console.log(newCart)
                   
                                                       localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                       this.props.setcartitemcount(newCart.length)
@@ -1627,7 +1823,7 @@ class CartUpdated extends React.Component
                                                         return result + (item.fld_amount*item.fld_quantity);
                                                       }, 0))
                                                       this.getUpdatedCart()
-                                               
+                                                    //   Notiflix.Notify.Info("Product added to Cart.");
 
                                                     }
                                                 }
@@ -1656,7 +1852,7 @@ class CartUpdated extends React.Component
                                                     
                                                     },"DeleteItemShoppingCart").then((results) => 
                                                     
-                                                
+                                                      // const objs = JSON.parse(result._bodyText)
                                                       results.json().then(obj => {
                                             
                                                     
@@ -1683,22 +1879,23 @@ class CartUpdated extends React.Component
                                                     PostApiCall.postRequest({
                                             
                                                         customer_id : login.fld_userid,
-                                               
+                                                        // customer_id : 13,
                                                         variant_id : info.fld_id,
                                                         product_category : 'Footwear',
                                                         quantity :1,
                                                        updated_on : moment().format('lll'),
                                                        updated_by : login.fld_userid
-                                            
+                                                    // updated_by :13
                                                     
                                                     },"DeductShoppingCart").then((results) => 
-                                             
+                                                    
+                                                      // const objs = JSON.parse(result._bodyText)
                                                       results.json().then(obj => {
                                            
                                                     
                                                       if(results.status == 200 || results.status==201){
                                         
-                                                      
+                                                        // Notiflix.Loading.Remove()
                                                         Notiflix.Loading.Remove()
                                                         this.props.setcartitemcount(obj.data.length)
                                                         this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1722,7 +1919,7 @@ class CartUpdated extends React.Component
                                             {
                                                 var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-                                             
+                                                // console.log(cart_info)
                                                 var newCart = cart_info != null ? cart_info : []
                                         
                                                 if(info.fld_quantity - 1 == 0)
@@ -1749,14 +1946,14 @@ class CartUpdated extends React.Component
                                                 {
                                                     var item1 = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Footwear')
 
-                                               
+                                                    // console.log(item)
                                                     if(item1[0] != undefined){
                   
                                                       var newIndex1 = newCart.indexOf(item1[0])
                   
                                                       newCart[newIndex1].fld_quantity =  newCart[newIndex1].fld_quantity - 1
                   
-                                             
+                                                    //   console.log(newCart)
                   
                                                       localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                       this.props.setcartitemcount(newCart.length)
@@ -1764,7 +1961,7 @@ class CartUpdated extends React.Component
                                                         return result + (item.fld_amount*item.fld_quantity);
                                                       }, 0))
                                                       this.getUpdatedCart()
-                                                  
+                                                    //   Notiflix.Notify.Info("Product added to Cart.");
 
                                                     }
                                                 }
@@ -1794,7 +1991,7 @@ class CartUpdated extends React.Component
                                                     
                                                     },"DeleteItemShoppingCart").then((results) => 
                                                     
-                                               
+                                                      // const objs = JSON.parse(result._bodyText)
                                                       results.json().then(obj => {
                                             
                                                     
@@ -1821,22 +2018,23 @@ class CartUpdated extends React.Component
                                                     PostApiCall.postRequest({
                                             
                                                         customer_id : login.fld_userid,
-                                             
+                                                        // customer_id : 13,
                                                         variant_id : info.fld_id,
                                                         product_category : 'Socks',
                                                         quantity :1,
                                                        updated_on : moment().format('lll'),
                                                        updated_by : login.fld_userid
-                                                
+                                                    // updated_by :13
+                                                    
                                                     },"DeductShoppingCart").then((results) => 
                                                     
-                                                     
+                                                      // const objs = JSON.parse(result._bodyText)
                                                       results.json().then(obj => {
                                            
                                                     
                                                       if(results.status == 200 || results.status==201){
                                         
-                                                  
+                                                        // Notiflix.Loading.Remove()
                                                         Notiflix.Loading.Remove()
                                                         this.props.setcartitemcount(obj.data.length)
                                                         this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1860,7 +2058,7 @@ class CartUpdated extends React.Component
                                             {
                                                 var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-                                        
+                                                // console.log(cart_info)
                                                 var newCart = cart_info != null ? cart_info : []
                                         
                                                 if(info.fld_quantity - 1 == 0)
@@ -1887,14 +2085,14 @@ class CartUpdated extends React.Component
                                                 {
                                                     var item1 = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Socks')
 
-                                          
+                                                    // console.log(item)
                                                     if(item1[0] != undefined){
                   
                                                       var newIndex1 = newCart.indexOf(item1[0])
                   
                                                       newCart[newIndex1].fld_quantity =  newCart[newIndex1].fld_quantity - 1
                   
-                            
+                                                    //   console.log(newCart)
                   
                                                       localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                       this.props.setcartitemcount(newCart.length)
@@ -1902,7 +2100,8 @@ class CartUpdated extends React.Component
                                                         return result + (item.fld_amount*item.fld_quantity);
                                                       }, 0))
                                                       this.getUpdatedCart()
-                                         
+                                                    //   Notiflix.Notify.Info("Product added to Cart.");
+
                                                     }
                                                 }
                                         
@@ -1931,13 +2130,16 @@ class CartUpdated extends React.Component
             
             },"DeleteItemShoppingCart").then((results) => 
             
-           
+              // const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
     
             
               if(results.status == 200 || results.status==201){
     
-               
+                
+                // window.location.reload()
+                // this.getUpdatedCart()
+                // console.log(obj.data)
                 Notiflix.Loading.Remove()
                 this.props.setcartitemcount(obj.data.length)
                 this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1959,7 +2161,7 @@ class CartUpdated extends React.Component
           
         var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-                              
+                                            // console.log(cart_info)
                                             var newCart = cart_info != null ? cart_info : []
                                     
                                             if(info.fld_quantity - 1 == 0)
@@ -1978,7 +2180,7 @@ class CartUpdated extends React.Component
                                                         return result + (item.fld_amount*item.fld_quantity);
                                                       }, 0))
                                                     this.getUpdatedCart()
-                                         
+                                                    // Notiflix.Notify.Failure('Product removed from cart.')
 
                                                 }
 
@@ -2007,14 +2209,15 @@ class CartUpdated extends React.Component
             
             },"DeleteItemShoppingCart").then((results) => 
             
-         
+              // const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
     
             
               if(results.status == 200 || results.status==201){
     
                 
-              
+                // window.location.reload()
+                // this.getUpdatedCart()
                 Notiflix.Loading.Remove()
                 this.props.setcartitemcount(obj.data.length)
                 this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -2036,7 +2239,7 @@ class CartUpdated extends React.Component
           
         var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-                                   
+                                            // console.log(cart_info)
                                             var newCart = cart_info != null ? cart_info : []
                                     
                                             if(info.fld_quantity - 1 == 0)
@@ -2055,7 +2258,7 @@ class CartUpdated extends React.Component
                                                         return result + (item.fld_amount*item.fld_quantity);
                                                       }, 0))
                                                     this.getUpdatedCart()
-                                                   
+                                                    // Notiflix.Notify.Failure('Product removed from cart.')
 
                                                 }
 
@@ -2084,13 +2287,15 @@ class CartUpdated extends React.Component
             
             },"DeleteItemShoppingCart").then((results) => 
             
-            
+              // const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
     
             
               if(results.status == 200 || results.status==201){
     
-   
+                
+                // window.location.reload()
+                // this.getUpdatedCart()
                 Notiflix.Loading.Remove()
                 this.props.setcartitemcount(obj.data.length)
                 this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -2112,7 +2317,7 @@ class CartUpdated extends React.Component
           
         var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-                                  
+                                            // console.log(cart_info)
                                             var newCart = cart_info != null ? cart_info : []
                                     
                                             if(info.fld_quantity - 1 == 0)
@@ -2131,7 +2336,7 @@ class CartUpdated extends React.Component
                                                         return result + (item.fld_amount*item.fld_quantity);
                                                       }, 0))
                                                     this.getUpdatedCart()
-                                               
+                                                    // Notiflix.Notify.Failure('Product removed from cart.')
 
                                                 }
 
@@ -2162,15 +2367,17 @@ class CartUpdated extends React.Component
 
             },"ClearShoppingCart").then((results) => 
             
-           
+              // const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
    
             
               if(results.status == 200 || results.status==201){
 
-            
+                // Notiflix.Loading.Remove()
+                // Notiflix.Notify.Info('.')
+                // window.location.reload()
                 window.location.href = '/'
-         
+                // this.getUpdatedCart()
    
               }else{
                 Notiflix.Loading.Remove()

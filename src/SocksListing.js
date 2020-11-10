@@ -53,8 +53,10 @@ class SocksListing extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
+      //  #507dc0'
     });
 
+    // Notiflix.Loading.Dots("");
 
     var arr = [];
 
@@ -79,6 +81,7 @@ class SocksListing extends React.Component {
             res.data.data.filter(item => {
               if (item.fld_name.toLowerCase().includes(search.toLowerCase())
               || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+              // || item.fld_description.toLowerCase().includes(search.toLowerCase())
               ) {
                 srDt.push(item)
                 
@@ -104,12 +107,14 @@ class SocksListing extends React.Component {
         
         });
 
+          // Notiflix.Loading.Remove();
         });
 
 
 
         GetApiCall.getRequest("GetSocksTypeDataWebsite").then(resultdes =>
           resultdes.json().then(obj => {
+            // console.log(obj.data)
               this.setState({
                   
               TypeData : obj.data
@@ -120,6 +125,7 @@ class SocksListing extends React.Component {
 
         GetApiCall.getRequest("GetSocksColorDataWebsite").then(resultdes =>
           resultdes.json().then(obj => {
+            // console.log(obj.data)
               this.setState({
                   
               ColorData : obj.data
@@ -140,6 +146,7 @@ class SocksListing extends React.Component {
 
             GetApiCall.getRequest("GetSocksPriceDataFilter").then(resultdes =>
               resultdes.json().then(obj => {
+                // console.log(obj.data)
                   this.setState({
                       
                   PriceData : obj.data
@@ -186,6 +193,7 @@ class SocksListing extends React.Component {
 
 
   OnSubmitBrandFilter(){
+    // console.log(this.state.BrandFilter)
     var  newData = []
     var count = 0;
   
@@ -211,6 +219,7 @@ class SocksListing extends React.Component {
   
         }else
         {
+          // console.log(newData[0])
           this.OnSubmitGenderFilter(newData)
         }
        
@@ -489,6 +498,7 @@ class SocksListing extends React.Component {
         </div>
         <main class="main"  >
         <div class="container doctors-section">
+          {/* <h3 class="section-title">Socks</h3> */}
           <div class="row healthcare-slider">
           <div class="sidebar-overlay"></div>
                 <div class="sidebar-toggle">
@@ -847,7 +857,10 @@ class SocksListing extends React.Component {
       </a>
     </p>
     <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Brand:</span> {info.fld_brand}</p>
-
+    {/* <p>
+    <p class="price"> &#8377;{foot.fld_productprice}</p>
+    <p class="extrapheight"></p>
+  </p> */}
     <p class="discount-height">
 
     {info.fld_discountpercent == 0 ? 
@@ -900,14 +913,17 @@ class SocksListing extends React.Component {
               PostApiCall.postRequest({
       
                   customer_id : login.fld_userid,
+                  // customer_id : 13,
                   variant_id : info.fld_id,
                   product_category : 'Socks',
                   quantity :1,
                  updated_on : moment().format('lll'),
                  updated_by : login.fld_userid
+              // updated_by :13
               
               },"AddWishlist").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
      
               
@@ -916,6 +932,7 @@ class SocksListing extends React.Component {
                   
                   Notiflix.Loading.Remove()
                   Notiflix.Notify.Info('Product added to Wishlist.')
+                  // window.location.reload()
                  
      
                 }else{
@@ -926,6 +943,7 @@ class SocksListing extends React.Component {
              }))
   
           }else{
+          // console.log('please login first')
               Notiflix.Notify.Failure('Please Login to add products to your wishlist.')
           }
   
@@ -936,6 +954,7 @@ class SocksListing extends React.Component {
           <i class="fas fa-heart"></i>
         </button>{" "}
       </li>
+      {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
     </ul>
   </div>
 </div>
@@ -946,7 +965,168 @@ class SocksListing extends React.Component {
               </div>
             </div>
 
-           
+            {/* <div class="col-md-2">
+                                <div class="product product-inner">
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="assets/images/footcare/dia.jpg" alt="product"/>
+                                                <img src="assets/images/footcare/dia.jpg" class="hover-image" alt="product"/>
+                                            </a>
+                                            
+                                          
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2 class="product-title">
+                                                <a href="footcare.html">Dia One Orthopedic Sandal PU Sole MCP Insole Diabetic Footwear for Men and Women Dia_53 Size 10</a>
+                                            </h2>
+                                            <div class="price-box">
+                                                <p class="short-desc">DRUPHA_005</p>
+                                                <p class="price"><span><s>&#8377;770.21</s></span> &#8377;700.00</p>
+                                                <p class="discount-price">You Save &#8377;70.21 (30%)</p>
+                                               
+                                            </div>
+                
+                                            <div class="product-details-inner">
+                                                <div class="product-action ">
+                                                    <a href="#" class="paction add-cart" title="Add to Cart">
+                                                        <span>Add to Cart</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction fas fa-info-circle" title="More Information">
+                                                           
+                                                        <span>More Information</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+
+                        <div class="col-md-2">
+                                <div class="product product-inner">
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="assets/images/footcare/dia.jpg" alt="product"/>
+                                                <img src="assets/images/footcare/dia.jpg" class="hover-image" alt="product"/>
+                                            </a>
+                                            
+                                          
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2 class="product-title">
+                                                <a href="footcare.html">Dia One Orthopedic Sandal PU Sole MCP Insole Diabetic Footwear for Men and Women Dia_53 Size 10</a>
+                                            </h2>
+                                            <div class="price-box">
+                                                <p class="short-desc">DRUPHA_005</p>
+                                                <p class="price"><span><s>&#8377;770.21</s></span> &#8377;700.00</p>
+                                                <p class="discount-price">You Save &#8377;70.21 (30%)</p>
+                                               
+                                            </div>
+                                            <div class="product-details-inner">
+                                                <div class="product-action ">
+                                                    <a href="#" class="paction add-cart" title="Add to Cart">
+                                                        <span>Add to Cart</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction fas fa-info-circle" title="More Information">
+                                                           
+                                                        <span>More Information</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+
+                        <div class="col-md-2">
+                                <div class="product product-inner">
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="assets/images/footcare/dia.jpg" alt="product"/>
+                                                <img src="assets/images/footcare/dia.jpg" class="hover-image" alt="product"/>
+                                            </a>
+                                            
+                                          
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2 class="product-title">
+                                                <a href="footcare.html">Dia One Orthopedic Sandal PU Sole MCP Insole Diabetic Footwear for Men and Women Dia_53 Size 10</a>
+                                            </h2>
+                                            <div class="price-box">
+                                                <p class="short-desc">DRUPHA_005</p>
+                                                <p class="price"><span><s>&#8377;770.21</s></span> &#8377;700.00</p>
+                                                <p class="discount-price">You Save &#8377;70.21 (30%)</p>
+                                               
+                                            </div>
+                
+                                            <div class="product-details-inner">
+                                                <div class="product-action ">
+                                                    <a href="#" class="paction add-cart" title="Add to Cart">
+                                                        <span>Add to Cart</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction fas fa-info-circle" title="More Information">
+                                                           
+                                                        <span>More Information</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+
+                        <div class="col-md-2">
+                                <div class="product product-inner">
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="assets/images/footcare/dia.jpg" alt="product"/>
+                                                <img src="assets/images/footcare/dia.jpg" class="hover-image" alt="product"/>
+                                            </a>
+                                            
+                                          
+                                        </figure>
+                                        <div class="product-details">
+                                            <h2 class="product-title">
+                                                <a href="footcare.html">Dia One Orthopedic Sandal PU Sole MCP Insole Diabetic Footwear for Men and Women Dia_53 Size 10</a>
+                                            </h2>
+                                            <div class="price-box">
+                                                <p class="short-desc">DRUPHA_005</p>
+                                                <p class="price"><span><s>&#8377;770.21</s></span> &#8377;700.00</p>
+                                                <p class="discount-price">You Save &#8377;70.21 (30%)</p>
+                                               
+                                            </div>
+                
+                                            <div class="product-details-inner">
+                                                <div class="product-action ">
+                                                    <a href="#" class="paction add-cart" title="Add to Cart">
+                                                        <span>Add to Cart</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                                        <span>Add to Wishlist</span>
+                                                    </a>
+                
+                                                    <a href="#" class="paction fas fa-info-circle" title="More Information">
+                                                           
+                                                        <span>More Information</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                        </div>*/}
           </div>
         </div>
 
@@ -1009,9 +1189,11 @@ class SocksListing extends React.Component {
                                                     "-"
                                                   )
                                               }`
+                                               // updated_by :13
                                              },
                                              "AddShoppingCart"
                                            ).then((results) =>
+                                             // const objs = JSON.parse(result._bodyText)
                                              results.json().then((obj) => {
                                                if (
                                                  results.status == 200 ||
@@ -1024,6 +1206,7 @@ class SocksListing extends React.Component {
                                                  Notiflix.Notify.Info(
                                                    "Product added to Cart."
                                                  );
+                                                 // window.location.reload();
   
                                                  this.props.setcartitemcount(obj.data.length)
                                                  this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1043,6 +1226,7 @@ class SocksListing extends React.Component {
   
                                           var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
   
+                                          // console.log(cart_info)
                                           var newCart = cart_info != null ? cart_info : []
   
                                           if(cart_info != null){
@@ -1050,12 +1234,14 @@ class SocksListing extends React.Component {
                                         
                                             var item = newCart.filter(val => val.fld_variantid == info.fld_id && val.fld_productcategory == 'Socks')
   
+                                            // console.log(item)
                                             if(item[0] != undefined){
   
                                               var newIndex = newCart.indexOf(item[0])
   
                                               newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
   
+                                              // console.log(newCart)
   
                                               localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                               this.props.setcartitemcount(newCart.length)

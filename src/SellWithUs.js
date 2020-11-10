@@ -52,6 +52,7 @@ class Sellwithus extends React.Component
     componentDidMount(){
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
+            //  #507dc0'
           });
 
           GetApiCall.getRequest("GetCountry").then(resultdes =>
@@ -77,6 +78,7 @@ class Sellwithus extends React.Component
 
               },"GetState").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objstate => {
           
               
@@ -99,6 +101,7 @@ class Sellwithus extends React.Component
         
                       },"GetCity").then((resultscity) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         resultscity.json().then(objcity => {
                   
                       
@@ -107,6 +110,7 @@ class Sellwithus extends React.Component
         
                             if(objcity.data.length != 0 ){
                                 this.props.setCity(objcity.data[0].label)
+                                // this.props.setpermanentcity(objcity.data[0].label)
                                 this.setState({
                                     CityId : objcity.data[0].value,
                                     CityData : objcity.data,
@@ -120,6 +124,7 @@ class Sellwithus extends React.Component
             }))
              
         
+            // Notiflix.Loading.Remove()
         
         }) 
         );
@@ -129,11 +134,13 @@ class Sellwithus extends React.Component
         this.props.setCompanyName(company.target.value)
     }
     onChangeAddress(address){
+        //  console.log(address.target.value)
      this.props.setAddress(address.target.value)
        
     }
 
     onChangeCountry(country){
+        // this.props.setvendorcountry(country.target.value)
         this.setState({
             CountryId : country.target.value
           })
@@ -211,6 +218,7 @@ class Sellwithus extends React.Component
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -222,6 +230,7 @@ class Sellwithus extends React.Component
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -275,7 +284,11 @@ onChangeName(name){
     }
     
     SaveSellWithUS(){
-       
+        // console.log('Country:'+this.props.SellCredentials.Country)
+        //                                                         console.log('Stete:'+this.props.SellCredentials.State)
+        //                                                         console.log('City:'+this.props.SellCredentials.City)
+
+        //  console.log(this.props.SellCredentials)
         if(this.props.SellCredentials.CompanyName!=''){
             if(this.props.SellCredentials.Address!=''){
                 if(this.props.SellCredentials.Country!=''){
@@ -333,6 +346,7 @@ onChangeName(name){
                                                                    },"AddSellWithUs").then((results) => 
                                                                        
                                                                    
+                                                                  //    const objs = JSON.parse(result._bodyText)
                                                                      results.json().then(obj => {
                                                                
                                                                    
@@ -459,6 +473,7 @@ onChangeName(name){
                         <div class="col-md-12" >
                             <div class="write-to-us" style={{height: "100%", padding: "40px 45px 40px",background: "#fff",}}>
                             <h1 class="light-title">Sell With Us</h1>
+                            {/* <form action="#"> */}
                                 <div class = "row">
                                 <div class="form-group required-field col-md-12">
                                     <label for="contact-name">Vendor Company Name</label>
@@ -623,6 +638,7 @@ onChangeName(name){
                                    onClick={this.SaveSellWithUS.bind(this)}
                                     >Submit</button>
                                 </div>
+                            {/* </form> */}
                             </div>
                         </div>
 
@@ -756,7 +772,10 @@ onChangeName(name){
 </p>
                                 </div>
                                 </div>
-                            
+                               {/* <div class="col-md-12">
+                                   <p style={{marginTop:"20px"}}>Connect with us today: wecare@beatmysugar.com, +91-90244-22444
+</p>
+                               </div> */}
                             </div>
                         </div>
                     </div>

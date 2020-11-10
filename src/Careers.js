@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import Header from './Header'
 import Footer from './Footer'
-// // import News from './News';
+import News from './News';
 
 import Notiflix from "notiflix-react";
 import Parser from "html-react-parser";
@@ -24,13 +24,13 @@ class Careers extends React.Component {
        
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
-
+            //  #507dc0'
           });
-
+        //    Notiflix.Loading.Dots('');
 
         Notiflix.Loading.Init({
             svgColor: "#507dc0",
-   
+            //  #507dc0'
           });
       
       
@@ -51,7 +51,22 @@ class Careers extends React.Component {
               }
             }))
     
+//           var det = localStorage.getItem('CareerDetails')
+//           var CareerData = JSON.parse(det)
+//            console.log(CareerData)
+//         this.setState({
+//               Title:CareerData.fld_title,
+//               Location:CareerData.fld_city,
+//               State:CareerData.fld_state,
+//               Country:CareerData.fld_country,
 
+//               EmploymentType:CareerData.fld_employmenttype,
+//               Experience:CareerData.fld_workexperience,
+//               Qualification:CareerData.fld_qualification,
+//               Description:CareerData.fld_jobdescription,
+
+ 
+//   })
         }
     
 
@@ -64,7 +79,12 @@ class Careers extends React.Component {
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                         <div class="container">
                             <ol class="breadcrumb">
-                                
+                                {/* <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                                <li class="breadcrumb-item" aria-current="page">Careers</li> */}
+                                {/* <li class="breadcrumb-item" aria-current="page">Diabetes</li>
+                                <li class="breadcrumb-item" aria-current="page">Type 1 Diabetes</li>
+                                <li class="breadcrumb-item active" aria-current="page">Type 1 diabetes causes and risk factors */}
+                                    {/* </li> */}
                             </ol>
                         </div>
                         {/* <!-- End .container --> */}
@@ -96,7 +116,30 @@ class Careers extends React.Component {
                                                  
                                                  <p><b>Job Description </b></p>
                                                  <p style={{paddingLeft:'8px'}}>{Parser(('<span>'+ this.state.CareerData.fld_jobdescription +'</span>').replace(/font-family/g, '').replace(/color/g, '').replace(/&amp;/g, '&').replace(/<p>/g, ''))} </p>
-                                                   
+                                                    {/*<ul style={{listStyle:'none'}}>
+                                                        <li>• Write effective medical/clinical content in a scientifically accurate and in an engaging manner. Convert complex scientific content into easy to understand content for the target audience</li>
+                                                        <li>• Write articles in his/her own unique way - authentic, trustworthy and free from plagiarism</li>
+                                                        <li>• Write clear, concise and grammatically correct content</li>
+                                                        <li>• Know authentic and reliable online and offline sources for content search</li>
+                                                        <li>• Fact check the information with healthcare professionals and subject matter experts</li>
+                                                        <li>• Ability to work independently with minimal supervision</li>
+                                                    </ul>
+                                                    <p>Project management</p>
+                                                    <ul style={{listStyle:'none'}}>
+                                                        <li>• Multi-task and possess excellent project management skills with attention to details</li>
+                                                        <li>• Understand the business needs and work on various projects accordingly, set realistic timeline expectations; ability to deliver within agreed timelines</li>
+                                                    </ul>
+                                                    <p>Team player</p>
+                                                    <ul style={{listStyle:'none'}}>
+                                                        <li>• Excellent interpersonal skills, active listening; establish and maintains professional and productive working relationships within the team with cross-functional teams</li>
+                                                        <li>• Coordinate effectively with external stakeholders like subject matter experts (SMEs) and designers for various projects</li>
+                                                    </ul>
+                                                    <p>Learning agility and flexibility</p>
+                                                    <ul style={{listStyle:'none'}}>
+                                                        <li>• Keen to learn and explore innovative ways of working</li>
+                                                        <li>• Flexible and open to taking on new initiatives and projects</li>
+                                                        <li>• Work effectively under pressure, flexible in work timings and schedules as per the needs of the project</li>
+                                            </ul>*/}
                                                         <p>The above job description is not an all-inclusive list of duties and responsibilities. The candidate is expected to follow any other instructions, and perform other related duties if required, as per the business needs and demands.</p>
                                                         <p>Write to - <span><a href= "mailto:hr@beatmysugar.com">hr@beatmysugar.com</a></span></p>
 

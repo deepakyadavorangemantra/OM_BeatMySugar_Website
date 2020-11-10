@@ -65,12 +65,15 @@ class RegistrationPage extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
+      //  #507dc0'
     });
 
     this.props.setCustomerClearData();
+    //  Notiflix.Loading.Dots('Please wait...');
 
     Notiflix.Notify.Init({
       // width:'100%',
+      position: "right-top",
       distance: "2%",
       cssAnimationStyle: "from-top",
       useIcon: true,
@@ -79,6 +82,7 @@ class RegistrationPage extends React.Component {
       fontAwesomeIconStyle: "shadow", // 'shadow' - 'basic'
       fontAwesomeIconSize: "34px",
       plainText: true,
+      // ...
     });
 
     var day = [];
@@ -104,6 +108,7 @@ class RegistrationPage extends React.Component {
     }
 
     const date2 = new Date();
+    // console.log(Math.abs(date2.getUTCFullYear() - 1970))
     for (var i = 0; i < Math.abs(date2.getUTCFullYear() - 1920); i++) {
       year.push({
         label: date2.getUTCFullYear() - 1 - i,
@@ -172,6 +177,12 @@ class RegistrationPage extends React.Component {
 
   SaveData() {
 
+   
+    // console.log(this.props.Register)
+
+    // this.props.history.push('/')
+    // window.location.href= "/"
+
     if (this.props.Register.Name != "") {
       if (
         this.props.Register.Mobile.length != 10 &&
@@ -187,6 +198,7 @@ class RegistrationPage extends React.Component {
                   this.props.Register.Password ==
                   this.props.Register.ConfirmPassword
                 ) {
+                  //if(this.state.Captcha){
 
                   Notiflix.Loading.Dots("Please wait...");
 
@@ -200,12 +212,20 @@ class RegistrationPage extends React.Component {
                     },
                     "IfEmailExists"
                   ).then((results1) =>
+                    // const objs = JSON.parse(result._bodyText)
                     results1.json().then((obj1) => {
                       if (results1.status == 200 || results1.status == 201) {
-                        
+                        // PostApiCall.postRequest(
+                        //   {
+                        //     name: this.props.Register.Name,
+                        //     mobile: this.props.Register.Mobile,
+                        //     otp: random2,
+                        //   },
+                        //   "VerifyMobileOTP"
+                        // );
 
                         fetch(
-                          "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
+                          "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
                             this.props.Register.Mobile +
                             "&msg=Hi " +
                             this.state.Title + ' ' +this.props.Register.Name +
@@ -214,7 +234,20 @@ class RegistrationPage extends React.Component {
                             ". DO NOT share this OTP with anyone. Team BeatMySugar"
                         ).then((res) => res.json());
 
-                        
+                        // PostApiCall.postRequest(
+                        //   {
+                        //     name: this.state.Title + ' ' +this.props.Register.Name,
+                        //     email: this.props.Register.Email.trim(),
+                        //     otp: random,
+                        //   },
+                        //   "VerifyMailMailer"
+                        // ).then((results2) =>
+                        //   // const objs = JSON.parse(result._bodyText)
+                        //   results2.json().then((obj2) => {
+                        //     if (
+                        //       results2.status == 200 ||
+                        //       results2.status == 201
+                        //     ) {
                               const data = {
                                 otp: random,
                                 mobotp: random2,
@@ -227,7 +260,7 @@ class RegistrationPage extends React.Component {
                                 dob:
                                   this.props.Register.DobYear +
                                   "-" +
-                                  this.props.Register.DobMonth +
+                                  moment().month(this.props.Register.DobMonth).format("MM")+
                                   "-" +
                                   this.props.Register.DobDay,
                                 age:
@@ -244,7 +277,9 @@ class RegistrationPage extends React.Component {
                               );
                               Notiflix.Loading.Remove();
                               window.location.href = "/verifymobile";
-                       
+                        //     }
+                        //   })
+                        // );
                       } else {
                         Notiflix.Loading.Remove();
                         Notiflix.Notify.Failure(obj1.data);
@@ -252,7 +287,71 @@ class RegistrationPage extends React.Component {
                     })
                   );
 
-                  
+                  //             PostApiCall.postRequest({
+
+                  //                 name : this.props.Register.Name,
+                  //                 email : this.props.Register.Email.trim(),
+                  //                 mobile : this.props.Register.Mobile,
+                  //                 password : this.props.Register.Password,
+                  //                 gender : this.props.Register.Gender,
+                  //                 dob : this.props.Register.DobYear+"-"+this.props.Register.DobMonth+"-"+this.props.Register.DobDay,
+                  //                 age : new Date().getUTCFullYear() - this.props.Register.DobYear,
+                  //                 source : 'Website',
+                  //                 login_type : 'Manual',
+                  //                 updated_on : moment().format('lll').toString(),
+                  //                 updated_by : 0
+
+                  //              },"RegisterCustomer").then((results) =>
+
+                  //                // const objs = JSON.parse(result._bodyText)
+                  //                results.json().then(obj => {
+
+                  //                if(results.status == 200 || results.status == 201){
+
+                  //                 // console.log(JSON.parse(JSON.stringify(obj.data[0])).Result)
+                  //                 // console.log((JSON.parse(JSON.stringify(obj.data[0]))).Result)
+
+                  //                 if(((JSON.parse(JSON.stringify(obj.data[0]))).Result) == 'Successfully Registered'){
+
+                  //                     PostApiCall.postRequest({
+
+                  //                         name : this.props.Register.Name,
+                  //                         email : this.props.Register.Email.trim(),
+
+                  //                      },"CustomerRegistraionMailer").then((results1) =>
+
+                  //                        // const objs = JSON.parse(result._bodyText)
+                  //                        results1.json().then(obj1 => {
+
+                  //                        if(results1.status == 200 || results1.status == 201){
+
+                  //                         Notiflix.Loading.Remove()
+
+                  //                     Notiflix.Report.Success(
+
+                  //                         'Registration Successful',
+                  //                         'You are successfully registered with BeatMySugar.',
+                  //                         'Ok'
+
+                  //                     )
+
+                  //                     window.location.href= "/"
+
+                  //                     }
+                  //                 }))
+                  //                 }
+                  //                 else
+                  //                 {
+                  //                     Notiflix.Notify.Failure('Email Address Already Registered.');
+                  //                 }
+                  //    }
+
+                  // }))
+
+                  // }else
+                  // {
+                  // Notiflix.Notify.Failure('Please verify Captcha.');
+                  //}
                 } else {
                   Notiflix.Notify.Failure(
                     "Password & Confirm Password donot match."
@@ -526,6 +625,7 @@ class RegistrationPage extends React.Component {
 
                         <div class="row" style={{ marginBottom: "15px" }}>
                           <div class="col-md-12">
+                            {/* <div id={'recaptcha-container'}/> */}
                             <p class="disclaimer-text">
                               By clicking 'Send OTP', you agree to BeatMySugar POLICIES ( mentioned at the bottom of the page ). 
                               You would receive SMS notifications from us.
@@ -535,6 +635,7 @@ class RegistrationPage extends React.Component {
 
                         <div class="form-footer">
                           <div class="form-footer-right">
+                            {/* <a class="btn btn-primary" onClick={this.SaveData.bind(this)}>Register with us</a> */}
 
                             <Button
                               class="btn btn-primary"

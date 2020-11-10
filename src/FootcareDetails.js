@@ -49,7 +49,7 @@ class FootcareDetails extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
 
     Notiflix.Loading.Dots("");
@@ -67,7 +67,7 @@ class FootcareDetails extends React.Component {
          
           });
 
-     
+          // Notiflix.Loading.Remove();
           PostApiCall.postRequest(
             {
               gender: obj.data[0].fld_gender,
@@ -95,7 +95,7 @@ class FootcareDetails extends React.Component {
     ).then((results) =>
       results.json().then((obj) => {
         if (results.status == 200 || results.status == 201) {
-     
+          // console.log(obj.data)
 
           this.setState({
             FootVariants: obj.data,
@@ -111,6 +111,8 @@ class FootcareDetails extends React.Component {
               });
             }
           }
+
+
 
           var size = [];
           for (var i = 0; i < Object.keys(obj.data).length; i++) {
@@ -131,7 +133,9 @@ class FootcareDetails extends React.Component {
           for (var i = 0; i < Object.keys(obj.data).length; i++) {
             color.push(obj.data[i].fld_color);
 
-           
+            // this.setState({
+            //   ColorData : Array.from(new Set(color))
+            // })
           }
 
           color = Array.from(new Set(color));
@@ -143,7 +147,7 @@ class FootcareDetails extends React.Component {
               if (obj.data[j].fld_color == color[i]) {
                 if (this.search(color[i], colorfootwear)) {
                 }
-        
+                // if(obj.data[j].fld_id != this.props.match.params.varid)
                 else {
                   colorfootwear.push({
                     color: color[i],
@@ -208,7 +212,7 @@ class FootcareDetails extends React.Component {
               return result + (item.fld_amount*item.fld_quantity);
             }, 0))
             Notiflix.Notify.Info("Product Added to Cart");
-     
+            // window.location.reload();
           } else {
             Notiflix.Loading.Remove();
             Notiflix.Notify.Failure("Something went wrong, try again later.");
@@ -220,7 +224,7 @@ class FootcareDetails extends React.Component {
 
       var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
 
-     
+      // console.log(cart_info)
       var newCart = cart_info != null ? cart_info : []
   
       if(cart_info != null){
@@ -228,14 +232,14 @@ class FootcareDetails extends React.Component {
     
         var item = newCart.filter(val => val.fld_variantid == this.state.SelectedVariant.fld_id && val.fld_productcategory == 'Footwear')
   
-   
+        // console.log(item)
         if(item[0] != undefined){
   
           var newIndex = newCart.indexOf(item[0])
   
           newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
   
-       
+          // console.log(newCart)
   
           localStorage.setItem('BMSCartData',JSON.stringify(newCart))
           this.props.setcartitemcount(newCart.length)
@@ -312,7 +316,7 @@ class FootcareDetails extends React.Component {
 
 
   truncate(source, size) {
-   
+    // console.log(source)
     if (source != null) {
       return source.length > size ? source.slice(0, size - 1) + "…" : source;
     }
@@ -376,7 +380,21 @@ class FootcareDetails extends React.Component {
           <div id="myTarget" class="d-none d-sm-none d-md-block"></div>
           <div id="myTargetMobile" class="d-md-none d-sm-block"></div>
         </div>
-        <div class="container" style={{display : this.state.done ? '' : 'none'}}>
+
+
+        {JSON.stringify(this.state.SelectedVariant) == '[]' && this.state.done ? (
+                
+                <div class="col-md-12">
+                  <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
+                </div>
+           
+            ) : (
+              <div class="col-md-12">
+                {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
+              </div>
+            )}
+
+        <div class="container" style={{display : this.state.done & JSON.stringify(this.state.SelectedVariant) != '[]' ? '' : 'none'}}>
           <div class="container-box " style={{ marginTop: "40px" }}>
             <div class="row">
               <div class="col-lg-9">
@@ -442,19 +460,103 @@ class FootcareDetails extends React.Component {
                           />
                         </div>
 
-                      
+                        {/* {this.state.Photo.map(
+                                                  (book,index) => (
+
+                                                    
+                                                <div class="product-item">
+                                                    <img class="product-single-image" src={book} onMouseOver={()=>{
+                                                        console.log(book)
+                                                    }}/>
+                                                </div>
+                                                  ))} */}
+                        {/* <div class="product-item">
+                                                    <img class="product-single-image" src="assets/images/cauliflowerbook.jpg" data-zoom-image="assets/images/cauliflowerbook.jpg"/>
+                                                </div>
+                                                <div class="product-item">
+                                                        <img class="product-single-image" src="assets/images/cauliflowerbook.jpg" data-zoom-image="assets/images/cauliflowerbook.jpg"/>
+                                                    </div>
+                                                    <div class="product-item">
+                                                        <img class="product-single-image" src="assets/images/cauliflowerbook.jpg" data-zoom-image="assets/images/cauliflowerbook.jpg"/>
+                                                    </div> */}
+
+                        {/* </div>
+                                           
+                                            <span class="prod-full-screen">
+                                                <i class="icon-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="prod-thumbnail row owl-dots" id='carousel-custom-dots'>
+                                        {this.state.Photo.map(
+                                                  (book,index) => (
+
+                                            <div class="col-3 owl-dot">
+                                                <img src={book}/>
+                                            </div>
+                                                  ))} */}
+                        {/* <div class="col-3 owl-dot">
+                                                <img src="assets/images/cauliflowerbook.jpg"/>
+                                            </div>
+                                            <div class="col-3 owl-dot">
+                                                    <img src="assets/images/cauliflowerbook.jpg"/>
+                                                </div>
+                                                <div class="col-3 owl-dot">
+                                                    <img src="assets/images/cauliflowerbook.jpg"/>
+                                                </div> */}
                       </div>
                     </div>
-                   
+                    {/* <div class="col-lg-7 col-md-6 product-single-gallery">
+                                        <div class="product-slider-container product-item">
+                                            <div class="product-single-carousel owl-carousel owl-theme">
+                                                <div class="product-item">
+                                                    <img class="product-single-image" src="assets/images/dio.jpg" data-zoom-image="assets/images/dio.jpg"/>
+                                                </div>
+                                                <div class="product-item">
+                                                    <img class="product-single-image" src="assets/images/dio-1.jpg" data-zoom-image="assets/images/dio-1.jpg"/>
+                                                </div>
+                                                <div class="product-item">
+                                                        <img class="product-single-image" src="assets/images/dio.jpg" data-zoom-image="assets/images/dio.jpg"/>
+                                                    </div>
+                                                    <div class="product-item">
+                                                        <img class="product-single-image" src="assets/images/dio-1.jpg" data-zoom-image="assets/images/dio-1.jpg"/>
+                                                    </div>
+                                              
+                                            </div>
+                                           
+                                            <span class="prod-full-screen">
+                                                <i class="icon-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="prod-thumbnail row owl-dots" id='carousel-custom-dots'>
+                                            <div class="col-3 owl-dot">
+                                                <img src="assets/images/dio.jpg"/>
+                                            </div>
+                                            <div class="col-3 owl-dot">
+                                                <img src="assets/images/dio-1.jpg"/>
+                                            </div>
+                                            <div class="col-3 owl-dot">
+                                                    <img src="assets/images/dio.jpg"/>
+                                                </div>
+                                                <div class="col-3 owl-dot">
+                                                    <img src="assets/images/dio-1.jpg"/>
+                                                </div>
+                                           
+                                        </div>
+                                    </div> */}
+
                     <div class="col-lg-5 col-md-6">
                       <div class="product-single-details">
-              
+                        {/* <p class="item-code">{this.state.Foot.fld_itemcode}</p> */}
                         <h1 class="product-title">
                           {this.state.SelectedVariant.fld_name}
                         </h1>
 
                         <div class="ratings-container">
-                        
+                          {/* <a href="#" class="rating-link">
+                            <span class="company-name">
+                              {this.state.SelectedVariant.fld_sku}
+                            </span>
+                          </a> */}
                           <p class="rating-link">
                             Brand{" "}
                             <span class="company-name">
@@ -587,7 +689,30 @@ class FootcareDetails extends React.Component {
                           </li>
                         </ul>
 
-                        
+                        {/* <div class="product-desc">
+                          <p>
+                            <b>Size</b>
+                          </p>
+
+                          <select class="footcare-size">
+                            {this.state.GenderSelect == "Male" ? (
+                              this.state.Male.map((male, index) => (
+                                <option>{male}</option>
+                              ))
+                            ) : this.state.GenderSelect == "Select" ? (
+                              <option></option>
+                            ) : (
+                              this.state.Female.map((female, index) => (
+                                <option>{female}</option>
+                              ))
+                            )}
+                          </select>
+                          <span>
+                            <a href="" class="sizechart-link">
+                              Size Chart
+                            </a>
+                          </span>
+                        </div> */}
 
                         <div class="size-chart-updated">
                           <p>
@@ -703,7 +828,33 @@ class FootcareDetails extends React.Component {
                           </ul>
                         </div>
                         <p></p>
-                       
+                        {/* <div class="product-desc">
+                          <p>
+                            <b>Know your Product</b>
+                          </p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book. It has
+                          survived not only five centuries, but also the leap
+                          into electronic typesetting, remaining essentially
+                          unchanged.
+                        </div>
+
+                        <div class="product-desc">
+                          <p>
+                            <b>Product Information</b>
+                          </p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book. It has
+                          survived not only five centuries, but also the leap
+                          into electronic typesetting, remaining essentially
+                          unchanged.
+                        </div> */}
 
                         <div class="product-action product-all-icons">
                           <div class="product-single-qty">
@@ -778,7 +929,7 @@ class FootcareDetails extends React.Component {
                                   },
                                   "AddWishlist"
                                 ).then((results) =>
-                                  
+                                  // const objs = JSON.parse(result._bodyText)
                                   results.json().then((obj) => {
                                     if (
                                       results.status == 200 ||
@@ -788,7 +939,7 @@ class FootcareDetails extends React.Component {
                                       Notiflix.Notify.Info(
                                         "Product added to Wishlist."
                                       );
-                             
+                                      // window.location.reload()
                                     } else {
                                       Notiflix.Loading.Remove();
                                       Notiflix.Notify.Failure(
@@ -798,7 +949,7 @@ class FootcareDetails extends React.Component {
                                   })
                                 );
                               } else {
-                         
+                                // console.log('please login first')
                                 Notiflix.Notify.Failure(
                                   "Please Login to add products to your wishlist."
                                 );
@@ -809,7 +960,9 @@ class FootcareDetails extends React.Component {
                           >
                             <span>Add to Wishlist</span>
                           </a>
-                     
+                          {/* <a href="#" class="paction add-compare" title="Add to Compare">
+                                                    <span>Add to Compare</span>
+                                                </a> */}
                         </div>
                       </div>
                     </div>
@@ -854,9 +1007,7 @@ class FootcareDetails extends React.Component {
                           100% GENUINE
                           <br />
                           PRODUCTS
-                          100% Genuine
-                          <br />
-                           Products
+                       
                         </h4>
                       </li>
                       <li>
@@ -873,8 +1024,11 @@ class FootcareDetails extends React.Component {
                   <div class="widget widget-banner">
                     <div class="banner banner-image">
                       <a href="#">
-                     
-                        <div id="adbanner"></div>
+                        {/* <img
+                          src="/assets/images/banners/banner-sidebar.jpg"
+                          alt="Banner Desc"
+                        /> */}
+                        {/* <div id="adbanner"></div> */}
                       </a>
                     </div>
                   </div>
@@ -947,7 +1101,10 @@ class FootcareDetails extends React.Component {
                         <p class="small-desc item-name">
                         <span style={{color:"#222222",fontWeight:"600"}}>Brand:</span> {info.fld_brand}
                         </p>
-                      
+                        {/* <p>
+                      <p class="price"> &#8377;{foot.fld_productprice}</p>
+                      <p class="extrapheight"></p>
+                    </p> */}
                     <p class="discount-height">
                         {info.fld_discountpercent == 0 ? (
                           <p class="price">&#8377; {info.fld_discountprice}</p>
@@ -996,17 +1153,17 @@ class FootcareDetails extends React.Component {
                                   PostApiCall.postRequest(
                                     {
                                       customer_id: login.fld_userid,
-                      
+                                      // customer_id : 13,
                                       variant_id: info.fld_id,
                                       product_category: "Footwear",
                                       quantity: 1,
                                       updated_on: moment().format("lll"),
                                       updated_by: login.fld_userid,
-                                  
+                                      // updated_by :13
                                     },
                                     "AddWishlist"
                                   ).then((results) =>
-                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     results.json().then((obj) => {
                                       if (
                                         results.status == 200 ||
@@ -1016,7 +1173,7 @@ class FootcareDetails extends React.Component {
                                         Notiflix.Notify.Info(
                                           "Product added to Wishlist."
                                         );
-                                     
+                                        // window.location.reload()
                                       } else {
                                         Notiflix.Loading.Remove();
                                         Notiflix.Notify.Failure(
@@ -1026,7 +1183,7 @@ class FootcareDetails extends React.Component {
                                     })
                                   );
                                 } else {
-                             
+                                  // console.log('please login first')
                                   Notiflix.Notify.Failure(
                                     "Please Login to add products to your wishlist."
                                   );
@@ -1037,7 +1194,7 @@ class FootcareDetails extends React.Component {
                               <i class="fas fa-heart"></i>
                             </button>{" "}
                           </li>
-                          
+                          {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
                         </ul>
                       </div>
                     </div>
@@ -1145,11 +1302,11 @@ class FootcareDetails extends React.Component {
                                                     "-"
                                                   )
                                               }`
-                                     
+                                               // updated_by :13
                                              },
                                              "AddShoppingCart"
                                            ).then((results) =>
-                                       
+                                             // const objs = JSON.parse(result._bodyText)
                                              results.json().then((obj) => {
                                                if (
                                                  results.status == 200 ||
@@ -1162,7 +1319,7 @@ class FootcareDetails extends React.Component {
                                                  Notiflix.Notify.Info(
                                                    "Product added to Cart."
                                                  );
-                                  
+                                                 // window.location.reload();
   
                                                  this.props.setcartitemcount(obj.data.length)
                                                  this.props.setcartamount(obj.data.reduce(function (result, item) {
@@ -1182,7 +1339,7 @@ class FootcareDetails extends React.Component {
   
                                           var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
   
-                                      
+                                          // console.log(cart_info)
                                           var newCart = cart_info != null ? cart_info : []
   
                                           if(cart_info != null){
@@ -1190,14 +1347,14 @@ class FootcareDetails extends React.Component {
                                         
                                             var item = newCart.filter(val => val.fld_variantid == info.fld_id && val.fld_productcategory == 'Footwear')
   
-                                      
+                                            // console.log(item)
                                             if(item[0] != undefined){
   
                                               var newIndex = newCart.indexOf(item[0])
   
                                               newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
   
-                                            
+                                              // console.log(newCart)
   
                                               localStorage.setItem('BMSCartData',JSON.stringify(newCart))
                                                 this.props.setcartitemcount(newCart.length)

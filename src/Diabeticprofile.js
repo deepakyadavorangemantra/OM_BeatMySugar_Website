@@ -4,7 +4,7 @@ import logo from './logo.svg';
 
 import Header from './Header'
 import Footer from './Footer'
-// // import News from './News';
+import News from './News';
 import Notiflix from "notiflix-react";
 import PostApiCall from './Api';
 import moment from 'moment';
@@ -93,7 +93,7 @@ class Diabeticprofile extends React.Component {
        
         Notiflix.Loading.Init({
             svgColor : '#507dc0'
-       
+            //  #507dc0'
           });
 
           
@@ -112,7 +112,7 @@ class Diabeticprofile extends React.Component {
             results.json().then((obj) => {
               if (results.status == 200 || results.status == 201) {
          
- 
+        //  console.log(ProfileData) 
         this.setState({
             ProfileData : obj.data[0],
             isDiabetic : obj.data[0].fld_areyoudiabetic == null ? 'No' : obj.data[0].fld_areyoudiabetic,
@@ -120,7 +120,7 @@ class Diabeticprofile extends React.Component {
             DateDiagnosed : obj.data[0].fld_diagnosed == null ? '' : new Date(obj.data[0].fld_diagnosed)
         })
 
-
+        // Notiflix.Loading.Remove()
 
     }
 }))
@@ -176,7 +176,7 @@ PostApiCall.postRequest(
             },"UpdateUserDiabeticProfile").then((results) => 
                 
             
-   
+           //    const objs = JSON.parse(result._bodyText)
               results.json().then(obj => {
         
             
@@ -200,12 +200,15 @@ PostApiCall.postRequest(
 
                 if(this.state.DiabetesType != ''){
 
-        
+                    // if(this.state.DateDiagnosed != ''){
 
 
                         this.OnSelfDia()
 
-                 
+                    // }else
+                    // {
+                    //     Notiflix.Notify.Failure('Please select when were you diagnosed with it.')
+                    // }
                 }else
                 {
                     Notiflix.Notify.Failure('Please select which type of diabetes you have.')
@@ -217,12 +220,12 @@ PostApiCall.postRequest(
 
         OnSaveFamilyProfile(){
             if(this.state.Name != ''){
-        
+                // if(this.state.Dob != ''){
                     if(this.state.Relationship != 'Select..' && this.state.Relationship != ''){
                         
                         if(this.state.DiabetesFamilyType != 'Select..' && this.state.DiabetesFamilyType != ''){
 
-                     
+                            // if(this.state.DateFamilyDiagnosed != ''){
 
 
                                 Notiflix.Loading.Dots('');
@@ -249,7 +252,7 @@ PostApiCall.postRequest(
                                 },"AddUserFamilyInfoMapping").then((results) => 
                                     
                                 
-                      
+                               //    const objs = JSON.parse(result._bodyText)
                                   results.json().then(obj => {
                             
                                 
@@ -263,7 +266,10 @@ PostApiCall.postRequest(
                     
                                 }))
 
-                           
+                            // }else
+                            // {
+                            //     Notiflix.Notify.Failure('Please select when your family menber was diagnosed with diabetes.')
+                            // }
                         }else
                         {
                             Notiflix.Notify.Failure('Please select which type of diabetes they have.')
@@ -273,7 +279,10 @@ PostApiCall.postRequest(
                     {
                         Notiflix.Notify.Failure('Please select your relationship with the family member.')
                     }
-               
+                // }else
+                // {
+                //     Notiflix.Notify.Failure('Please select date of birth of your family member.')
+                // }
             }else
             {
                 Notiflix.Notify.Failure('Please enter name of your family member.')
@@ -296,7 +305,27 @@ PostApiCall.postRequest(
                             <div class="dashboard-content" style={{    marginBottom: '3%'}}>
                             <h2>Diabetic Profile
 </h2>
+                            {/* <div class="row">
+                                <div class="col-md-6">
+                                <div class="card">
+                                        <div class="card-header">
+                                            Contact Information
+                                            <a href="#" class="card-edit">Edit your Account Details</a>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <p>
+                                            <i class="fas fa-user" style={{fontSize:"12px",marginRight:"7px"}}></i> Saravan Kumar</p>
+                                            <p><i class="fas fa-envelope" style={{fontSize:"12px",marginRight:"7px"}}></i> saravan@globaltrendz.com</p>
+                                            <p><i class="fas fa-phone-volume" style={{fontSize:"12px",marginRight:"7px"}}></i> 9500027017
+                                                
+                                            </p>
+                                            <a href="#">Change Password</a>
+                                        </div>
+                                    </div>
                             
+                                </div>
+                            </div> */}
                            
                              <form onSubmit={(e)=>{
                                  e.preventDefault()
@@ -381,7 +410,21 @@ PostApiCall.postRequest(
                                         <label for="acc-pass2">When were you diagnosed with diabetes ?</label>
 
                                             <div class="input-group required-field">
-                                                
+                                                 {/* <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span> */}
+                                                {/* <input 
+                                                value={this.state.DateDiagnosed}
+                                                onChange={(text)=>{
+                                                    this.setState({
+                                                        DateDiagnosed : text.target.value
+                                                    })
+                                                }}
+                                                type="text"
+                                                id="datepickerTwo"
+                                                max={moment().format('DD/MM/YYYY')}
+                                                class="form-control" name="date-pick"
+                                                placeholder="MM/YYYY"/> */}
 
                                     <DatePicker
                                 disabled={this.state.isVisible}
@@ -395,7 +438,7 @@ PostApiCall.postRequest(
                                 }}
                                maxDetail={"year"}
                                clearIcon={null}
-                                 
+                                  // format={'dd/MM/yy'}
                                 />
                                             </div>
                                         </div>
@@ -531,7 +574,24 @@ PostApiCall.postRequest(
                                             <div class="input-group required-field">
                                                 
                                                
-                                              
+                                                {/* <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                                <input class="form-control" 
+                                                value={this.state.Dob}
+                                                onChange={(text)=>{
+
+                                                    this.setState({
+                                                        Dob : text.target.value
+                                                    })
+
+                                                }}
+                                                id="datepickerThree"
+
+                                                 max={moment().format('DD/MM/YYYY')}
+                                                 onKeyDown={(e) => e.preventDefault()} 
+                                                placeholder="DD/MM/YYYY"/> */}
+
                                 <DatePicker
                                 
                                 onKeyDown={(e) => e.preventDefault()}
@@ -543,7 +603,8 @@ PostApiCall.postRequest(
                                                     })
 
                                                 }}
-                                            
+                                                // maxDetail={"year"}
+                                  // format={'dd/MM/yy'}
                                   maxDate={new Date()}
                                   clearIcon={null}
                                 />
@@ -641,7 +702,22 @@ PostApiCall.postRequest(
                                             <div class="input-group required-field">
                                                
                                                
-                                               
+                                                {/* <span class="input-group-text">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                                
+                                                <input 
+                                                value={this.state.DateFamilyDiagnosed}
+                                                onChange={(text)=>{
+                                                    this.setState({
+                                                        DateFamilyDiagnosed : text.target.value
+                                                    })
+                                                }}
+                                                id="datepickerFour"
+                                                type="text"
+                                                max={moment().format('YYYY-MM-DD')}
+                                                class="form-control"  name="date-pick"
+                                                placeholder="MM/YYYY"/> */}
 
                                                         <DatePicker
                                                         
@@ -653,7 +729,7 @@ PostApiCall.postRequest(
                                                     })
                                                 }}
                                                                         maxDetail={"year"}
-                                        
+                                                        // format={'dd/MM/yy'}
                                                         maxDate={new Date()}
                                                         clearIcon={null}
                                                         />
@@ -728,7 +804,7 @@ PostApiCall.postRequest(
                                                 },"DeleteUserFamilyInfoMapping").then((results) => 
                                                     
 
-                                     
+                                                //    const objs = JSON.parse(result._bodyText)
                                                 results.json().then(obj => {
 
 
@@ -743,7 +819,7 @@ PostApiCall.postRequest(
                                                 }))
 
                                              }} class="card-edit">Remove</a>
-                                        
+                                            {/* <a href="#" class="card-edit">Edit</a>  */}
                                         </div>
 
                                               

@@ -25,13 +25,16 @@ class VerifyEmailSuccess extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
+      //  #507dc0'
     });
+    // Notiflix.Loading.Dots()
     PostApiCall.postRequest(
         {
           email: this.props.match.params.email
         },
         "VerifyEmail"
       ).then((results1) =>
+        // const objs = JSON.parse(result._bodyText)
         results1.json().then((obj1) => {
           if (results1.status == 200 || results1.status == 201) {
 

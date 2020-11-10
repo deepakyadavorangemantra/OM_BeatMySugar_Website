@@ -27,13 +27,13 @@ class Contact extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
   }
 
   Submit() {
     if (this.state.Name != "") {
-      
+      // if (this.state.CompanyName != "") {
         if (this.state.Email != "") {
           if (this.state.EmailRegex.test(this.state.Email)) {
             if (this.state.Mobile != "" && this.state.Mobile.length != 10) {
@@ -52,7 +52,7 @@ class Contact extends React.Component {
                   },
                   "ContactUsMailer"
                 ).then((results2) =>
-   
+                  // const objs = JSON.parse(result._bodyText)
                   results2.json().then((obj2) => {
                     if (results2.status == 200 || results2.status == 201) {
                       Notiflix.Loading.Remove();
@@ -77,7 +77,9 @@ class Contact extends React.Component {
         } else {
           Notiflix.Notify.Failure("Please enter your Email Address.");
         }
-    
+      // } else {
+      //   Notiflix.Notify.Failure("Please enter your Company Name.");
+      // }
     } else {
       Notiflix.Notify.Failure("Please enter your Name");
     }
@@ -102,7 +104,8 @@ class Contact extends React.Component {
             <div class="contact-box">
               <div class="row">
                 <div class="col-md-12">
-               
+                  {/* <h2 style={{ marginBottom: "20px" }}>Write to Us</h2> */}
+                  {/* <p style={{fontSize: "12px"}}>Get in touch with us and our team would be glad to assist you.</p> */}
                 </div>
               </div>
               <div class="row">
@@ -121,7 +124,7 @@ class Contact extends React.Component {
                     <p style={{ textAlign: "left" }}>
                       We would definitely get back to you !
                     </p>
-                 
+                    {/* <form action="#"> */}
                     <div class="row">
                       <div class="form-group required-field col-md-6">
                         <label for="contact-name">Name</label>
@@ -211,7 +214,7 @@ class Contact extends React.Component {
                         Submit
                       </button>
                     </div>
-             
+                    {/* </form> */}
                   </div>
                 </div>
 

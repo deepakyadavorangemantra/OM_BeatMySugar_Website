@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 
 import Header from './Header'
-// // import News from './News';
+import News from './News';
 import Footer from "./Footer";
 import PostApiCall from "./Api";
 import Notiflix from "notiflix-react";
@@ -118,7 +118,10 @@ class Editaddress extends React.Component {
         this.setState({
           CountryId: country.target.value
         });
-      
+        // console.log(this.props.masterDetails.CountryData[country.target.value - 1]);
+        // this.props.countryDiag(
+        //   this.state.CountryData[country.target.value - 1].label
+        // );
         this.setState({
             Country : this.state.CountryData[country.target.value - 1].label
         })
@@ -131,10 +134,10 @@ class Editaddress extends React.Component {
           },
           "GetState"
         ).then(results =>
-     
+          // const objs = JSON.parse(result._bodyText)
           results.json().then(obj => {
             if (results.status == 200 || results.status == 201) {
-    
+            //   this.props.stateDataDiag(obj.data);
               this.setState({
                   StateData : obj.data
               })
@@ -145,10 +148,11 @@ class Editaddress extends React.Component {
                 },
                 "GetCity"
               ).then(results =>
-           
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objcity => {
                   if (results.status == 200 || results.status == 201) {
-                    
+                    // this.props.cityDataDiag(objcity.data);
+                    // this.props.stateDiag(obj.data[0].label);
                     this.setState({ City: objcity.data[0].value ,
                     State : obj.data[0].label,
                     CityData : objcity.data
@@ -175,7 +179,7 @@ class Editaddress extends React.Component {
           if (
             this.state.StateData[i].value == state.target.value
           ) {
-           
+            // this.props.stateDiag(this.props.diagnosticReducer.StateData[i].label);
             this.setState({
                 State : this.state.StateData[i].label
             })
@@ -190,14 +194,14 @@ class Editaddress extends React.Component {
           },
           "GetCity"
         ).then(results =>
-          
+          // const objs = JSON.parse(result._bodyText)
           results.json().then(obj => {
             if (results.status == 200 || results.status == 201) {
-            
+            //   this.props.cityDataDiag(obj.data);
             this.setState({
                 CityData : obj.data,
                 City : obj.data[0].label,
-               
+                // CityId : obj.data[0].value
             })
       
 
@@ -207,7 +211,7 @@ class Editaddress extends React.Component {
         );
       }
       onChangeCity(city) {
-  
+        // this.props.setstaffpermanentcity(city.target.value);
         this.setState({
           CityId: city.target.value
         });
@@ -218,7 +222,7 @@ class Editaddress extends React.Component {
           i++
         ) {
           if (this.state.CityData[i].value == city.target.value) {
-         
+            // this.props.cityDiag(this.state.CityData[i].label);
             this.setState({
                 City : this.state.CityData[i].label
             })
@@ -250,7 +254,7 @@ class Editaddress extends React.Component {
 
                                     if(this.state.Pincode != ''){
 
-                               
+                                        // console.log(this.state)
                                         Notiflix.Loading.Dots('Please wait...');
                                         var log = localStorage.getItem('CustomerLoginDetails')
                                         var login = JSON.parse(log)
@@ -272,11 +276,11 @@ class Editaddress extends React.Component {
                                             },
                                             "AddUserAddressMapping"
                                           ).then(results =>
-                                
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then(obj => {
                                               if (results.status == 200 || results.status == 201) {
 
-                                           
+                                                // this.props.history.goBack();
                                                 window.location.href = '/addressbook'
                                              
                                               }
@@ -335,7 +339,27 @@ class Editaddress extends React.Component {
                             <div class="dashboard-content">
                             <h2>Add New Address
 </h2>
-                           
+                            {/* <div class="row">
+                                <div class="col-md-6">
+                                <div class="card">
+                                        <div class="card-header">
+                                            Contact Information
+                                            <a href="#" class="card-edit">Edit your Account Details</a>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <p>
+                                            <i class="fas fa-user" style={{fontSize:"12px",marginRight:"7px"}}></i> Saravan Kumar</p>
+                                            <p><i class="fas fa-envelope" style={{fontSize:"12px",marginRight:"7px"}}></i> saravan@globaltrendz.com</p>
+                                            <p><i class="fas fa-phone-volume" style={{fontSize:"12px",marginRight:"7px"}}></i> 9500027017
+                                                
+                                            </p>
+                                            <a href="#">Change Password</a>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                            </div> */}
                            
                              <form onSubmit={(e)=>{
                                  e.preventDefault()
@@ -350,7 +374,7 @@ class Editaddress extends React.Component {
 
                                 <div class="row">
                                 <div class="col-md-12 " >
-                   
+                                {/* <form class="white-bg"> */}
                                     <div class="row">
                                         <div class="col-sm-12">
                                             
@@ -404,7 +428,7 @@ class Editaddress extends React.Component {
                                     <div class="form-group required-field">
                                         <label for="acc-email">Area, Colony, Street, Sector, Village</label>
                                         <input 
-                                        
+                                        // type="email" 
                                          value={this.state.Street}
                                          onChange={(text)=>{
                                              this.setState({
@@ -506,7 +530,7 @@ class Editaddress extends React.Component {
                                 
 
                                  
-                             
+                                {/* </form> */}
                                 </div>
                                
                                 </div>
@@ -522,7 +546,7 @@ class Editaddress extends React.Component {
 
                                 <div class="required text-right">* Required Field</div>
                                 <div class="form-footer">
-                               
+                                    {/* <a href="#"><i class=""></i>Edit</a> */}
 
                                     <div class="form-footer-right">
                                         <button 

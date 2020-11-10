@@ -4,7 +4,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Header from "./Header";
 import Footer from "./Footer";
-// import News from "./News";
+import News from "./News";
 
 import Parser from "html-react-parser";
 import GetApiCall from "./GetApi";
@@ -88,14 +88,14 @@ class BlogInner extends React.Component {
 
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
 
 
 
     Notiflix.Loading.Dots("Please wait...");
 
-   
+    // console.log(this.props.match.params.blogid.split('-')[0])
 
     PostApiCall.postRequest(
       {
@@ -103,16 +103,17 @@ class BlogInner extends React.Component {
       },
       "GetBlogDetails"
     ).then((resultsblog) =>
-  
+      // const objs = JSON.parse(result._bodyText)
       resultsblog.json().then((objblog) => {
         if (resultsblog.status == 200 || resultsblog.status == 201) {
-       
+          //    var data =  localStorage.getItem('BlogDetails')
           var blog = objblog.data[0];
 
-
+          // console.log(blog)
+          // console.log(objblog.data[0].fld_articlecontent)
 
           this.props.setBlogDetails(blog);
-       
+          // console.log(blog.fld_likecount)
           this.setState({
             likeCount: blog.fld_likecount,
             shareUrl: window.location.href,
@@ -121,7 +122,7 @@ class BlogInner extends React.Component {
           var login = localStorage.getItem("CustomerLoginDetails");
           var details = JSON.parse(login);
 
-
+          // console.log(details)
           this.setState({
             LoginData: details,
           });
@@ -134,10 +135,10 @@ class BlogInner extends React.Component {
               },
               "GetBlogCustomerLikedStatus"
             ).then((results) =>
-            
+              // const objs = JSON.parse(result._bodyText)
               results.json().then((obj) => {
                 if (results.status == 200 || results.status == 201) {
-            
+                  // console.log(obj.data)
                   if (JSON.stringify(obj.data) != "[]") {
                     this.setState({
                       thumb: obj.data[0].fld_liked == 0 ? false : true,
@@ -154,10 +155,10 @@ class BlogInner extends React.Component {
             },
             "GetBlogComments"
           ).then((results) =>
-
+            // const objs = JSON.parse(result._bodyText)
             results.json().then((obj) => {
               if (results.status == 200 || results.status == 201) {
-          
+                // console.log(obj.data);
 
                 this.setState({
                   BlogComments: obj.data,
@@ -188,7 +189,7 @@ class BlogInner extends React.Component {
           },
           "AddBlogComments"
         ).then((results) =>
-       
+          // const objs = JSON.parse(result._bodyText)
           results.json().then((obj) => {
             if (results.status == 200 || results.status == 201) {
               Notiflix.Loading.Remove();
@@ -207,7 +208,12 @@ class BlogInner extends React.Component {
                       }
                     ]
                   });
-             
+              // window.location.reload();
+              // Notiflix.Report.Success(
+              //   "Comment Posted",
+              //   "You are successfully posted a comment, it will be published after sometime.",
+              //   "Ok"
+              // );
             } else {
               Notiflix.Loading.Remove();
             }
@@ -223,7 +229,8 @@ class BlogInner extends React.Component {
 
 
   onViewContributor(name, id){
-
+// console.log(name)
+// console.log(id)
 window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
   }
 
@@ -235,7 +242,27 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
           <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
               <ol class="breadcrumb">
-               
+                {/* <li class="breadcrumb-item">
+                  <a href="/">
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                <a href="/healthknowledge"> Health Knowledge</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                  {this.props.BlogDetails.BlogDetails.fld_category}
+                </li>
+                {this.props.BlogDetails.BlogDetails.fld_subcategory == "" || this.props.BlogDetails.BlogDetails.fld_subcategory == null ? ( 
+                  ""
+                ) : (
+                  <li class="breadcrumb-item" aria-current="page">
+                    {this.props.BlogDetails.BlogDetails.fld_subcategory}
+                  </li>
+                )}
+                <li class="breadcrumb-item active" aria-current="page">
+                  {this.props.BlogDetails.BlogDetails.fld_title}
+                </li> */}
               </ol>
             </div>
             {/* <!-- End .container --> */}
@@ -321,7 +348,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                               </div>
                             </div>
 
-                       
+                            {/* <span style={{ fontSize: "12px" }}> Doctor</span> */}
                           </div>
 
                           {this.props.BlogDetails.BlogDetails.fld_reviewedby == '' || this.props.BlogDetails.BlogDetails.fld_reviewedby == null
@@ -368,7 +395,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                             
                             </div>
                           
-                  
+                            {/* <span style={{ fontSize: "12px" }}> Doctor</span> */}
                           </div>
   }
                         </div>
@@ -384,7 +411,8 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                           "</p>"
                         ).replace(/font-family/g, "")
                       )}
-                     
+                      {/* {Parser(JSON.stringify(this.props.BlogDetails.BlogDetails.fld_articlecontent))} */}
+                      {/* {Parser((this.props.BlogDetails.BlogDetails.fld_articlecontent).replace(/style/g, ''))}    */}
                     </div>
                     {/* <!-- End .entry-content --> */}
 
@@ -394,13 +422,13 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                           <a
                             style={{ float: "right" }}
                             onClick={() => {
-                 
+                              // console.log('clicked')
                               var login = localStorage.getItem(
                                 "CustomerLoginDetails"
                               );
                               var details = JSON.parse(login);
 
-           
+                              // console.log(details)
 
                               if (details != null) {
                                 this.setState(
@@ -424,7 +452,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                                       },
                                       "AddCustomerBlogLikeStatus"
                                     ).then((results) =>
-                                     
+                                      // const objs = JSON.parse(result._bodyText)
                                       results.json().then((obj) => {
                                         if (results.status == 200 || results.status == 201) {
                                           PostApiCall.postRequest(
@@ -434,7 +462,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                                             },
                                             "UpdateLikeCount"
                                           ).then((results) =>
-                                       
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then((obj) => {
                                               if (results.status == 200 ||results.status == 201) {
                                               }
@@ -468,14 +496,14 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                           <li>
                             <FacebookShareButton
                               url={this.state.shareUrl}
-                           
+                              // quote={this.props.BlogDetails.BlogDetails.fld_title}
                             >
                               <FacebookIcon size={32} round={false} />
                             </FacebookShareButton>
                           </li>
                           <li>
                             <TwitterShareButton
-            
+                              // title={this.props.BlogDetails.BlogDetails.fld_title}
                               url={this.state.shareUrl}
                             >
                               <TwitterIcon size={32} round={false} />
@@ -483,7 +511,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                           </li>
                           <li>
                             <LinkedinShareButton
-                   
+                              // title={this.props.BlogDetails.BlogDetails.fld_title}
                               url={this.state.shareUrl}
                             >
                               <LinkedinIcon size={32} round={false} />
@@ -491,7 +519,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                           </li>
                           <li>
                             <EmailShareButton
-                        
+                              // title={this.props.BlogDetails.BlogDetails.fld_title}
                               url={this.state.shareUrl}
                             >
                               <EmailIcon size={32} round={false} />
@@ -514,7 +542,7 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                       </h3>
 
                       <form action="#">
-                    
+                        {/* <img src="assets/images/user.png" class="user-comments-img" /> */}
                         <div class="form-group">
                           <div class="row">
                             <div class="col-md-1">
@@ -535,11 +563,11 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                               </p>
 
                               <ul class="commentbox-social">
-                  
+                                {/* <li><a href="" class=""><i class="fas fa-thumbs-up"></i> 13</a></li> */}
                               </ul>
                             </div>
                           </div>
-                     
+                          {/* {this.state.LoginData != null ?  */}
                           <textarea
                             cols="30"
                             rows="5"
@@ -551,21 +579,22 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                               });
                             }}
                           ></textarea>
-                   
+                          {/* : 'Please Login to Comment.' }   */}
                         </div>
                         {/* <!-- End .form-group --> */}
 
-                       
+                        {/* {this.state.LoginData != null ?    */}
                         <div class="form-footer">
                           <Button
-                         
+                            //  type="submit"
                             class="btn btn-primary"
                             onClick={this.onPostCommnet.bind(this)}
                           >
                             Post Comment
                           </Button>
                         </div>
-     
+                        {/* : <div></div> } */}
+                        {/* <!-- End .form-footer --> */}
                       </form>
                       <div class="comment-box" style={{paddingTop: '15px'}}>
                         {this.state.BlogComments.map((blog, index) => (
@@ -582,12 +611,23 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
                               </p>
                               <p>{blog.fld_comment}</p>
                               <ul class="commentbox-social">
-                      
+                                {/* <li><a href="" class=""><i class="fas fa-thumbs-up"></i> 13</a></li> */}
                               </ul>
                             </div>
                           </div>
                         ))}
-                       
+                        {/* <div class="row">
+                                                    <div class="col-md-1">
+                                                         <img src="assets/images/user.png" class="user-commentbox-img" />
+                                                    </div>
+                                                    <div class="col-md-11 minus-left">
+                                                         <p><b>Renit Daniel</b></p>
+                                                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                                         <ul class="commentbox-social">
+                                                                {/* <li><a href="" class=""><i class="fas fa-thumbs-up"></i> 15</a></li> */}
+                        {/* </ul>
+                                                        </div>
+                                                </div>  */}
                       </div>
                     </div>
                     {/* <!-- End .comment-respond --> */}
@@ -600,7 +640,9 @@ window.location.href = `/contributors/${id+"-"+name.replace( / /g,'-')}`
 
               <BlogCategorySection />
           
-   
+              {/* <div class="col-md-3">
+                          <News></News>
+                          </div> */}
             </div>
           </div>
 

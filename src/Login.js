@@ -39,12 +39,12 @@ class Login extends React.Component {
   componentDidMount() {
     Notiflix.Loading.Init({
       svgColor: "#507dc0",
-
+      //  #507dc0'
     });
   }
 
   onLogin() {
-
+    // console.log('clicked')
 
     if(this.state.ButtonText == 'Send OTP'){
 
@@ -59,7 +59,7 @@ class Login extends React.Component {
           },
           "IfMobileExists"
         ).then((results1) =>
-         
+          // const objs = JSON.parse(result._bodyText)
           results1.json().then((obj1) => {
             if (results1.status == 200 || results1.status == 201) {
 
@@ -70,7 +70,7 @@ class Login extends React.Component {
               var random = Math.floor(100000 + Math.random() * 900000);
 
               fetch(
-                "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
+                "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
                   this.state.email +
                   "&msg=Hi " +
                   JSON.parse(JSON.stringify(obj1.data[0])).fld_name + 
@@ -116,7 +116,7 @@ class Login extends React.Component {
 
 
   OnLoginViaOTP() {
-
+    // console.log(this.state.MobileOtp);
 
     if (this.state.EnteredOtp != "") {
       if (this.state.EnteredOtp == this.state.MobileOtp) {
@@ -130,7 +130,7 @@ class Login extends React.Component {
           },
           "CustomerAuthMobile"
         ).then((results) =>
-         
+          // const objs = JSON.parse(result._bodyText)
           results.json().then((obj) => {
             if (results.status == 200 || results.status == 201) {
               localStorage.setItem(
@@ -139,7 +139,7 @@ class Login extends React.Component {
               );
 
               Notiflix.Loading.Remove();
-            
+              // window.location.reload()
 
               var path = JSON.parse(localStorage.getItem("PathCame"));
           
@@ -169,7 +169,7 @@ class Login extends React.Component {
 
   OnLoginInitiatedEmail(){
     if (this.state.email != "") {
- 
+      // if(this.state.EmailRegex.test(this.state.email)){
 
       if (this.state.password != "") {
         Notiflix.Loading.Dots("Please wait...");
@@ -185,7 +185,7 @@ class Login extends React.Component {
           },
           "CustomerLoginAuth"
         ).then((results) =>
-      
+          // const objs = JSON.parse(result._bodyText)
           results.json().then((obj) => {
             if (results.status == 200 || results.status == 201) {
               localStorage.setItem(
@@ -194,7 +194,7 @@ class Login extends React.Component {
               );
 
               Notiflix.Loading.Remove();
-        
+              // window.location.reload()
               var path = JSON.parse(localStorage.getItem("PathCame"));
           
 
@@ -217,7 +217,8 @@ class Login extends React.Component {
                     {
                       label: 'Send Verification Link',
                       onClick: () => {
-                    
+                          // Notiflix.Loading.Dots('');
+                          // console.log('send verify mail mailer.')
 
                           PostApiCall.postRequest(
                             {
@@ -227,7 +228,7 @@ class Login extends React.Component {
                             },
                             "GetUserInfoEmail"
                           ).then((resultse) =>
-                      
+                            // const objs = JSON.parse(result._bodyText)
                             resultse.json().then((obje) => {
                               if (
                                 resultse.status == 200 ||
@@ -243,7 +244,7 @@ class Login extends React.Component {
                           },
                           "VerifyMailMailer"
                         ).then((results2) =>
-                    
+                          // const objs = JSON.parse(result._bodyText)
                           results2.json().then((obj2) => {
                             if (
                               results2.status == 200 ||
@@ -280,12 +281,12 @@ class Login extends React.Component {
               {
 
                 Notiflix.Notify.Failure('Your email is not regitered with us, Click Create Account to Register.');
-    
+                // Notiflix.Notify.Failure('You have entered an invalid email address.');
               }else
               {
                 Notiflix.Notify.Failure(obj.data)
               }
-       
+              // Notiflix.Notify.Failure(obj.data);
             }
           })
         );
@@ -293,14 +294,19 @@ class Login extends React.Component {
         Notiflix.Notify.Failure("Please enter Password.");
       }
 
-     
+      // }
+
+      // else
+      // {
+      //   Notiflix.Notify.Failure('Please enter valid Email Address.');
+      // }
     } else {
       Notiflix.Notify.Failure("Please enter your Email.");
     }
   }
 
   responseFacebook = (response) => {
-    
+    // console.log(response);
     if (response.name != null && response.name != undefined) {
       Notiflix.Loading.Dots("Please wait...");
 
@@ -353,7 +359,7 @@ class Login extends React.Component {
   };
 
   responseGoogle = (response) => {
- 
+    // console.log(response);
 
     if (response.profileObj != null && response.profileObj != undefined) {
       Notiflix.Loading.Dots("Please wait...");
@@ -423,9 +429,9 @@ class Login extends React.Component {
         },
         "IfEmailExists"
       ).then((results1) =>
-       
+        // const objs = JSON.parse(result._bodyText)
         results1.json().then((obj1) => {
-   
+          // console.log(obj1.data)
           if (results1.status == 200 || results1.status == 201) {
 
             Notiflix.Loading.Remove();
@@ -440,9 +446,9 @@ class Login extends React.Component {
               },
               "GetIfEmailVerified"
             ).then((resultsv) =>
-        
+              // const objs = JSON.parse(result._bodyText)
               resultsv.json().then((objv) => {
-             
+                // console.log(obj1.data)
                 if (resultsv.status == 200 || resultsv.status == 201) {
 
             PostApiCall.postRequest(
@@ -451,9 +457,9 @@ class Login extends React.Component {
               },
               "GetCustomerEmailDetails"
             ).then((results3) =>
-
+              // const objs = JSON.parse(result._bodyText)
               results3.json().then((obj3) => {
-    
+                // console.log(obj1.data)
                 if (results3.status == 200 || results3.status == 201) {
             
             PostApiCall.postRequest(
@@ -464,7 +470,7 @@ class Login extends React.Component {
               },
               "ForgotPasswordMailer"
             ).then((results2) =>
-
+              // const objs = JSON.parse(result._bodyText)
               results2.json().then((obj2) => {
                 if (results2.status == 200 || results2.status == 201) {
                   const data = {
@@ -509,7 +515,7 @@ class Login extends React.Component {
       });
 
       fetch(
-        "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
+        "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=BMSIND&dest=" +
           this.state.CustomerData.fld_mobile +
           "&msg=Hi " +
           this.state.CustomerData.fld_name +
@@ -537,7 +543,7 @@ class Login extends React.Component {
               <div class="col-lg-4 col-md-3 col-sm-3"></div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
                   <div class="login-section">
-          
+                    {/* <h3>Enter OTP</h3> */}
                     <h3>Enter One Time Password (OTP)</h3>
                     <h5>
                       One Time Password (OTP) has been sent to your <br />
@@ -556,7 +562,7 @@ class Login extends React.Component {
                           }
                           value={this.state.EnteredOtp}
                           numInputs={6}
-                    
+                          //   separator={<span>-<span>}
                         />
                       </div>
   
@@ -599,7 +605,27 @@ class Login extends React.Component {
                 <div class="login-section">
                   <h3>Login to BeatMySugar</h3>
 
-                  
+                  {/* <ul class="login-list-img">
+                                            <li> */}
+                  {/* <img src="assets/images/fb.png"></img> */}
+                  {/* <FacebookLogin 
+        appId="481436436037785" //APP ID NOT CREATED YET
+        fields="name,email,picture"
+        callback={this.responseFacebook}
+      /> */}
+                  {/* </li> 
+                                            <li> */}
+                  {/* <img src="assets/images/google.png"></img> */}
+                  {/* <GoogleLogin
+        clientId="247460357089-maqdecd495ligtqftbvddlm9p6p36mic.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+        buttonText="LOGIN WITH GOOGLE"
+        fields="name,email,picture"
+        onSuccess={this.responseGoogle}
+        onFailure={this.responseGoogle}
+      /> */}
+                  {/* </li>
+                                        </ul> */}
+                  {/* <p>- OR USING EMAIL -</p> */}
                   <div class="input-boxes-login col-md-12">
                     <input
                 
