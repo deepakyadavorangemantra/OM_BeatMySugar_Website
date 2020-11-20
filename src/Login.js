@@ -76,7 +76,7 @@ class Login extends React.Component {
                   JSON.parse(JSON.stringify(obj1.data[0])).fld_name + 
                   ", OTP for login is :" +
                   random +
-                  ". DO NOT share this OTP with anyone. Team BeatMySugar"
+                  ". DO NOT share this OTP with anyone. Team BeatMySugar",{mode:'no-cors'}
               ).then((res) => res.json());
 
               this.setState({
