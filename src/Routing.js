@@ -87,7 +87,7 @@ import Termsmarketplace from './Termsmarketplace';
 import OrderSuccess from "./OrderSuccess";
 import NotFound from "./NotFound";
 import DiwalioffersListing from "./DiwalioffersListing";
-
+import Education from "./Pages/Education";
 class Routing extends Component {
   render() {
     return (
@@ -394,6 +394,7 @@ class Routing extends Component {
             path={"/festive-offers"}
             component={DiwalioffersListing}
           />
+        <Route exact path={"/education"} component={Education} />
       </BrowserRouter>
     );
   }

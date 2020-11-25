@@ -1171,6 +1171,11 @@ class Menu extends React.Component {
                              class="">Diagonstic Labs</a>
                                
                             </li> */}
+                    <li class="hvr-overline-from-left">
+                      <a href="/education" class="">
+                        Education
+                      </a>
+                    </li>
 
                     <li style={{ float: "right", paddingRight: "10px" }}>
                       {/* //    <a href="/personalinformation" class="cont-details prescription-btn">Upload Prescription</a> */}
@@ -1551,6 +1556,11 @@ class Menu extends React.Component {
                 <li class="hvr-overline-from-left">
                   <a href="/dietitian" class="">
                     Dietitians
+                  </a>
+                </li>
+                <li class="hvr-overline-from-left">
+                  <a href="/education" class="">
+                    Education
                   </a>
                 </li>
                 {/* 
