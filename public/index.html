@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xml:lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="google-site-verification"
+      content="VNmiwF7rHUfcosohbnCw53B_7FR79X5I3VyhF5t5g8c"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+
+
+    <title>$OG_TITLE</title>
+    <meta name="description" content="$OG_DESCRIPTION" />
+    <meta name="keywords" content="$KEYWORDS" />
+    <meta property="og:description" content="$OG_DESCRIPTION" />
+    <meta property="og:title"  content="$OG_TITLE" />
+    <meta property="og:image" content="$OG_IMAGE" />
+    <meta property="og:url"       content="$OG_URL" />
+    <!-- <meta property="og:type" content="$OG_TYPE" /> -->
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/images/favicon.jpg"
+      sizes="32x32"
+    />
+
+    <!-- Plugins CSS File -->
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="/assets/css/jquery-ui.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+      href="/assets/css/font.css"
+    />
+    <!-- Main CSS File -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fontawesome.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/brands.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/bs_leftnavi.css" />
+
+
+    <style>
+    
+    </style>
+
+
+
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NVRPN5R");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body lang="en">
+    <div id="fb-root"></div>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NVRPN5R"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden;"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0"
+      nonce="ETN6j7Cw"
+    ></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/plugins.min.js"></script>
+
+    <script src="/assets/js/jquery-ui.js"></script>
+
+    <!-- Main JS File -->
+
+    <script src="/assets/js/main.min.js"></script>
+
+    <script>
+      $(function () {
+        $("#tabs").tabs();
+      });
+    </script>
+   
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-162428907-1"
+    ></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-162428907-1");
+    </script>
+
+
+    <script>
+      $(document).ready(function () {
+        $(".dropdown").click(function (event) {
+          event.stopPropagation();
+          $(".dropdown-content").slideToggle("slow");
+        });
+        $(".dropdown-content").on("click", function (event) {
+          event.stopPropagation();
+        });
+      });
+
+      $(document).on("click", function () {
+        $(".dropdown-content").hide();
+      });
+    </script>
+   
+
+    <script>
+      var nav = function () {
+        $(document).on("click", "a", function () {
+          var gw_nav = $(".gw-nav");
+          gw_nav.find("li").removeClass("active");
+          $(".gw-nav > li > ul > li").removeClass("active");
+
+          var checkElement = $(this).parent();
+          var ulDom = checkElement.find(".gw-submenu")[0];
+
+          if (ulDom == undefined) {
+            checkElement.addClass("active");
+            $(".gw-nav").find("li").find("ul:visible").slideUp();
+            return;
+          }
+          if (ulDom.style.display != "block") {
+            gw_nav.find("li").find("ul:visible").slideUp();
+            gw_nav
+              .find("li.init-arrow-up")
+              .removeClass("init-arrow-up")
+              .addClass("arrow-down");
+            gw_nav
+              .find("li.arrow-up")
+              .removeClass("arrow-up")
+              .addClass("arrow-down");
+            checkElement.removeClass("init-arrow-down");
+            checkElement.removeClass("arrow-down");
+            checkElement.addClass("arrow-up");
+            checkElement.addClass("active");
+            checkElement.find("ul").slideDown(300);
+          } else {
+            checkElement.removeClass("init-arrow-up");
+            checkElement.removeClass("arrow-up");
+            checkElement.removeClass("active");
+            checkElement.addClass("arrow-down");
+            checkElement.find("ul").slideUp(300);
+          }
+        });
+        $(".gw-nav > li > ul > li > a").click(function () {
+          $(this).parent().parent().parent().removeClass("active");
+          $(".gw-nav > li > ul > li").removeClass("active");
+          $(this).parent().addClass("active");
+        });
+      };
+      nav();
+    </script>
+
+
+<!-- 
+<script>
+  $(document).ready(function () {
+    var images = [
+      "<img src='/assets/images/Product Page Top Banners/bms_internal_final-01.jpg'>",
+      // "<img src='/assets/images/Product Page Top Banners/bms_internal_final-02.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/bms_internal_final-03.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/bms_internal_final-04.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/bms_internal_final-05.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/bms_internal_final-06.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/bms_internal_final-07.jpg'>",
+    ];
+
+    var index = Math.floor(Math.random() * images.length);
+
+    document.getElementById("myTarget").innerHTML = images[index];
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    var images = [
+      "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal1.jpg'>",
+      // "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal2.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal3.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal4.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal5.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal6.jpg'>",
+      "<img src='/assets/images/Product Page Top Banners/Mobile Version/BMS_Banners_Mobile_Internal7.jpg'>",
+    ];
+
+    var index = Math.floor(Math.random() * images.length);
+
+    document.getElementById("myTargetMobile").innerHTML = images[index];
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    var images = [
+      "<img src='/assets/images/Side Banners/BMS_side_banners_new1.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new2.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new4.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new3.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new5.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new6.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new7.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new8.png'>",
+      // "<img src='/assets/images/Side Banners/BMS_side_banners_new9.png'>",
+    ];
+
+    var index = Math.floor(Math.random() * images.length);
+
+    document.getElementById("adbanner").innerHTML = images[index];
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    var images = [
+      "<img src='/assets/images/blog-banners/B24.png'>",
+      "<img src='/assets/images/blog-banners/B31.png'>",
+      "<img src='/assets/images/blog-banners/B46.png'>",
+      "<img src='/assets/images/blog-banners/B69.png'>",
+      "<img src='/assets/images/blog-banners/B77.png'>",
+      "<img src='/assets/images/blog-banners/B78.png'>",
+      "<img src='/assets/images/blog-banners/B93.png'>",
+      "<img src='/assets/images/blog-banners/B94.png'>",
+      "<img src='/assets/images/blog-banners/B95.png'>",
+      "<img src='/assets/images/blog-banners/B109.png'>",
+      "<img src='/assets/images/blog-banners/B110.png'>",
+      "<img src='/assets/images/blog-banners/B131.png'>",
+      "<img src='/assets/images/blog-banners/B154.png'>",
+      "<img src='/assets/images/blog-banners/B210.png'>",
+      "<img src='/assets/images/blog-banners/B212.png'>",
+      "<img src='/assets/images/blog-banners/B213.png'>",
+      "<img src='/assets/images/blog-banners/B174.jpeg'>",
+      "<img src='/assets/images/blog-banners/B175.png'>",
+      "<img src='/assets/images/blog-banners/B186.jpeg'>",
+      "<img src='/assets/images/blog-banners/B188.jpeg'>",
+    ];
+
+    var index = Math.floor(Math.random() * images.length);
+
+    document.getElementById("blogbanner").innerHTML = images[index];
+  });
+</script> -->
+
+
+ 
+  
+  </body>
+</html>
