@@ -38,7 +38,8 @@ class Menu extends React.Component {
       OfferData : [],
 
       AccessoriesCategory : [],
-      AccessoriesData : []
+      AccessoriesData : [],
+      CovidCategory : []
     };
   }
 
@@ -86,6 +87,13 @@ class Menu extends React.Component {
           });
         
 
+          GetApiCall.getRequest("GetCovidCategoryWebsiteData").then((resultcov) =>
+          resultcov.json().then((objcov) => {
+            // console.log(obj.data)
+            this.setState({
+              CovidCategory: objcov.data,
+            });
+
 
         var dts = [];
         dts.push({
@@ -107,6 +115,7 @@ class Menu extends React.Component {
           fld_status: "Active",
           fld_page: "socks",
         });
+        dts.push(...objcov.data);
         dts.push(...objacc.data);
         dts.push({
           fld_category: "Health Knowledge",
@@ -122,18 +131,13 @@ class Menu extends React.Component {
           // FoodRef : obj.data
         });
       }))
+    }))
       })
     );
 
 
 
-    GetApiCall.getRequest("GetAccessoriesCategoryWebsiteData").then((resultdes) =>
-    resultdes.json().then((obj) => {
-      // console.log(obj.data)
-      this.setState({
-        AccessoriesCategory: obj.data,
-      });
-    }))
+   
 
     this.getUpdatedCart();
   }
@@ -316,6 +320,47 @@ class Menu extends React.Component {
               }
             }))
           }
+
+          else if(newCart[i].fld_productcategory == 'Covid')
+          {
+          PostApiCall.postRequest(
+            {
+              customer_id: login.fld_userid,
+              variant_id: newCart[i].fld_variantid,
+              product_category: "Covid",
+              quantity: newCart[i].fld_quantity,
+              amount: newCart[i].fld_amount,
+              updated_on: moment().format("lll"),
+              updated_by: login.fld_userid,
+              url : newCart[i].fld_url
+              // updated_by :13
+            },
+            "AddShoppingCart"
+          ).then((results) =>
+            // const objs = JSON.parse(result._bodyText)
+            results.json().then((obj) => {
+
+              if (results.status == 200 || results.status == 201 ) {
+
+                count = count + 1
+
+                if(count == newCart.length)
+                {
+                  this.SyncCartData(login)
+                }
+
+
+              }else{
+                count = count + 1
+
+                if(count == newCart.length)
+                {
+                  this.SyncCartData(login)
+                }
+
+              }
+            }))
+          }
         }
 
 
@@ -452,6 +497,32 @@ class Menu extends React.Component {
                                             },
                                             () => {
                                               cn = cn + 1;
+
+
+                                              PostApiCall.postRequest(
+                                                {
+                                                  product_category: "Covid",
+                                                  customer_id: login.fld_userid,
+                                                },
+                                                "GetCartCovidVariant"
+                                              ).then((results) =>
+                                                results.json().then((obj) => {
+                                                  if (results.status == 200 ||results.status == 201) {
+                                                    if (obj.data.length > 0) {
+                                                      arr.push(obj.data);
+                    
+                                                      // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                                      //     subt = subt + obj.data[i].fld_discountprice
+                                                      // }
+                                                    }
+                    
+                                                    this.setState(
+                                                      {
+                                                        CovidData: obj.data,
+                                                        Cart: arr,
+                                                      },
+                                                      () => {
+                                                        cn = cn + 1;
           
                                     // console.log(this.state.Cart)
 
@@ -469,6 +540,9 @@ class Menu extends React.Component {
                                         localStorage.removeItem('BMSCartData')
                                       }
                                     }
+                                  })
+                                }
+                              }))
                                   })
                                 }
                               }))
@@ -686,6 +760,17 @@ class Menu extends React.Component {
                                         }`;
 
                                       }
+                                      else if (this.state.SearchBarCategory[i].fld_page == "covid") {
+
+                                        localStorage.setItem("SearchText",JSON.stringify(this.state.SearchText));
+
+                                        window.location.href = `/covidessentials/${
+                                          this.state.SearchBarCategory[i].fld_id +
+                                          "/" +
+                                          this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"") 
+                                        }`;
+
+                                      }
                                       else if (
                                         this.state.SearchBarCategory[i].fld_page == "search"
                                       ) {
@@ -815,6 +900,17 @@ class Menu extends React.Component {
                                           /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
                                           "-"
                                         )
+                                      }`;
+
+                                    }
+                                    else if (this.state.SearchBarCategory[i].fld_page == "covid") {
+
+                                      localStorage.setItem("SearchText",JSON.stringify(this.state.SearchText));
+
+                                      window.location.href = `/covidessentials/${
+                                        this.state.SearchBarCategory[i].fld_id +
+                                        "/" +
+                                        this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"") 
                                       }`;
 
                                     }
@@ -1167,10 +1263,44 @@ class Menu extends React.Component {
                       </ul>
                     </li>
 
+                    <li class="hvr-overline-from-left">
+                      <a href="javascript: void(0);" class="">
+                       Covid Essentials{" "}
+                       <span class="new-option" >
+                       *New
+                       </span>
+                      </a>
+                      <ul>
+                        {this.state.CovidCategory.map((cat, index) => (
+                          <li>
+                            <a
+                              onClick={() => {
+                                localStorage.removeItem("SearchText");
+                                window.location.href = `/covidessentials/${
+                                  cat.fld_id +
+                                  "/" +
+                                  cat.fld_category.replace(
+                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                                    "-"
+                                  )
+                                }`;
+                              }}
+                              class=""
+                            >
+                              {cat.fld_category}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+
 
                     <li class="hvr-overline-from-left">
                       <a href="javascript: void(0);" class="">
                        Accessories{" "}
+                       <span class="new-option" >
+                       *New
+                       </span>
                       </a>
                       <ul>
                         {this.state.AccessoriesCategory.map((cat, index) => (
@@ -1190,6 +1320,7 @@ class Menu extends React.Component {
                               class=""
                             >
                               {cat.fld_category}
+                         
                             </a>
                           </li>
                         ))}
@@ -1294,16 +1425,16 @@ class Menu extends React.Component {
                                
                             </li> */}
 
-                    <li style={{ float: "right", paddingRight: "10px" }}>
-                      {/* //    <a href="/personalinformation" class="cont-details prescription-btn">Upload Prescription</a> */}
+                    {/* <li style={{ float: "right", paddingRight: "10px" }}>
+                          <a href="/personalinformation" class="cont-details prescription-btn">Upload Prescription</a>
                       <h3
-                        // onClick={this.OnTestPayAPI.bind(this)}
+                     
                         className="header-text d-none d-md-block "
                         style={{ padding: "13px 7px" }}
                       >
                         Simplifying Diabetes Management
                       </h3>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
               </div>
@@ -1629,6 +1760,87 @@ class Menu extends React.Component {
                 </div>
 
 
+                <div>
+                  <div
+                    style={{
+                      paddingTop: "11px",
+                      paddingBottom: "11px",
+                      paddingRight: "15px",
+                      paddingLeft: "15px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      this.setState({
+                        isOpen: this.state.isOpen == "Covid" ? -1 : "Covid",
+                      });
+                    }}
+                  >
+                    <span
+                      class="hvr-overline-from-left"
+                      style={{ verticalAlign: "middle" }}
+                    >
+                      Covid Essentials
+                      <span class="new-option" style={{color : 'green'}}>
+                       *New
+                       </span>
+                    </span>
+                    <span>
+                      <i
+                        class="fa fa-angle-down"
+                        aria-hidden="true"
+                        style={{
+                          float: "right",
+                          paddingTop: "7px",
+                          display: this.state.isOpen == "Covid" ? "none" : "",
+                          // fontSize: '17px'
+                        }}
+                      ></i>
+                    </span>
+                    <span>
+                      <i
+                        class="fa fa-angle-up"
+                        aria-hidden="true"
+                        style={{
+                          float: "right",
+                          paddingTop: "7px",
+                          display: this.state.isOpen == "Covid" ? "" : "none",
+                          // fontSize: '17px'
+                        }}
+                      ></i>
+                    </span>
+                  </div>
+
+                  <Collapse
+                    isOpen={this.state.isOpen == "Covid" ? true : false}
+                    style={{ padding: "0px" }}
+                  >
+                    <div style={{ padding: "7px 0 9px 20px" }}>
+                      {this.state.CovidCategory.map((cat, index) => (
+                        <li>
+                          <a
+                            onClick={() => {
+                              localStorage.removeItem("SearchText");
+                              window.location.href = `/covidessentials/${
+                                cat.fld_id +
+                                "/" +
+                                cat.fld_category.replace(
+                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                                  "-"
+                                )
+                              }`;
+                            }}
+                            class=""
+                          >
+                            {cat.fld_category}
+                          </a>
+                        </li>
+                      ))}
+                    </div>
+                  </Collapse>
+                </div>
+
+
+
 
 
                 <div>
@@ -1651,6 +1863,9 @@ class Menu extends React.Component {
                       style={{ verticalAlign: "middle" }}
                     >
                       Accessories
+                      <span class="new-option" style={{color : 'green'}}>
+                       *New
+                       </span>
                     </span>
                     <span>
                       <i
@@ -2005,7 +2220,35 @@ class Menu extends React.Component {
                                     "-"
                                   )
                                 }`;
-                              } else if (
+                              } 
+                              
+                              else if (this.state.SearchBarCategory[i].fld_page == "accessories") {
+
+                                localStorage.setItem("SearchText",JSON.stringify(this.state.SearchText));
+
+                                window.location.href = `/accessories/${
+                                  this.state.SearchBarCategory[i].fld_id +
+                                  "/" +
+                                  this.state.SearchBarCategory[i].fld_category.replace(
+                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                                    "-"
+                                  )
+                                }`;
+
+                              }
+                              else if (this.state.SearchBarCategory[i].fld_page == "covid") {
+
+                                localStorage.setItem("SearchText",JSON.stringify(this.state.SearchText));
+
+                                window.location.href = `/covidessentials/${
+                                  this.state.SearchBarCategory[i].fld_id +
+                                  "/" +
+                                  this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"") 
+                                }`;
+
+                              }
+
+                              else if (
                                 this.state.SearchBarCategory[i].fld_page ==
                                 "search"
                               ) {
@@ -2080,7 +2323,36 @@ class Menu extends React.Component {
                                 "-"
                               )
                             }`;
-                          } else if (
+                          } 
+                          
+
+                          else if (this.state.SearchBarCategory[i].fld_page == "accessories") {
+
+                            localStorage.setItem("SearchText",JSON.stringify(this.state.SearchText));
+
+                            window.location.href = `/accessories/${
+                              this.state.SearchBarCategory[i].fld_id +
+                              "/" +
+                              this.state.SearchBarCategory[i].fld_category.replace(
+                                /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                                "-"
+                              )
+                            }`;
+
+                          }
+                          else if (this.state.SearchBarCategory[i].fld_page == "covid") {
+
+                            localStorage.setItem("SearchText",JSON.stringify(this.state.SearchText));
+
+                            window.location.href = `/covidessentials/${
+                              this.state.SearchBarCategory[i].fld_id +
+                              "/" +
+                              this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"") 
+                            }`;
+
+                          }
+                          
+                          else if (
                             this.state.SearchBarCategory[i].fld_page == "search"
                           ) {
                             // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))

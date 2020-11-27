@@ -19,6 +19,9 @@ import "slick-carousel/slick/slick-theme.css";
 import DiwaliOffersHP from "./DiwaliOffersHP";
 import { connect } from "react-redux";
 import { setcartitemcount, setcartamount } from "./Actions/actionType";
+import AccessoriesHP from "./AccessoriesHP";
+import CovidHP from "./CovidHP";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -62,14 +65,18 @@ class App extends React.Component {
       "Get_AdBannerWebsite"
     ).then((resultdes) =>
       resultdes.json().then((obj) => {
-        console.log(obj.data);
+        // console.log(obj.data);
         if (obj.data) {
           obj.data.map((singledata) => {
             images.push(singledata.fld_image);
           });
         }
+
         this.setState({
-          bannerHome: obj.data,
+          // bannerHome: obj.data,
+          bannerHome : obj.data.sort((a, b) => {
+            return a.fld_order - b.fld_order;
+        }),
           images: images,
         });
       })
@@ -1786,6 +1793,9 @@ class App extends React.Component {
                 </div>
               </div>
             </div>
+
+<CovidHP />
+<AccessoriesHP />
 
             <div class="container blog-section">
               <h3 class="section-title margin-bottom">Health Knowledge</h3>

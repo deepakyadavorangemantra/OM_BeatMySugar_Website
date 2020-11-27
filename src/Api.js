@@ -1,13 +1,11 @@
 
 
-//  var urlString = "https://api.beatmysugar.com/BackofficeApi/";
+  // var urlString = "https://api.beatmysugar.com/BackofficeApi/";
+  var urlString = "https://api.iitpl.com/BackofficeApi/"; 
 
 // var urlString = "http://192.168.43.146:7000/BackofficeApi/";
 
 // var urlString = "http://localhost:7000/BackofficeApi/";
-
-var urlString = "https://api.iitpl.com/BackofficeApi/";
-
 
 
 

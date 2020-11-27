@@ -776,7 +776,7 @@ src={info.fld_image}/>
                           </span>
                         </div> */}
 
-                        <div class="size-chart-updated">
+                        <div class="size-chart-updated" style={{display: this.state.SizeData[0]=='N/A' ? 'none' : ''}}>
                           <p>
                             <b>Sizes Available (UK)</b>
                           </p>
@@ -792,12 +792,12 @@ src={info.fld_image}/>
                               data-toggle="modal"
                               // data-target="#exampleModal"
                             >
-                              Size Chart
+                              {/* Size Chart */}
                             </a>
                           </span>
                           <ul>
                             {this.state.SizeData.map((dt, i) => (
-                              <li>
+                              <li style={{display:dt=='N/A' ? 'none' : ''}}>
                                 <a
                                   class={
                                     dt == this.state.SelectedSize
@@ -1069,9 +1069,7 @@ src={info.fld_image}/>
                           100% GENUINE
                           <br />
                           PRODUCTS
-                          100% Genuine
-                          <br />
-                           Products
+                         
                         </h4>
                       </li>
                       <li>

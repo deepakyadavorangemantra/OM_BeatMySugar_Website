@@ -38,7 +38,10 @@ class Tabs extends React.Component {
       BlogDetails : [],
       SearchText :'',
       AccessoriesDetails : [],
-      AccessoriesRef : []
+      AccessoriesRef : [],
+
+      CovidDetails : [],
+      CovidRef : []
   
     };
   }
@@ -225,6 +228,45 @@ class Tabs extends React.Component {
             }
           }
           }));
+
+
+
+          PostApiCall.postRequest(
+            {
+              category: 0,
+            },
+            "GetCovidListingSearchPageWeb"
+          ).then((results) =>
+            results.json().then((obj) => {
+              if (results.status == 200 || results.status == 201) {
+      
+              console.log(obj.data)
+    
+              var srDt= []
+              if(search != null){
+    
+               obj.data.filter(item => {
+                  if (item.fld_name.toLowerCase().includes(search.toLowerCase())
+                  || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                  // || item.fld_description.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    srDt.push(item)
+                    
+                  }
+                })
+                this.setState({
+      
+                 CovidDetails: srDt,
+                  CovidRef : obj.data,
+            
+                  
+                });
+              }else
+            {
+
+            }
+          }
+          }));
   
 
 
@@ -351,8 +393,9 @@ class Tabs extends React.Component {
  <li><a href="#tabs-2">Food & Supplements ({this.state.Food.length})</a></li>
  <li><a href="#tabs-3">Footwear ({this.state.FootDetails.length})</a></li>
  <li><a href="#tabs-4">Socks ({this.state.SocksDetails.length})</a></li>
- <li><a href="#tabs-5">Accessories ({this.state.AccessoriesDetails.length})</a></li>
- <li><a href="#tabs-6">Health Knowledge ({this.state.BlogDetails.length})</a></li>
+ <li><a href="#tabs-5">Covid Essentials ({this.state.CovidDetails.length})</a></li>
+ <li><a href="#tabs-6">Accessories ({this.state.AccessoriesDetails.length})</a></li>
+ <li><a href="#tabs-7">Health Knowledge ({this.state.BlogDetails.length})</a></li>
 </ul>
                                 </div>
                                 </div>
@@ -902,8 +945,177 @@ class Tabs extends React.Component {
             </div>
 
   </div>
- 
+
+
   <div id="tabs-5">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="row">
+              
+              {this.state.CovidDetails.length ==0  && this.state.done ?  
+                <div class="col-md-12">
+              <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
+              </div>: ''}
+              <ul class="search-products-list">
+               
+
+               
+              {this.state.CovidDetails.map((info, index)=>(
+ <li>
+<div class="">
+<div class="partner product-inner ">
+  <div id="overlay" style={{display : info.fld_availability =='In stock' ? 'none' : ''}}>Out Of Stock</div>
+
+  <img
+    src={info.Photos.split(',')[0]}
+    alt="product"
+    class="footcare-image img-center"
+    onClick={()=>{
+      window.location.href = `/covidessentials/${
+        info.fld_category.replace(/\W|_/g,"") +
+        "/" +
+        info.fld_covidid +
+        "/" +
+        info.fld_id +
+        "/" +
+        info.fld_name.replace(/\W|_/g,"")
+      }`;
+    }}
+  />
+
+  <div class="product-details">
+    <p class="product-title">
+      <a class="item-name"
+      onClick={()=>{
+        window.location.href = `/covidessentials/${
+          info.fld_category.replace(/\W|_/g,"") +
+          "/" +
+          info.fld_covidid +
+          "/" +
+          info.fld_id +
+          "/" +
+          info.fld_name.replace(/\W|_/g,"")
+        }`;
+      }}
+      >
+        {info.fld_name}
+      </a>
+    </p>
+    <p class="small-desc item-name"><span style={{color:"#222222",fontWeight:"600"}}>Brand:</span> {info.fld_brand}</p>
+    {/* <p>
+    <p class="price"> &#8377;{foot.fld_productprice}</p>
+    <p class="extrapheight"></p>
+  </p> */}
+    <p class="discount-height">
+
+    {info.fld_discountpercent == 0 ? 
+    
+    <p class="price">
+      
+    &#8377; {info.fld_discountprice}
+    
+  </p>
+    :
+      <p class="price">
+      
+        &#8377; {info.fld_discountprice}
+        {" "}<span>
+          <s>&#8377;  {info.fld_price}</s>
+        </span>
+        
+      </p>
+  }
+      {info.fld_discountpercent == 0 ? '' :
+      <p class="discount-price">  You Save &#8377; {info.fld_price - info.fld_discountprice} ({info.fld_discountpercent}%)</p>
+    }
+      </p>
+
+    <p class="brief-desc"></p>
+    <ul class="group-buttons">
+      <li style={{display : info.fld_availability =='In stock' ? '' : 'none'}}>
+        {" "}
+        <button class="add-to-cart-btn"
+        
+        onClick={()=>{
+          this.AddToCartCovid(info)
+  
+      }}
+
+        >
+          <i class="fas fa-shopping-cart"></i> ADD TO CART
+        </button>
+      </li>
+      <li>
+        <button 
+         onClick={()=>{
+          var log = localStorage.getItem('CustomerLoginDetails')
+          var login = JSON.parse(log)
+  
+  
+          if(login != null && login != ''){
+  
+              Notiflix.Loading.Dots('');
+  
+              PostApiCall.postRequest({
+      
+                  customer_id : login.fld_userid,
+                  // customer_id : 13,
+                  variant_id : info.fld_id,
+                  product_category : 'Covid',
+                  quantity :1,
+                 updated_on : moment().format('lll'),
+                 updated_by : login.fld_userid
+              // updated_by :13
+              
+              },"AddWishlist").then((results) => 
+              
+                // const objs = JSON.parse(result._bodyText)
+                results.json().then(obj => {
+     
+              
+                if(results.status == 200 || results.status==201){
+  
+                  
+                  Notiflix.Loading.Remove()
+                  Notiflix.Notify.Info('Product added to Wishlist.')
+                  // window.location.reload()
+                 
+     
+                }else{
+                  Notiflix.Loading.Remove()
+                  Notiflix.Notify.Failure('Something went wrong, try again later.') 
+                }
+     
+             }))
+  
+          }else{
+          // console.log('please login first')
+              Notiflix.Notify.Failure('Please Login to add products to your wishlist.')
+          }
+  
+      }}
+      
+      class="like-btn">
+    
+          <i class="fas fa-heart"></i>
+        </button>{" "}
+      </li>
+      {/* <li><button class="like-btn"><i class="fas fa-info-circle"></i></button> </li> */}
+    </ul>
+  </div>
+</div>
+</div>
+
+</li>
+))}
+ 
+                </ul>
+              </div>
+            </div>
+
+  </div>
+ 
+
+  <div id="tabs-6">
   <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="row">
               
@@ -1057,7 +1269,7 @@ class Tabs extends React.Component {
   </div>
  
  
-  <div id="tabs-6">
+  <div id="tabs-7">
   <div class="col-lg-12 col-md-12 col-sm-12">
   <div class="row">
   {this.state.BlogDetails.length == 0  ? 
@@ -1781,6 +1993,156 @@ class Tabs extends React.Component {
 
 }
 
+
+AddToCartCovid(info){
+
+
+  var log = localStorage.getItem(
+                                         "CustomerLoginDetails"
+                                       );
+                                       var login = JSON.parse(log);
+
+                                       if (login != null && login != "") {
+                                         Notiflix.Loading.Dots("");
+
+                                         PostApiCall.postRequest(
+                                           {
+                                             customer_id: login.fld_userid,
+                                             variant_id: info.fld_id,
+                                             product_category: "Covid",
+                                             quantity: 1,
+                                             amount: info.fld_discountprice,
+                                             updated_on: moment().format("lll"),
+                                             updated_by: login.fld_userid,
+                                             url : `/covidessentials/${info.fld_covidid +"/" +info.fld_id +"/" +info.fld_name.replace(/\W|_/g,"")
+                                             }`
+                                             // updated_by :13
+                                           },
+                                           "AddShoppingCart"
+                                         ).then((results) =>
+                                           // const objs = JSON.parse(result._bodyText)
+                                           results.json().then((obj) => {
+                                             if (
+                                               results.status == 200 ||
+                                               results.status == 201
+                                             ) {
+                                               Notiflix.Loading.Remove();
+
+
+
+                                             
+                                               // window.location.reload();
+
+                                               this.props.setcartitemcount(obj.data.length)
+                                               this.props.setcartamount(obj.data.reduce(function (result, item) {
+                                                 return result + (item.fld_amount*item.fld_quantity);
+                                               }, 0))
+                                               Notiflix.Notify.Info(
+                                                "Product added to Cart."
+                                              );
+
+                                             } else {
+                                               Notiflix.Loading.Remove();
+                                               Notiflix.Notify.Failure(
+                                                 "Something went wrong, try again later."
+                                               );
+                                             }
+                                           })
+                                         );
+                                       } else {
+                                        
+
+                                         var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
+ 
+                                         // console.log(cart_info)
+                                         var newCart = cart_info != null ? cart_info : []
+ 
+                                         if(cart_info != null){
+ 
+                                       
+                                           var item = newCart.filter(val => val.fld_variantid == info.fld_id && val.fld_productcategory == 'Covid')
+ 
+                                           // console.log(item)
+                                           if(item[0] != undefined){
+ 
+                                             var newIndex = newCart.indexOf(item[0])
+ 
+                                             newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
+ 
+                                             // console.log(newCart)
+ 
+                                             localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                             this.props.setcartitemcount(newCart.length)
+                                             this.props.setcartamount(newCart.reduce(function (result, item) {
+                                               return result + (item.fld_amount*item.fld_quantity);
+                                             }, 0))
+                                             Notiflix.Notify.Info("Product added to Cart.");
+ 
+                                             
+ 
+                                           }else{
+ 
+                                             const addNewCartData ={
+                                               fld_variantid : info.fld_id,
+                                               fld_productcategory : 'Covid',
+                                               fld_quantity : 1,
+                                               fld_amount : info.fld_discountprice,
+                                               fld_addedon : moment().format('lll'),
+                                               fld_url : `/covidessentials/${
+                                                 info.fld_covidid +
+                                                 "/" +
+                                                 info.fld_id +
+                                                 "/" +
+                                                 info.fld_name.replace(/\W|_/g,"")
+                                               }`
+ 
+                                             }
+ 
+                                             newCart.push(addNewCartData)
+                                             // console.log(newCart.length)
+                                            
+                                             localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                             this.props.setcartitemcount(newCart.length)
+                                             this.props.setcartamount(newCart.reduce(function (result, item) {
+                                               return result + (item.fld_amount*item.fld_quantity);
+                                             }, 0))
+                                             Notiflix.Notify.Info("Product added to Cart.");
+ 
+                                           }
+                                         }else
+                                         {
+ 
+                                           const addNewCartData ={
+                                             fld_variantid : info.fld_id,
+                                             fld_productcategory : 'Covid',
+                                             fld_quantity : 1,
+                                             fld_amount :  info.fld_discountprice,
+                                             fld_addedon : moment().format('lll'),
+                                             fld_url : `/covidessentials/${
+                                               info.fld_covidid +
+                                               "/" +
+                                               info.fld_id +
+                                               "/" +
+                                               info.fld_name.replace(/\W|_/g,"")
+                                             }`
+ 
+                                           }
+ 
+                                           newCart.push(addNewCartData)
+                                       
+                                           localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                           this.props.setcartitemcount(newCart.length)
+                                           this.props.setcartamount(newCart.reduce(function (result, item) {
+                                             return result + (item.fld_amount*item.fld_quantity);
+                                           }, 0))
+                                                  Notiflix.Notify.Info("Product added to Cart.");
+ 
+                                         }
+                                         
+
+                                       }
+
+}
 }
 
 function mapStateToProps(state) {

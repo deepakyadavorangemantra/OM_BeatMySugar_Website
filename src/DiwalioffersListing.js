@@ -1112,24 +1112,24 @@ src={info.fld_image}/>
             </div>
             <div class="row">
               {/* {this.state.Book.map((book, index) => ( */}
-              {/* <div class="col-md-3 col-sm-3 col-xs-3 col-3">
+                <div class="col-md-3 col-sm-3 col-xs-3 col-3">
               <div class="sidebar-overlay"></div>
               <div class="sidebar-toggle">
                 <i class="icon-sliders"></i>
               </div>
-              </div> */}
-                {/* <div class="col-md-9 col-sm-9 col-xs-9 col-9">
+              </div>
+                <div class=" col-md-9 col-sm-9 col-xs-9 col-9 d-flex mb-1 justify-content-end">
                 <div class="sort-dropdown">
-                  <span>Sort By</span>
-                    <select onChange={this.onChangeSortBy.bind(this)}>
+                  <span className='p-1'>Sort By</span>
+                  <select onChange={this.onChangeSortBy.bind(this)}>
 
-                    <option value='New Arrivals'>New Arrivals</option>
-                     
-                      <option value='High to Low' >Price : High to Low</option>
-                      <option value='Low to High'>Price : Low to High</option>
-                    </select>
+                <option value='New Arrivals'>New Arrivals</option>
+                                    
+                <option value='High to Low' >Price : High to Low</option>
+                <option value='Low to High'>Price : Low to High</option>
+                </select>
                 </div>  
-              </div> */}
+              </div>
             
               <aside class="sidebar-product col-lg-2 col-sm-4 padding-left-lg mobile-sidebar">
                 <div class="sidebar-wrapper">
@@ -1373,7 +1373,7 @@ src={info.fld_image}/>
                       {/* <h2 class="light-title section-title" style={{marginBottom: "20px"}}>{this.state.CategorySelected} </h2> */}
                     </div>
                   )}
-                   
+                   {/* {console.log(this.state.ProductData)} */}
                   {this.state.ProductData.sort((a,b)=>{
                   
                      if(this.state.sortBy!==''){
@@ -1386,7 +1386,7 @@ src={info.fld_image}/>
                       
                        }
                        else if(this.state.sortBy==='New Arrivals'){
-                         
+                         console.log(b.fld_updatedon[0])
                         return new Date(b.fld_updatedon[0])-new Date(a.fld_updatedon[0])
 
                        }

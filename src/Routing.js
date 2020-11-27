@@ -89,6 +89,8 @@ import NotFound from "./NotFound";
 import DiwalioffersListing from "./DiwalioffersListing";
 import AccessoriesListing from "./AccessoriesListing";
 import AccessoriesDetails from "./AccessoriesDetails";
+import CovidListing from "./CovidListing";
+import CovidDetails from "./CovidDetails";
 
 class Routing extends Component {
   render() {
@@ -115,7 +117,7 @@ class Routing extends Component {
 
           <Route exact path={"/book/:bookid"} component={BookDetails} />
 
-          <Route exact path={"/book"} component={BookListing} />
+          <Route exact path={"/books/:id/:category"} component={BookListing} />
 
           {/* <Route exact path={"/cart"} component={Cart} /> */}
 
@@ -401,6 +403,8 @@ class Routing extends Component {
 <Route exact path={"/accessories/:id/:category"} component={AccessoriesListing} />
 <Route exact path={"/accessories/:accessoriesid/:varid/:accessoriesname"} component={AccessoriesDetails} />
 
+<Route exact path={"/covidessentials/:id/:category"} component={CovidListing} />
+<Route exact path={"/covidessentials/:category/:covidid/:varid/:covidname"} component={CovidDetails} />
 
       </BrowserRouter>
     );

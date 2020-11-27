@@ -148,7 +148,10 @@ class AccessoriesListing extends React.Component {
 
 
 
-        GetApiCall.getRequest("GetAccessoriesTypeDataWebsite").then(resultdes =>
+      PostApiCall.postRequest(
+        {
+          category: this.props.match.params.id,
+        },"GetAccessoriesTypeDataWebsite").then(resultdes =>
           resultdes.json().then(obj => {
             // console.log(obj.data)
               this.setState({
@@ -160,7 +163,10 @@ class AccessoriesListing extends React.Component {
 
 
 
-        GetApiCall.getRequest("GetAccessoriesColorDataWebsite").then(resultdes =>
+          PostApiCall.postRequest(
+            {
+              category: this.props.match.params.id,
+            },"GetAccessoriesColorDataWebsite").then(resultdes =>
           resultdes.json().then(obj => {
             // console.log(obj.data)
               this.setState({
@@ -170,7 +176,10 @@ class AccessoriesListing extends React.Component {
 
           }))
 
-          GetApiCall.getRequest("GetAccessoriesBrandData").then(resultdes =>
+          PostApiCall.postRequest(
+            {
+              category: this.props.match.params.id,
+            },"GetAccessoriesBrandData").then(resultdes =>
             resultdes.json().then(obj => {
                 this.setState({
                     
@@ -192,7 +201,10 @@ class AccessoriesListing extends React.Component {
               }))
         
 
-        GetApiCall.getRequest("GetAccessoriesSizeDataWebsite").then(resultdes =>
+              PostApiCall.postRequest(
+                {
+                  category: this.props.match.params.id,
+                },"GetAccessoriesSizeDataWebsite").then(resultdes =>
           resultdes.json().then(obj => {
              
 
@@ -619,17 +631,17 @@ src={info.fld_image}/>
                 <i class="icon-sliders"></i>
               </div>
               </div>
-                <div class="col-md-9 col-sm-9 col-xs-9 col-9">
-                {/* <div class="sort-dropdown">
-                  <span>Sort By</span>
+                <div class=" col-md-9 col-sm-9 col-xs-9 col-9 d-flex mb-1 justify-content-end">
+                <div class="form-controll sort-dropdown">
+                  <span className='p-1'>Sort By</span>
                   <select onChange={this.onChangeSortBy.bind(this)}>
 
-<option value='New Arrivals'>New Arrivals</option>
-                     
-<option value='High to Low' >Price : High to Low</option>
-<option value='Low to High'>Price : Low to High</option>
-</select>
-                </div>   */}
+                <option value='New Arrivals'>New Arrivals</option>
+                                    
+                <option value='High to Low' >Price : High to Low</option>
+                <option value='Low to High'>Price : Low to High</option>
+                </select>
+                </div>  
               </div>
                 <aside class="sidebar-product col-lg-2 col-md-4 col-sm-4 padding-left-lg mobile-sidebar">
                   <div class="sidebar-wrapper">
@@ -960,6 +972,7 @@ src={info.fld_image}/>
                         <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
                       </div>
                : ''}
+               {console.log(this.state.FootDetails)}
                 {this.state.FootDetails.sort((a,b)=>{
                      if(this.state.sortBy!==''){
                        if(this.state.sortBy==='Low to High'){
@@ -1119,6 +1132,7 @@ src={info.fld_image}/>
                       </ul>
                     </div>
                   </div>
+                 
                   </div>
 
 

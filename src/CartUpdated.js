@@ -54,7 +54,8 @@ class CartUpdated extends React.Component
             showoffer : false,
             Couponcode : '',
             done : false,
-            CodMasterData : []
+            CodMasterData : [],
+            CovidData : []
 
            
         }
@@ -202,6 +203,33 @@ class CartUpdated extends React.Component
                                                         },
                                                         () => {
                                                           cn = cn + 1;
+
+
+
+                                                          PostApiCall.postRequest(
+                                                            {
+                                                              product_category: "Covid",
+                                                              customer_id: login.fld_userid,
+                                                            },
+                                                            "GetCartCovidVariant"
+                                                          ).then((results) =>
+                                                            results.json().then((obj) => {
+                                                              if (results.status == 200 ||results.status == 201) {
+                                                                if (obj.data.length > 0) {
+                                                                  arr.push(obj.data);
+                                
+                                                                  // for(var i = 0 ; i<Object.keys(obj.data).length;i++){
+                                                                  //     subt = subt + obj.data[i].fld_discountprice
+                                                                  // }
+                                                                }
+                                
+                                                                this.setState(
+                                                                  {
+                                                                    CovidData: obj.data,
+                                                                    Cart: arr,
+                                                                  },
+                                                                  () => {
+                                                                    cn = cn + 1;
                         
                                                 // console.log(this.state.Cart)
                                                 this.setState({
@@ -228,6 +256,9 @@ class CartUpdated extends React.Component
                                                     }
                                              
                                                 }
+                                              })
+                                            }
+                                            }))
                                               })
                                             }
                                           }))
@@ -322,6 +353,7 @@ class CartUpdated extends React.Component
             var ftData =[]
             var skData = []
             var accData = []
+            var covData = []
     
           
     
@@ -373,7 +405,9 @@ class CartUpdated extends React.Component
                                     CartData : crtData,
                                     FootwearData : ftData,
                                     FoodData : fdData,
-                                    SocksData : skData
+                                    SocksData : skData,
+                                    AccessoriesData : accData,
+                                    CovidData : covData
                                 },()=>{
                                     for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
                                         subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
@@ -432,7 +466,9 @@ class CartUpdated extends React.Component
                                             CartData : crtData,
                                             FootwearData : ftData,
                                             FoodData : fdData,
-                                            SocksData : skData
+                                            SocksData : skData,
+                                            AccessoriesData : accData,
+                                            CovidData : covData
                                         },()=>{
                                             for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
                                                 subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
@@ -490,7 +526,9 @@ class CartUpdated extends React.Component
                                     CartData : crtData,
                                     FootwearData : ftData,
                                     FoodData : fdData,
-                                    SocksData : skData
+                                    SocksData : skData,
+                                    AccessoriesData : accData,
+                                    CovidData : covData
                                 },()=>{
                                     for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
                                         subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
@@ -549,7 +587,8 @@ class CartUpdated extends React.Component
                                     FootwearData : ftData,
                                     FoodData : fdData,
                                     SocksData : skData,
-                                    AccessoriesData : accData
+                                    AccessoriesData : accData,
+                                    CovidData : covData
                                 },()=>{
                                     for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
                                         subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
@@ -580,6 +619,65 @@ class CartUpdated extends React.Component
                     }
     
     
+                    else if(cart_info[i].fld_productcategory == 'Covid')
+                    {
+                        PostApiCall.postRequest(
+                            {
+                                id : cart_info[i].fld_variantid,
+                                quantity : cart_info[i].fld_quantity,
+                                url : cart_info[i].fld_url
+                            },
+                            "GetCartCovidVariantCookie"
+                          ).then((results) =>
+                            results.json().then((obj) => {
+                              if (results.status == 200 || results.status == 201) {
+            
+            
+                                covData.push(obj.data[0])
+                        crtData.push(obj.data[0])
+    
+                            
+                            cn = cn +1
+    
+                            if(cn == cart_info.length){
+                                
+                                // console.log(this.state.)
+                                this.setState({
+                                    done : true,
+                                    CartData : crtData,
+                                    FootwearData : ftData,
+                                    FoodData : fdData,
+                                    SocksData : skData,
+                                    AccessoriesData : accData,
+                                    CovidData : covData
+                                },()=>{
+                                    for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
+                                        subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
+                                        mrpt = mrpt + this.state.CartData[j].fld_price*this.state.CartData[j].fld_quantity
+                                        baset = baset + (this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity
+                                        gstval = gstval + ((this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity)*(this.state.CartData[j].fld_gstpercent/100)
+                                        this.setState({
+                                            SubTotal : subt,
+                                            MrpSubTotal : mrpt,
+                                            BaseSubTotal : baset,
+                                            GstValue : gstval,
+                                            GstValueRef : gstval
+                                        })
+                                        this.props.setcartitemcount(this.state.CartData.length)
+                                        this.props.setcartamount(subt)
+                                        Notiflix.Loading.Remove()
+                                    }
+                                })
+                                
+    
+                            }
+                        //   });
+    
+                        
+    
+                      }
+                    }))
+                    }
                 }
             }else
             {
@@ -1430,6 +1528,114 @@ class CartUpdated extends React.Component
 
 
 
+   {/* ------------------ Accessories ------------------------- */}
+   <div class="title-sub-col" style={{display : this.state.CovidData.length == 0 ? 'none' : ''}}>
+                                    <div class="row ">
+                                        <div class="col-md-3"><p class="cart-sub-title">Covid Essentials</p></div>
+                                        <div class="col-md-4">
+                                            <p class="cart-sub-title">{this.state.CovidData.length} Item{this.state.CovidData.length == 1 ? '' : 's'} (₹ {this.state.CovidData.reduce(function (result, item) {
+  return result + (item.fld_discountprice*item.fld_quantity);
+}, 0)})</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                        
+                                        </div>
+                                        <div class="col-md-1">
+                                       
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                    </div>
+                                    {this.state.CovidData.map((info,index)=>(
+                                    <div class="cart-details">
+                                    <div class="row ">
+                                        <div 
+                                        onClick={()=>{
+                                            // console.log(info.fld_url)
+                                            if(info.fld_url != '' && info.fld_url != null)
+                                            {
+                                                // window.location.href = info.fld_url
+                                                if(info.fld_url[0] != undefined){
+                                                  window.location.href = info.fld_url[0]
+                                                }else
+                                                {
+                                                  window.location.href = info.fld_url
+                                                }
+                                               
+                                            }
+                                           
+                                        }}
+                                        class="col-md-3">
+                                            <img src={info.VariantImage.split('#')[0]} class="img-responsive cart-img"></img>
+                                        </div>
+                                        <div class="col-md-4">
+                                           <p 
+                                           onClick={()=>{
+                                            // console.log(info.fld_url)
+                                            if(info.fld_url != '' && info.fld_url != null)
+                                            {
+                                              if(info.fld_url[0] != undefined){
+                                                window.location.href = info.fld_url[0]
+                                              }else
+                                              {
+                                                window.location.href = info.fld_url
+                                              }
+                                            }
+                                           
+                                        }}
+                                           class="cart-product-name">{info.fld_name} 
+                                            </p>
+                                            <p><b>Brand</b> - {info.fld_brand}</p>
+                                           
+                                            <div class="cart-price">
+                                                {info.fld_discountpercent == 0 ?
+                                                <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice}</p>
+                                              </p>
+                                            :
+                                            <p class=""> <p class="price"><b>Price </b> - ₹ {info.fld_discountprice} <span><s>₹ {info.fld_price}</s></span></p>
+                                            <p class="discount-price"> You Save ₹ {info.fld_price-info.fld_discountprice} ({info.fld_discountpercent}% )</p></p>}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="cart-btn">
+                                        <form>
+                                            <div 
+                                             onClick={()=>{
+                                               this.RemoveFromCartCovid(info) 
+                                        
+                                               
+                                          }} 
+                                          
+                                            class="value-button" id="decrease" value="Decrease Value">-</div>
+                                        <input type="number" id="number" value={info.fld_quantity} disabled/>
+                                            <div 
+                                               onClick={()=>{
+                                                this.AddToCartCovid(info)
+                                            
+                                               
+                                            }} 
+                                            class="value-button" id="increase" value="Increase Value">+</div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p class="cart-amount">₹ {info.fld_quantity*info.fld_discountprice}</p>
+                                        </div>
+                                        <div class="col-md-2"
+                                         onClick={()=>{
+                                                    
+                                           this.DeleteFromCartCovid(info)
+                                       
+                                    }} 
+                                        >
+                                        <a 
+                                        title="Remove product" class="btn-remove"><span class="">Remove</span></a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    ))}
+
+
 
 
                                     <div class="row cart-buttons">
@@ -1987,6 +2193,102 @@ class CartUpdated extends React.Component
       
                                             
                                                 var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Accessories')
+      
+                                                // console.log(item)
+                                                if(item[0] != undefined){
+      
+                                                  var newIndex = newCart.indexOf(item[0])
+      
+                                                  newCart[newIndex].fld_quantity =  newCart[newIndex].fld_quantity + 1
+      
+                                                  // console.log(newCart)
+      
+                                                  localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                                  this.props.setcartitemcount(newCart.length)
+                                                  this.props.setcartamount(newCart.reduce(function (result, item) {
+                                                    return result + (item.fld_amount*item.fld_quantity);
+                                                  }, 0))
+                                                  Notiflix.Notify.Info("Product added to Cart.");
+                                                  this.getUpdatedCart()
+                                                  
+      
+                                                }
+                                              }
+      
+                                             }
+      
+      }
+
+      AddToCartCovid(info){
+      
+        this.setState({
+          SelectedCouponData : [],
+          // GstValue : this.state.GstValueRef
+        })
+      
+        var log = localStorage.getItem(
+                                               "CustomerLoginDetails"
+                                             );
+                                             var login = JSON.parse(log);
+      
+                                             if (login != null && login != "") {
+                                               Notiflix.Loading.Dots("");
+      
+                                               PostApiCall.postRequest(
+                                                 {
+                                                   customer_id: login.fld_userid,
+                                                   variant_id: info.fld_id,
+                                                   product_category: "Covid",
+                                                   quantity: 1,
+                                                   amount: info.fld_discountprice,
+                                                   updated_on: moment().format("lll"),
+                                                   updated_by: login.fld_userid,
+                                                   url : info.fld_url
+                                                   // updated_by :13
+                                                 },
+                                                 "AddShoppingCart"
+                                               ).then((results) =>
+                                                 // const objs = JSON.parse(result._bodyText)
+                                                 results.json().then((obj) => {
+                                                   if (
+                                                     results.status == 200 ||
+                                                     results.status == 201
+                                                   ) {
+                                                     Notiflix.Loading.Remove();
+      
+      
+      
+                                                     Notiflix.Notify.Info(
+                                                       "Product added to Cart."
+                                                     );
+                                                     // window.location.reload();
+      
+                                                     this.props.setcartitemcount(obj.data.length)
+                                                     this.props.setcartamount(obj.data.reduce(function (result, item) {
+                                                       return result + (item.fld_amount*item.fld_quantity);
+                                                     }, 0))
+                                                     this.getUpdatedCart()
+      
+                                                   } else {
+                                                     Notiflix.Loading.Remove();
+                                                     Notiflix.Notify.Failure(
+                                                       "Something went wrong, try again later."
+                                                     );
+                                                   }
+                                                 })
+                                               );
+                                             } else {
+                                              
+      
+                                              var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
+      
+                                              // console.log(cart_info)
+                                              var newCart = cart_info != null ? cart_info : []
+      
+                                              if(cart_info != null){
+      
+                                            
+                                                var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Covid')
       
                                                 // console.log(item)
                                                 if(item[0] != undefined){
@@ -2590,6 +2892,148 @@ class CartUpdated extends React.Component
                                                  
       }
 
+      RemoveFromCartCovid(info){
+
+        this.setState({
+          SelectedCouponData : [],
+          // GstValue : this.state.GstValueRef
+        })
+       
+        var log = localStorage.getItem('CustomerLoginDetails')
+                                                var login = JSON.parse(log)
+                                        
+
+                                                if (login != null && login != "") {
+                                        
+                                                if(info.fld_quantity - 1 == 0)
+                                                {
+                                        
+                                                    Notiflix.Loading.Dots('');
+                                                                                        
+                                                    PostApiCall.postRequest({
+                                            
+                                                        cart_id : info.fld_cartid,
+                                                       
+                                                    
+                                                    },"DeleteItemShoppingCart").then((results) => 
+                                                    
+                                                      // const objs = JSON.parse(result._bodyText)
+                                                      results.json().then(obj => {
+                                            
+                                                    
+                                                      if(results.status == 200 || results.status==201){
+                                            
+                                                        Notiflix.Loading.Remove()
+                                                        this.props.setcartitemcount(obj.data.length)
+                                                        this.props.setcartamount(obj.data.reduce(function (result, item) {
+                                                          return result + (item.fld_amount*item.fld_quantity);
+                                                        }, 0))
+                                                        this.getUpdatedCart()
+                                            
+                                                      }else{
+                                                        Notiflix.Loading.Remove()
+                                                        Notiflix.Notify.Failure('Something went wrong, try again later.') 
+                                                      }
+                                            
+                                                   }))
+                                                }
+                                                else
+                                                {
+                                                    Notiflix.Loading.Dots('');
+                                        
+                                                    PostApiCall.postRequest({
+                                            
+                                                        customer_id : login.fld_userid,
+                                                        // customer_id : 13,
+                                                        variant_id : info.fld_id,
+                                                        product_category : 'Covid',
+                                                        quantity :1,
+                                                       updated_on : moment().format('lll'),
+                                                       updated_by : login.fld_userid
+                                                    // updated_by :13
+                                                    
+                                                    },"DeductShoppingCart").then((results) => 
+                                                    
+                                                      // const objs = JSON.parse(result._bodyText)
+                                                      results.json().then(obj => {
+                                           
+                                                    
+                                                      if(results.status == 200 || results.status==201){
+                                        
+                                                        // Notiflix.Loading.Remove()
+                                                        Notiflix.Loading.Remove()
+                                                        this.props.setcartitemcount(obj.data.length)
+                                                        this.props.setcartamount(obj.data.reduce(function (result, item) {
+                                                          return result + (item.fld_amount*item.fld_quantity);
+                                                        }, 0))
+                                                        Notiflix.Notify.Info('Product quantity updated.')
+                                                        this.getUpdatedCart()
+                                                      
+                                           
+                                                      }else{
+                                                        Notiflix.Loading.Remove()
+                                                        Notiflix.Notify.Failure('Something went wrong, try again later.') 
+                                                      }
+                                           
+                                                   }))
+                                                }
+                                        
+                                            }
+
+                                            else
+                                            {
+                                                var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
+
+                                                // console.log(cart_info)
+                                                var newCart = cart_info != null ? cart_info : []
+                                        
+                                                if(info.fld_quantity - 1 == 0)
+                                                {
+                                        
+                                                    var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Covid')
+
+                                                    if(item[0] != undefined){
+
+                                                        var newIndex = newCart.indexOf(item[0])
+
+                                                        newCart.splice(newIndex,1)
+                                                        localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                                        this.props.setcartitemcount(newCart.length)
+                                                        this.props.setcartamount(newCart.reduce(function (result, item) {
+                                                            return result + (item.fld_amount*item.fld_quantity);
+                                                          }, 0))
+                                                        this.getUpdatedCart()
+
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    var item1 = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Covid')
+
+                                                    // console.log(item)
+                                                    if(item1[0] != undefined){
+                  
+                                                      var newIndex1 = newCart.indexOf(item1[0])
+                  
+                                                      newCart[newIndex1].fld_quantity =  newCart[newIndex1].fld_quantity - 1
+                  
+                                                    //   console.log(newCart)
+                  
+                                                      localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                                      this.props.setcartitemcount(newCart.length)
+                                                      this.props.setcartamount(newCart.reduce(function (result, item) {
+                                                        return result + (item.fld_amount*item.fld_quantity);
+                                                      }, 0))
+                                                      this.getUpdatedCart()
+                                                    //   Notiflix.Notify.Info("Product added to Cart.");
+
+                                                    }
+                                                }
+                                        
+                                            }
+                                                 
+      }
 
       DeleteFromCartFood(info){
 
@@ -2920,6 +3364,87 @@ class CartUpdated extends React.Component
       }
     }
 
+    DeleteFromCartCovid(info){
+
+      this.setState({
+        SelectedCouponData : [],
+        // GstValue : this.state.GstValueRef
+      })
+
+        var log = localStorage.getItem(
+            "CustomerLoginDetails"
+          );
+          var login = JSON.parse(log);
+
+          if (login != null && login != "") {
+
+
+            Notiflix.Loading.Dots('');
+                                    
+            PostApiCall.postRequest({
+    
+                cart_id : info.fld_cartid,
+               
+            
+            },"DeleteItemShoppingCart").then((results) => 
+            
+              // const objs = JSON.parse(result._bodyText)
+              results.json().then(obj => {
+    
+            
+              if(results.status == 200 || results.status==201){
+    
+                
+                // window.location.reload()
+                // this.getUpdatedCart()
+                Notiflix.Loading.Remove()
+                this.props.setcartitemcount(obj.data.length)
+                this.props.setcartamount(obj.data.reduce(function (result, item) {
+                  return result + (item.fld_amount*item.fld_quantity);
+                }, 0))
+                this.getUpdatedCart()
+    
+              }else{
+                Notiflix.Loading.Remove()
+                Notiflix.Notify.Failure('Something went wrong, try again later.') 
+              }
+    
+           }))
+
+          }
+          else
+          {
+
+          
+        var cart_info = JSON.parse(localStorage.getItem('BMSCartData'))
+
+                                            // console.log(cart_info)
+                                            var newCart = cart_info != null ? cart_info : []
+                                    
+                                            if(info.fld_quantity - 1 == 0)
+                                            {
+                                    
+                                                var item = newCart.filter(val => val.fld_variantid == info.fld_variantid && val.fld_productcategory == 'Covid')
+
+                                                if(item[0] != undefined){
+
+                                                    var newIndex = newCart.indexOf(item[0])
+
+                                                    newCart.splice(newIndex,1)
+                                                    localStorage.setItem('BMSCartData',JSON.stringify(newCart))
+                                                    this.props.setcartitemcount(newCart.length)
+                                                    this.props.setcartamount(newCart.reduce(function (result, item) {
+                                                        return result + (item.fld_amount*item.fld_quantity);
+                                                      }, 0))
+                                                    this.getUpdatedCart()
+                                                    // Notiflix.Notify.Failure('Product removed from cart.')
+
+                                                }
+
+                                            }
+                                       
+      }
+    }
 
     ClearShoppingCart(){
 

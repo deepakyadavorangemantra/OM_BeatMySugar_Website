@@ -936,6 +936,8 @@ src={info.fld_image}/>
                         <img src="/assets/images/No-product-Found.png" style={{    margin: 'auto'}}/>
                       </div>
                : ''}
+                   {/* {console.log(this.state.FootDetails)} */}
+
                 {this.state.FootDetails.sort((a,b)=>{
                      if(this.state.sortBy!==''){
                        if(this.state.sortBy==='Low to High'){

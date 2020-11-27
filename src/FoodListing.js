@@ -873,7 +873,7 @@ src={info.fld_image}/>
                 </div>
              
               </aside>
-
+{console.log(this.state.Food)}
               <div class="col-lg-10 col-md-12 col-sm-12">
                 <div class="row">
                   {this.state.Food.length == 0 && this.state.done ? (
