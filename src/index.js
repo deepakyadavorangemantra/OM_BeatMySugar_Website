@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Routing from './Routing'
-
+import HttpsRedirect from 'react-https-redirect';
 import  createHistory from 'history/createBrowserHistory';
 import * as serviceWorker from './serviceWorker';
 
@@ -17,8 +17,10 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
+     <HttpsRedirect>
   <Routing></Routing>
-  </Provider>
+  </HttpsRedirect>
+  </Provider> 
 , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
