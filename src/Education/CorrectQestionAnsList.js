@@ -44,7 +44,14 @@ const CourseQuestionsAnsList =( props)=>{
                 }
                 
                 <div class="col-md-12">
-                    <button onClick={()=>{ props.goToNextChapterTopic()}}>Go To Next Chapter -{'>'}</button> 
+                    <button onClick={()=>{ props.goToNextChapterTopic()}}>
+                    { props.is_finel_chapter === true ? 
+                        'Go To Feedback ->'
+                        :
+                        'Go To Next Chapter ->'
+                    }
+                        
+                    </button> 
                 </div>
                 
             </div>

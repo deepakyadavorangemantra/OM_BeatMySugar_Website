@@ -9,6 +9,8 @@ import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
 import CourseQuestionsAns from '../Education/CourseQuestionAns';
 import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
+import UserFeedBackView from '../Education/UserFeedback';
+import CongratulationView from '../Education/Congratulation';
 
 class Education extends React.Component {
   constructor(props) {
@@ -21,15 +23,18 @@ class Education extends React.Component {
       ChapterData: [],
       ResendCount: 0,
       MobileOtp: "",
-      Show_course_content_list : true,
+      Show_course_content_list : true, //
       Show_Topics : false,
       Show_Questions_Module : false,
       Show_Correct_Question_Ans : false,
       Topic_Details : [],
-      edit_chapter: '',
+      current_chapter_data: '',
       current_topic_index : 0,
-      current_index : 0,
-      ChapterQuestionList:[]
+      current_chapter_index : 0,
+      ChapterQuestionList:[],
+      is_finel_chapter : false,
+      Show_User_Feedback : false,
+      Show_Congratulation_Page : false
     };
   }
 
@@ -53,14 +58,20 @@ class Education extends React.Component {
     })
   }
 
-  showTopicDetails=(topic, edit_chapter, current_topic_index, chapterIndex )=>{
+  showTopicDetails=(topic, current_chapter_data, current_topic_index, chapterIndex )=>{
+    if(chapterIndex === this.state.ChapterData.length-1 ){
+      this.setState({ is_finel_chapter : true});
+    }
+
     this.setState({ 
       Show_course_content_list : false, 
       Show_Topics : true, 
+      Show_Questions_Module: false,
+      Show_Correct_Question_Ans : false,
       Topic_Details : topic, 
-      edit_chapter: edit_chapter, 
+      current_chapter_data: current_chapter_data, 
       current_topic_index : current_topic_index, 
-      current_index : chapterIndex
+      current_chapter_index : chapterIndex
     });
   }
 
@@ -70,7 +81,7 @@ class Education extends React.Component {
     GetApiCall.getRequest("ListQuestion?chapterid="+ chapter_id).then(resultdes =>
       resultdes.json().then(obj => {
       this.setState({
-        ChapterQuestionList : obj.data, Show_Questions_Module : true, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : false
+        ChapterQuestionList : obj.data, Show_Questions_Module : true, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : false, Show_User_Feedback : false
       })
       Notiflix.Loading.Remove();
     }))
@@ -79,19 +90,53 @@ class Education extends React.Component {
   updateUserAnsAndShowCorrectAns=( questionDataWithUserAns)=>{
     // post api to users answer of questions.
     this.setState({
-      ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true
+      ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true, Show_User_Feedback : false
     })
     console.log(questionDataWithUserAns);
   }
 
+  gotoNextTopic=(current_topic_index)=>{
+    debugger;
+    this.setState({ Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
+  }
+
   goToNextChapterTopic=()=>{
-    //unlock new chapter first topic.
-    // showTopicDetails( topic, edit_chapter, current_topic_index, chapterIndex)
+    let ChapterData = this.state.ChapterData;
+    debugger;
+    if(this.state.current_chapter_index< ChapterData.length-1){
+      let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
+      let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
+      let current_topic_index = 0;
+      let current_chapter_index = this.state.current_chapter_index+1;
+      //unlock new chapter first topic.
+     this.showTopicDetails( topic, current_chapter_data, current_topic_index, current_chapter_index)
+    }else{
+      this.setState({  Show_course_content_list : false, 
+        Show_Topics : false, 
+        Show_Questions_Module: false,
+        Show_Correct_Question_Ans : false,
+        Show_User_Feedback : true,
+      });
+    }
+    
+  }
+
+  onSubmitFeedback =(feedback)=>{
+    // user feedback api...
+    // go to congratulation .....
+    this.setState({  Show_course_content_list : false, 
+      Show_Topics : false, 
+      Show_Questions_Module: false,
+      Show_Correct_Question_Ans : false,
+      Show_User_Feedback : false,
+      Show_Congratulation_Page : true
+    });
   }
 
 
   render() {
-    const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_index, Show_Questions_Module, ChapterQuestionList, Show_Correct_Question_Ans} = this.state;
+    const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
+      current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
     return (
       <div>
         <Menu></Menu>
@@ -111,9 +156,11 @@ class Education extends React.Component {
                                         /> 
                                       : Show_Topics === true ? 
                                         <CourseContentDetails  
+                                          current_chapter_data = {current_chapter_data}
                                           Topic_Details = {Topic_Details} 
                                           current_topic_index={current_topic_index} 
-                                          current_index={current_index} 
+                                          current_chapter_index={current_chapter_index} 
+                                          gotoNextTopic={this.gotoNextTopic}
                                           setQuestionsView={this.setQuestionsView}
                                         />
                                       : Show_Questions_Module === true ?
@@ -125,7 +172,12 @@ class Education extends React.Component {
                                         <CourseQuestionsAnsList 
                                           ChapterQuestionList = {ChapterQuestionList}
                                           goToNextChapterTopic={this.goToNextChapterTopic}
+                                          is_finel_chapter={is_finel_chapter}
                                         />
+                                      : Show_User_Feedback === true?
+                                        <UserFeedBackView onSubmitFeedback={this.onSubmitFeedback} />
+                                      : Show_Congratulation_Page=== true ?
+                                        <CongratulationView />
                                       :
                                       ''
                                       }

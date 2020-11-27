@@ -13,7 +13,7 @@ const CourseContentList =( props)=>{
                         <span>{Item.fld_title}</span><br/>
                         <ul>
                             {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                return <li><a  class="card-edit" style={{float:'left', color : 'blue'}} onClick={( )=> props.showTopicDetails( TopicItem, props.ChapterData, index, chapterIndex ) } >{TopicItem.fld_title}</a></li>
+                                return <li><a  class="card-edit" style={{float:'left', color : 'blue'}} onClick={( )=> props.showTopicDetails( TopicItem, Item, index, chapterIndex ) } >{TopicItem.fld_title}</a></li>
                             }) : ''}
                         
                         </ul>
