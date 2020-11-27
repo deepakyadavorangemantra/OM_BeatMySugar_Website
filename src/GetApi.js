@@ -1,6 +1,8 @@
-var urlString = "https://api.beatmysugar.com/BackofficeApi/";
+// var urlString = "https://api.beatmysugar.com/BackofficeApi/";
 
 //  var urlString = "http://localhost:7000/BackofficeApi/";
+
+var urlString = "https://api.iitpl.com/BackofficeApi/";
 
 const GetApiCall = {
   getRequest(url) {
