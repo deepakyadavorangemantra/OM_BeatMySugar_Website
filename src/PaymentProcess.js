@@ -74,13 +74,13 @@ class PaymentProcess extends React.Component {
                 var c = 0
                 var c1 = 0
 
-                // console.log(obj.data[0])
+                console.log(obj.data[0])
           
        
 
                 for(var j=0;j<obj.data[0].OrderDet.split('#').length;j++){
 
-                    // console.log(obj.data[i].OrderDet.split('#')[j])
+                    console.log(obj.data[0].OrderDet.split('#')[j].split('^')[2])
 
                     if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Food'){
 
