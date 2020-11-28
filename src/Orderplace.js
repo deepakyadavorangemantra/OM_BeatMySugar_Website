@@ -1060,7 +1060,7 @@ class Orderplace extends React.Component {
                       name="amount"
                       placeholder="Amount"
                       value={parseFloat(
-                        this.state.SummaryData.TotalAmt
+                        '1'
                       ).toFixed(2)}
                     />
                   </span>

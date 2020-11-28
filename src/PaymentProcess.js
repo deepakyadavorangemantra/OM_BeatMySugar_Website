@@ -184,6 +184,8 @@ class PaymentProcess extends React.Component {
 
                     }))
 
+                    }else{
+                      console.log('missing condition code');
                     }
 
                   
