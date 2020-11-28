@@ -51,12 +51,13 @@ class BlogCategory extends React.Component {
           Notiflix.Loading.Dots('Please wait...');
 
           // console.log(this.props.match.params.sub == undefined)
-
+          debugger;
           var ct = JSON.parse(localStorage.getItem('BlogCat'))
           var sbct = JSON.parse(localStorage.getItem('BlogSubCat'))
 
           console.log(ct)
           console.log(sbct)
+          sbct = sbct.replaceAll('-',' ')
 
           this.setState({
               BlogCategoryTitle : sbct == undefined ?  ct
