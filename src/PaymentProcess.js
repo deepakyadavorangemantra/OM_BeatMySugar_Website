@@ -39,7 +39,7 @@ class PaymentProcess extends React.Component {
   }
 
   componentDidMount() {
-
+    debugger;
     Notiflix.Loading.Init({
         svgColor: "#507dc0",
         //  #507dc0'

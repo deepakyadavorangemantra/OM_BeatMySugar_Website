@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Routing from './Routing'
-import HttpsRedirect from 'react-https-redirect';
+// import HttpsRedirect from 'react-https-redirect';
 import  createHistory from 'history/createBrowserHistory';
 import * as serviceWorker from './serviceWorker';
 
@@ -17,9 +17,9 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
-     <HttpsRedirect>
+     {/* <HttpsRedirect> */}
   <Routing></Routing>
-  </HttpsRedirect>
+  {/* </HttpsRedirect> */}
   </Provider> 
 , document.getElementById('root'));
 
