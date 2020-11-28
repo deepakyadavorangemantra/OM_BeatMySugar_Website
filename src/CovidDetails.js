@@ -1153,7 +1153,7 @@ src={info.fld_image}/>
                       <p class="brief-desc"></p>
                       <ul class="group-buttons">
 
-                        {this.state.FoodData.find(cart=>cart.fld_footid==info.fld_footid)==undefined?   <li style={{display : info.fld_availability =='In stock' ? '' : 'none'}}>
+                        {this.state.FoodData && this.state.FoodData.find(cart=>cart.fld_footid==info.fld_footid)==undefined?   <li style={{display : info.fld_availability =='In stock' ? '' : 'none'}}>
                           {" "}
                           <button class="add-to-cart-btn"
                           
