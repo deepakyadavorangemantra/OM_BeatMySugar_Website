@@ -9,7 +9,7 @@ import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
 import CourseQuestionsAns from '../Education/CourseQuestionAns';
 import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
-
+import courseImage from '../images/course.jpg'
 class Education extends React.Component {
   constructor(props) {
     super(props);
@@ -97,11 +97,97 @@ class Education extends React.Component {
         <Menu></Menu>
         <div class="account-section"> 
             <div class="co">
+              <div class="banner-sec">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="head-text">
+                        <h1 class="main-head">Diabetes Learning Program</h1>
+                        <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
+                        <div class="rating-box">
+                          <span class="ratingtext">4.8 Rating</span>
+                          <span class="ratingsse">
+                          <span class="star-rating" title="70%">
+                              <span class="back-stars">
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  
+                                  <span class="front-stars" style={{width: "70%"}}>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                  </span>
+                                  </span>
+                              </span>   
+                            </span>
+                        </div>
+                      </div>
+                      <div class="tag-section">
+                        <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
+
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="courseimage">
+                           <img src="/assets/images/course.jpg" alt="course image"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
                 <div class="container" style={{background:"none"}}>
                     <div class="row mt-2">
-                        <div class="col-lg-9 order-lg-last ">
+                        <div class="col-lg-8 order-lg-first ">
                             <div class="dashboard-content">
+                             
+
                                 <HeaderCourseProgress />
+                                <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                  <div class="panel-heading lockedtitle" id="headingOne">
+                                    <h4 class="panel-title">                            
+                                    Chapter Number 1 : Diabetes Learning Program1
+                                  </h4>
+                                  <p><span class="topic">6 Topics</span> . <span class="length">26h 35m total length</span></p>
+                                  </div>
+                                  <div id="collapseOne" class="panel-collapse">
+                                    <div class="panel-body">
+                                    <ul class="topiclist">
+                                      <li class="locked"><a class="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="panel panel-default">
+                                  <div class="panel-heading lockedtitle" id="headingOne">
+                                    <h4 class="panel-title">                            
+                                    Chapter Number 2 : Diabetes Learning Program1
+                                  </h4>
+                                  <p><span class="topic">6 Topics</span> . <span class="length">26h 35m total length</span></p>
+                                  </div>
+                                  <div id="collapseOne" class="panel-collapse">
+                                    <div class="panel-body">
+                                    <ul class="topiclist">
+                                      <li class="locked"><a class="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li class="locked"><a class="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                       { Show_course_content_list === true ? 
@@ -131,6 +217,27 @@ class Education extends React.Component {
                                       }
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="course-side-bar">
+                              <div class="login-box">
+                                      <h3>Want to start your free course?</h3>
+                                      <a href="#" className="loginbutton">Login Now</a>
+                              </div>
+                              <div class="benefits">
+                                 <h4>Course Benefits</h4>
+                                 <ul>
+                                   <li><strong>Flexible</strong> You pick the schedule</li>
+                                   <li><strong>Pause</strong> Take break anytime</li>
+                                   <li><strong>Reliable</strong> Prepared by experts</li>
+                                   <li><strong>Goodies</strong> Free gifts on completion</li>
+                                 </ul>
+                              </div>
+                              <div class="gift-hemper">
+                                <h5>Gift Hamper</h5>
+                                <img src="/assets/images/gifts.jpg" />
+                              </div>
                             </div>
                         </div>
                     </div>
