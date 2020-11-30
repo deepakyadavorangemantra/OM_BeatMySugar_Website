@@ -741,10 +741,7 @@ class Menu extends React.Component {
                                         window.location.href = `/food/${
                                           this.state.SearchBarCategory[i].fld_id +
                                           "/" +
-                                          this.state.SearchBarCategory[i].fld_category.replace(
-                                            /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                            "-"
-                                          )
+                                          this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"")
                                         }`;
                                       } else if (this.state.SearchBarCategory[i].fld_page == "accessories") {
 
@@ -753,10 +750,7 @@ class Menu extends React.Component {
                                         window.location.href = `/accessories/${
                                           this.state.SearchBarCategory[i].fld_id +
                                           "/" +
-                                          this.state.SearchBarCategory[i].fld_category.replace(
-                                            /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                            "-"
-                                          )
+                                          this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"")
                                         }`;
 
                                       }
@@ -775,10 +769,7 @@ class Menu extends React.Component {
                                         this.state.SearchBarCategory[i].fld_page == "search"
                                       ) {
                                         // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
-                                        window.location.href = `/search/${this.state.SearchText.replace(
-                                          /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                          "-"
-                                        )}`;
+                                        window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                                       } else {
                                         localStorage.setItem(
                                           "SearchText",
@@ -883,10 +874,7 @@ class Menu extends React.Component {
                                         "/" +
                                         this.state.SearchBarCategory[
                                           i
-                                        ].fld_category.replace(
-                                          /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                          "-"
-                                        )
+                                        ].fld_category.replace(/\W|_/g,"")
                                       }`;
                                     } 
                                     else if (this.state.SearchBarCategory[i].fld_page == "accessories") {
@@ -896,10 +884,7 @@ class Menu extends React.Component {
                                       window.location.href = `/accessories/${
                                         this.state.SearchBarCategory[i].fld_id +
                                         "/" +
-                                        this.state.SearchBarCategory[i].fld_category.replace(
-                                          /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                          "-"
-                                        )
+                                        this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"")
                                       }`;
 
                                     }
@@ -919,10 +904,7 @@ class Menu extends React.Component {
                                         .fld_page == "search"
                                     ) {
                                       // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
-                                      window.location.href = `/search/${this.state.SearchText.replace(
-                                        /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                        "-"
-                                      )}`;
+                                      window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                                     } else {
                                       localStorage.setItem(
                                         "SearchText",
@@ -1220,10 +1202,7 @@ class Menu extends React.Component {
                                 window.location.href = `/food/${
                                   cat.fld_id +
                                   "/" +
-                                  cat.fld_category.replace(
-                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                    "-"
-                                  )
+                                  cat.fld_category.replace(/\W|_/g,"")
                                 }`;
                               }}
                               class=""
@@ -1279,10 +1258,7 @@ class Menu extends React.Component {
                                 window.location.href = `/covidessentials/${
                                   cat.fld_id +
                                   "/" +
-                                  cat.fld_category.replace(
-                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                    "-"
-                                  )
+                                  cat.fld_category.replace(/\W|_/g,"")
                                 }`;
                               }}
                               class=""
@@ -1311,10 +1287,7 @@ class Menu extends React.Component {
                                 window.location.href = `/accessories/${
                                   cat.fld_id +
                                   "/" +
-                                  cat.fld_category.replace(
-                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                    "-"
-                                  )
+                                  cat.fld_category.replace(/\W|_/g,"")
                                 }`;
                               }}
                               class=""
@@ -1451,10 +1424,7 @@ class Menu extends React.Component {
                         onKeyPress={(e) => {
                           if (e.key === "Enter") {
 
-                            window.location.href = `/search/${this.state.SearchText.replace(
-                              /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                              "-"
-                            )}`;
+                            window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                             
                           }
                         }}
@@ -1469,10 +1439,7 @@ class Menu extends React.Component {
                     <div class="col-md-2 col-2">
                         <button class="search-button-mobile"
                         onClick={()=>{
-                          window.location.href = `/search/${this.state.SearchText.replace(
-                            /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                            "-"
-                          )}`;
+                          window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                           
                         }}
                         ><i class="icon-magnifier"></i></button>
@@ -1667,10 +1634,7 @@ class Menu extends React.Component {
                               window.location.href = `/food/${
                                 cat.fld_id +
                                 "/" +
-                                cat.fld_category.replace(
-                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                  "-"
-                                )
+                                cat.fld_category.replace(/\W|_/g,"")
                               }`;
                             }}
                             class=""
@@ -1823,10 +1787,7 @@ class Menu extends React.Component {
                               window.location.href = `/covidessentials/${
                                 cat.fld_id +
                                 "/" +
-                                cat.fld_category.replace(
-                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                  "-"
-                                )
+                                cat.fld_category.replace(/\W|_/g,"")
                               }`;
                             }}
                             class=""
@@ -1906,10 +1867,7 @@ class Menu extends React.Component {
                               window.location.href = `/accessories/${
                                 cat.fld_id +
                                 "/" +
-                                cat.fld_category.replace(
-                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                  "-"
-                                )
+                                cat.fld_category.replace(/\W|_/g,"")
                               }`;
                             }}
                             class=""
@@ -2215,10 +2173,7 @@ class Menu extends React.Component {
                                   "/" +
                                   this.state.SearchBarCategory[
                                     i
-                                  ].fld_category.replace(
-                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                    "-"
-                                  )
+                                  ].fld_category.replace(/\W|_/g,"")
                                 }`;
                               } 
                               
@@ -2229,10 +2184,7 @@ class Menu extends React.Component {
                                 window.location.href = `/accessories/${
                                   this.state.SearchBarCategory[i].fld_id +
                                   "/" +
-                                  this.state.SearchBarCategory[i].fld_category.replace(
-                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                    "-"
-                                  )
+                                  this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"")
                                 }`;
 
                               }
@@ -2253,10 +2205,7 @@ class Menu extends React.Component {
                                 "search"
                               ) {
                                 // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
-                                window.location.href = `/search/${this.state.SearchText.replace(
-                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                  "-"
-                                )}`;
+                                window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                               } else {
                                 localStorage.setItem(
                                   "SearchText",
@@ -2318,10 +2267,7 @@ class Menu extends React.Component {
                               "/" +
                               this.state.SearchBarCategory[
                                 i
-                              ].fld_category.replace(
-                                /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                "-"
-                              )
+                              ].fld_category.replace(/\W|_/g,"")
                             }`;
                           } 
                           
@@ -2333,10 +2279,7 @@ class Menu extends React.Component {
                             window.location.href = `/accessories/${
                               this.state.SearchBarCategory[i].fld_id +
                               "/" +
-                              this.state.SearchBarCategory[i].fld_category.replace(
-                                /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                "-"
-                              )
+                              this.state.SearchBarCategory[i].fld_category.replace(/\W|_/g,"")
                             }`;
 
                           }
@@ -2356,10 +2299,7 @@ class Menu extends React.Component {
                             this.state.SearchBarCategory[i].fld_page == "search"
                           ) {
                             // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
-                            window.location.href = `/search/${this.state.SearchText.replace(
-                              /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                              "-"
-                            )}`;
+                            window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                           } else {
                             localStorage.setItem(
                               "SearchText",

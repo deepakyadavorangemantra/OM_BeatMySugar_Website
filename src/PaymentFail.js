@@ -36,7 +36,7 @@ class PaymentFail extends React.Component {
   }
 
   componentDidMount() {
-      debugger;
+
 
     PostApiCall.postRequest(
       {

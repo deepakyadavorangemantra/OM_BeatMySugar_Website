@@ -134,7 +134,7 @@ BlogCategory : obj.data
                                                                   onClick={()=>{
                                                                     localStorage.setItem('BlogCat', JSON.stringify(cat.fld_category))
                                                                     localStorage.removeItem('BlogSubCat')
-                                                                    window.location.href = '/healthknowledge/'+cat.fld_category.replace( /\W|_/g,'-')
+                                                                    window.location.href = '/healthknowledge/'+cat.fld_category.replace( /\W|_/g,'')
                                                                   }}
                                                              id="tabs">{cat.fld_category}</a> 
                                                             </div>
@@ -178,7 +178,7 @@ style={{float: 'right',    paddingTop: '7px', display:this.state.isOpen == index
     onClick={()=>{
       localStorage.setItem('BlogCat', JSON.stringify(cat.fld_category))
       localStorage.setItem('BlogSubCat', JSON.stringify(sub.split('<')[0].trim()))
-      window.location.href = '/healthknowledge/'+cat.fld_category.replace( /\W|_/g,'-')+"/"+sub.split('<')[0].trim().replace( /\W|_/g,'-')
+      window.location.href = '/healthknowledge/'+cat.fld_category.replace( /\W|_/g,'')+"/"+sub.split('<')[0].trim().replace( /\W|_/g,'')
     }}
     
      id="tabs">{sub.split('<')[0]}</a>

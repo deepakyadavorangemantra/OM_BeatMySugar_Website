@@ -81,7 +81,7 @@ class AllopathyListing extends React.Component
                                     <p class="product-title"><a 
                                     onClick={()=>{
 
-                                    window.location.href = `/allopathy/${medicine.fld_medicineid+"-"+medicine.fld_itemname.replace( / /g,'-')}`
+                                    window.location.href = `/allopathy/${medicine.fld_medicineid+"/"+medicine.fld_itemname.replace(/\W|_/g,"")}`
                                         
                                       
                                     }}

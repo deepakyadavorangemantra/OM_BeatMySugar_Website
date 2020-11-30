@@ -929,16 +929,13 @@ src={info.fld_image}/>
                           src={info.SelectedVar.split("@")[0].split("$")[1]}
                           onClick={() => {
                             window.location.href = `/food/${
-                              info.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,) +
+                              info.fld_category.replace(/\W|_/g,"") +
                               "/" +
                               info.fld_id +
                               "/" +
                               info.SelectedVar.split("#")[7].split("$")[0] +
                               "/" +
-                              info.fld_name
-                                .replace(/ /g, "-")
-                                .replace(/\//g, "-")
-                                .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                              info.fld_name.replace(/\W|_/g,"")
                             }`;
                           }}
                         />
@@ -948,16 +945,13 @@ src={info.fld_image}/>
                             <a
                               onClick={() => {
                                 window.location.href = `/food/${
-                                  info.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,) +
+                                  info.fld_category.replace(/\W|_/g,"") +
                                   "/" +
                                   info.fld_id +
                                   "/" +
                                   info.SelectedVar.split("#")[7].split("$")[0] +
                                   "/" +
-                                  info.fld_name
-                                    .replace(/ /g, "-")
-                                    .replace(/\//g, "-")
-                                    .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                  info.fld_name.replace(/\W|_/g,"")
                                 }`;
                               }}
                             >
@@ -1268,10 +1262,7 @@ src={info.fld_image}/>
                                                amount: info.SelectedVar.split("#")[3],
                                                updated_on: moment().format("lll"),
                                                updated_by: login.fld_userid,
-                                               url : `/food/${info.fld_id +"/" +info.SelectedVar.split("#")[7].split("$")[0] +"/" +info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                               url : `/food/${info.fld_id +"/" +info.SelectedVar.split("#")[7].split("$")[0] +"/" +info.fld_name.replace(/\W|_/g,"")
                                                }`
                                                // updated_by :13
                                              },
@@ -1350,10 +1341,7 @@ src={info.fld_image}/>
                                                    "/" +
                                                    info.SelectedVar.split("#")[7].split("$")[0] +
                                                    "/" +
-                                                   info.fld_name
-                                                     .replace(/ /g, "-")
-                                                     .replace(/\//g, "-")
-                                                     .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                   info.fld_name.replace(/\W|_/g,"")
                                                  }`
    
                                                }
@@ -1383,10 +1371,7 @@ src={info.fld_image}/>
                                                  "/" +
                                                  info.SelectedVar.split("#")[7].split("$")[0] +
                                                  "/" +
-                                                 info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                 info.fld_name.replace(/\W|_/g,"")
                                                }`
    
                                              }

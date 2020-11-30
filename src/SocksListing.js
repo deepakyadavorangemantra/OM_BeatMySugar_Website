@@ -939,7 +939,7 @@ src={info.fld_image}/>
     alt="product"
     class="footcare-image img-center"
     onClick={()=>{
-      window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+      window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
     }}
   />
 
@@ -947,7 +947,7 @@ src={info.fld_image}/>
     <p class="product-title">
       <a class="item-name"
       onClick={()=>{
-        window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+        window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
       }}
       >
         {info.fld_name}
@@ -1278,13 +1278,7 @@ src={info.fld_image}/>
                                                amount: info.fld_discountprice,
                                                updated_on: moment().format("lll"),
                                                updated_by: login.fld_userid,
-                                               url : `/socks/${info.fld_socksid +"/" +info.fld_id +"/" +info.fld_name
-                                                  .replace(/ /g, "-")
-                                                  .replace(/\//g, "-")
-                                                  .replace(
-                                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                    "-"
-                                                  )
+                                               url : `/socks/${info.fld_socksid +"/" +info.fld_id +"/" +info.fld_name.replace(/\W|_/g,"")
                                               }`
                                                // updated_by :13
                                              },
@@ -1362,13 +1356,7 @@ src={info.fld_image}/>
                                                   "/" +
                                                   info.fld_id +
                                                   "/" +
-                                                  info.fld_name
-                                                    .replace(/ /g, "-")
-                                                    .replace(/\//g, "-")
-                                                    .replace(
-                                                      /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                      "-"
-                                                    )
+                                                  info.fld_name.replace(/\W|_/g,"")
                                                 }`
   
                                               }
@@ -1397,13 +1385,7 @@ src={info.fld_image}/>
                                                 "/" +
                                                 info.fld_id +
                                                 "/" +
-                                                info.fld_name
-                                                  .replace(/ /g, "-")
-                                                  .replace(/\//g, "-")
-                                                  .replace(
-                                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                    "-"
-                                                  )
+                                                info.fld_name.replace(/\W|_/g,"")
                                               }`
   
                                             }

@@ -158,7 +158,7 @@ class AccessoriesHP extends Component {
                       alt="product"
                       class="footcare-image img-center"
                       onClick={()=>{
-                        window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                        window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
                       }}
                     />
 
@@ -166,7 +166,7 @@ class AccessoriesHP extends Component {
                       <p class="product-title">
                         <a 
                         onClick={()=>{
-                          window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                          window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
                         }}
                         class="item-name">
                           {info.fld_name}
@@ -324,13 +324,7 @@ class AccessoriesHP extends Component {
                                                    amount: info.fld_discountprice,
                                                    updated_on: moment().format("lll"),
                                                    updated_by: login.fld_userid,
-                                                   url : `/accessories/${ info.fld_accessoriesid +"/" +info.fld_id +"/" +info.fld_name
-                                                      .replace(/ /g, "-")
-                                                      .replace(/\//g, "-")
-                                                      .replace(
-                                                        /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                        "-"
-                                                      )
+                                                   url : `/accessories/${ info.fld_accessoriesid +"/" +info.fld_id +"/" +info.fld_name.replace(/\W|_/g,"")
                                                   }`
                                                    // updated_by :13
                                                  },
@@ -408,13 +402,7 @@ class AccessoriesHP extends Component {
                                                       "/" +
                                                       info.fld_id +
                                                       "/" +
-                                                      info.fld_name
-                                                        .replace(/ /g, "-")
-                                                        .replace(/\//g, "-")
-                                                        .replace(
-                                                          /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                          "-"
-                                                        )
+                                                      info.fld_name.replace(/\W|_/g,"")
                                                     }`
       
                                                   }
@@ -443,13 +431,7 @@ class AccessoriesHP extends Component {
                                                     "/" +
                                                     info.fld_id +
                                                     "/" +
-                                                    info.fld_name
-                                                      .replace(/ /g, "-")
-                                                      .replace(/\//g, "-")
-                                                      .replace(
-                                                        /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                        "-"
-                                                      )
+                                                    info.fld_name.replace(/\W|_/g,"")
                                                   }`
       
                                                 }

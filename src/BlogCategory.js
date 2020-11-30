@@ -51,13 +51,12 @@ class BlogCategory extends React.Component {
           Notiflix.Loading.Dots('Please wait...');
 
           // console.log(this.props.match.params.sub == undefined)
-          debugger;
+
           var ct = JSON.parse(localStorage.getItem('BlogCat'))
           var sbct = JSON.parse(localStorage.getItem('BlogSubCat'))
 
           console.log(ct)
           console.log(sbct)
-          sbct = sbct.replaceAll('-',' ')
 
           this.setState({
               BlogCategoryTitle : sbct == undefined ?  ct
@@ -151,14 +150,14 @@ class BlogCategory extends React.Component {
                      onClick={()=>{
       
       
-                      if( blog.fld_subcategory == null || blog.fld_subcategory.replace( /\W|_/g,'-') == ''){
-                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}` : 
-                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${blog.fld_subcategory.replace( /\W|_/g,'-')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+                      if( blog.fld_subcategory == null || blog.fld_subcategory.replace( /\W|_/g,'') == ''){
+                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}` : 
+                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${blog.fld_subcategory.replace( /\W|_/g,'')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
                       
                       }else
                       {
-                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}` : 
-                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${blog.fld_subcategory.replace( /\W|_/g,'-')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}` : 
+                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${blog.fld_subcategory.replace( /\W|_/g,'')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
                       
                       }
                     }}
@@ -173,14 +172,14 @@ class BlogCategory extends React.Component {
                      onClick={()=>{
       
       
-                      if( blog.fld_subcategory == null || blog.fld_subcategory.replace( /\W|_/g,'-') == ''){
-                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}` : 
-                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${blog.fld_subcategory.replace( /\W|_/g,'-')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+                      if( blog.fld_subcategory == null || blog.fld_subcategory.replace( /\W|_/g,'') == ''){
+                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}` : 
+                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${blog.fld_subcategory.replace( /\W|_/g,'')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
                       
                       }else
                       {
-                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}` : 
-                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${blog.fld_subcategory.replace( /\W|_/g,'-')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+                        window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}` : 
+                        `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${blog.fld_subcategory.replace( /\W|_/g,'')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
                       
                       }
                     }}
@@ -208,14 +207,14 @@ class BlogCategory extends React.Component {
                                         
                                               // console.log(this.state.BlogCategoryTitle )
                                   
-                                              if( blog.fld_subcategory == null || blog.fld_subcategory.replace( /\W|_/g,'-') == '' ){
-                                                window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}` : 
-                                                `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${blog.fld_subcategory.replace( /\W|_/g,'-')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+                                              if( blog.fld_subcategory == null || blog.fld_subcategory.replace( /\W|_/g,'') == '' ){
+                                                window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}` : 
+                                                `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${blog.fld_subcategory.replace( /\W|_/g,'')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
                                               
                                               }else
                                               {
-                                                window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}` : 
-                                                `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${blog.fld_subcategory.replace( /\W|_/g,'-')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+                                                window.location.href = this.state.BlogCategoryTitle == blog.fld_category ? `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/blog-details/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}` : 
+                                                `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${blog.fld_subcategory.replace( /\W|_/g,'')}/${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
                                               
                                               }
                                              

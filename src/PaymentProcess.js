@@ -39,7 +39,7 @@ class PaymentProcess extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
+
     Notiflix.Loading.Init({
         svgColor: "#507dc0",
         //  #507dc0'
@@ -74,13 +74,13 @@ class PaymentProcess extends React.Component {
                 var c = 0
                 var c1 = 0
 
-                console.log(obj.data[0])
+                // console.log(obj.data[0])
           
        
 
                 for(var j=0;j<obj.data[0].OrderDet.split('#').length;j++){
 
-                    console.log(obj.data[0].OrderDet.split('#')[j].split('^')[2])
+                    // console.log(obj.data[i].OrderDet.split('#')[j])
 
                     if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Food'){
 
@@ -152,7 +152,8 @@ class PaymentProcess extends React.Component {
 
 
 
-                    }else if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Socks'){
+                    }
+                    else if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Socks'){
 
                         PostApiCall.postRequest({
 
@@ -184,9 +185,76 @@ class PaymentProcess extends React.Component {
 
                     }))
 
-                    }else{
-                      console.log('missing condition code');
                     }
+
+                    else if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Accessories'){
+
+                      PostApiCall.postRequest({
+
+                          orderid : obj.data[0].fld_orderid,
+                          productid : obj.data[0].OrderDet.split('#')[j].split('^')[3]
+                   
+                   },"GetAccessoriesOrderDetail").then((results2) => 
+                   
+                     // const objs = JSON.parse(result._bodyText)
+                     results2.json().then(obj2 => {
+                  
+                   
+                     if(results2.status == 200 || results2.status==201){
+
+                      // console.log(obj2.data)
+                     
+                      infData.push(obj2.data[0])
+                      this.setState({
+                          ProdData : infData
+                      })
+                      c1 = c1 +1
+
+                      if(c1== obj.data[0].OrderDet.split('#').length){
+                          // Notiflix.Loading.Remove()
+                          // console.log('nidhi')
+                          this.SendMailers()
+                      }
+                     }
+
+                  }))
+
+                  }
+
+
+                  else if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Covid'){
+
+                    PostApiCall.postRequest({
+
+                        orderid : obj.data[0].fld_orderid,
+                        productid : obj.data[0].OrderDet.split('#')[j].split('^')[3]
+                 
+                 },"GetCovidOrderDetail").then((results2) => 
+                 
+                   // const objs = JSON.parse(result._bodyText)
+                   results2.json().then(obj2 => {
+                
+                 
+                   if(results2.status == 200 || results2.status==201){
+
+                    // console.log(obj2.data)
+                   
+                    infData.push(obj2.data[0])
+                    this.setState({
+                        ProdData : infData
+                    })
+                    c1 = c1 +1
+
+                    if(c1== obj.data[0].OrderDet.split('#').length){
+                        // Notiflix.Loading.Remove()
+                        // console.log('nidhi')
+                        this.SendMailers()
+                    }
+                   }
+
+                }))
+
+                }
 
                   
 

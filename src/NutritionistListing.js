@@ -124,7 +124,7 @@ class Nutritionist extends React.Component
     }
 
   onViewDetails(doc){
-    window.location.href = `/dietitian/${doc.fld_id+"-"+doc.fld_name.replace( / /g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+    window.location.href = `/dietitian/${doc.fld_id+"-"+doc.fld_name.replace(/\W|_/g,"")}`
 
   }
    

@@ -78,7 +78,7 @@ class AyurvedaListing extends React.Component
                                 <div class="product-details">
                                     <p class="product-title"><a  onClick={()=>{
                                        
-                                       window.location.href = `/ayurveda/${medicine.fld_medicineid+"-"+medicine.fld_itemname.replace( / /g,'-')}`
+                                       window.location.href = `/ayurveda/${medicine.fld_medicineid+"/"+medicine.fld_itemname.replace(/\W|_/g,"")}`
 
                                       
                                     }}>{medicine.fld_itemname}</a></p>

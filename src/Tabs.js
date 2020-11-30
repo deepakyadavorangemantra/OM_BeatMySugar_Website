@@ -347,7 +347,7 @@ class Tabs extends React.Component {
 
     onBlogView(blog){
 
-      window.location.href = `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${(blog.fld_subcategory != '' && blog.fld_subcategory != null ? blog.fld_subcategory.replace( /\W|_/g,'-') : moment(blog.fld_publishdate).format('ll'))+"/" }${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+      window.location.href = `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${(blog.fld_subcategory != '' && blog.fld_subcategory != null ? blog.fld_subcategory.replace( /\W|_/g,'') : moment(blog.fld_publishdate).format('ll'))+"/" }${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
 
 
     }
@@ -443,16 +443,13 @@ class Tabs extends React.Component {
                           src={info.SelectedVar.split("@")[0].split("$")[1]}
                           onClick={() => {
                             window.location.href = `/food/${
-                              info.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,) +
+                              info.fld_category.replace(/\W|_/g,"") +
                               "/" +
                               info.fld_id +
                               "/" +
                               info.SelectedVar.split("#")[7].split("$")[0] +
                               "/" +
-                              info.fld_name
-                                .replace(/ /g, "-")
-                                .replace(/\//g, "-")
-                                .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                              info.fld_name.replace(/\W|_/g,"")
                             }`;
                           }}
                         />
@@ -462,16 +459,13 @@ class Tabs extends React.Component {
                             <a
                               onClick={() => {
                                 window.location.href = `/food/${
-                                  info.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,) +
+                                  info.fld_category.replace(/\W|_/g,"") +
                                   "/" +
                                   info.fld_id +
                                   "/" +
                                   info.SelectedVar.split("#")[7].split("$")[0] +
                                   "/" +
-                                  info.fld_name
-                                    .replace(/ /g, "-")
-                                    .replace(/\//g, "-")
-                                    .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                  info.fld_name.replace(/\W|_/g,"")
                                 }`;
                               }}
                             >
@@ -666,7 +660,7 @@ class Tabs extends React.Component {
                       alt="product"
                       class="footcare-image img-center"
                       onClick={()=>{
-                        window.location.href = `/footwear/${info.fld_footid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                        window.location.href = `/footwear/${info.fld_footid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
                       }}
                     />
 
@@ -674,7 +668,7 @@ class Tabs extends React.Component {
                       <p class="product-title">
                         <a 
                         onClick={()=>{
-                          window.location.href = `/footwear/${info.fld_footid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                          window.location.href = `/footwear/${info.fld_footid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
                         }}
                         class="item-name">
                           {info.fld_name}
@@ -818,7 +812,7 @@ class Tabs extends React.Component {
     alt="product"
     class="footcare-image img-center"
     onClick={()=>{
-      window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+      window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
     }}
   />
 
@@ -826,7 +820,7 @@ class Tabs extends React.Component {
     <p class="product-title">
       <a class="item-name"
       onClick={()=>{
-        window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+        window.location.href = `/socks/${info.fld_socksid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
       }}
       >
         {info.fld_name}
@@ -1138,7 +1132,7 @@ class Tabs extends React.Component {
     alt="product"
     class="footcare-image img-center"
     onClick={()=>{
-      window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+      window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
     
     }}
   />
@@ -1147,7 +1141,7 @@ class Tabs extends React.Component {
     <p class="product-title">
       <a class="item-name"
       onClick={()=>{
-        window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+        window.location.href = `/accessories/${info.fld_accessoriesid+"/"+info.fld_id+"/"+info.fld_name.replace(/\W|_/g,"")}`
       
       }}
       >
@@ -1353,10 +1347,7 @@ class Tabs extends React.Component {
                                                amount: info.SelectedVar.split("#")[3],
                                                updated_on: moment().format("lll"),
                                                updated_by: login.fld_userid,
-                                               url : `/food/${info.fld_id +"/" +info.SelectedVar.split("#")[7].split("$")[0] +"/" +info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                               url : `/food/${info.fld_id +"/" +info.SelectedVar.split("#")[7].split("$")[0] +"/" +info.fld_name.replace(/\W|_/g,"")
                                                }`
                                                // updated_by :13
                                              },
@@ -1434,10 +1425,7 @@ class Tabs extends React.Component {
                                                    "/" +
                                                    info.SelectedVar.split("#")[7].split("$")[0] +
                                                    "/" +
-                                                   info.fld_name
-                                                     .replace(/ /g, "-")
-                                                     .replace(/\//g, "-")
-                                                     .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                   info.fld_name.replace(/\W|_/g,"")
                                                  }`
    
                                                }
@@ -1467,10 +1455,7 @@ class Tabs extends React.Component {
                                                  "/" +
                                                  info.SelectedVar.split("#")[7].split("$")[0] +
                                                  "/" +
-                                                 info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                 info.fld_name.replace(/\W|_/g,"")
                                                }`
    
                                              }
@@ -1513,13 +1498,7 @@ class Tabs extends React.Component {
                                               amount: info.fld_discountprice,
                                               updated_on: moment().format("lll"),
                                               updated_by: login.fld_userid,
-                                              url : `/footwear/${ info.fld_footid +"/" +info.fld_id +"/" +info.fld_name
-                                                 .replace(/ /g, "-")
-                                                 .replace(/\//g, "-")
-                                                 .replace(
-                                                   /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                   "-"
-                                                 )
+                                              url : `/footwear/${ info.fld_footid +"/" +info.fld_id +"/" +info.fld_name.replace(/\W|_/g,"")
                                              }`
                                               // updated_by :13
                                             },
@@ -1597,13 +1576,7 @@ class Tabs extends React.Component {
                                                  "/" +
                                                  info.fld_id +
                                                  "/" +
-                                                 info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(
-                                                     /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                     "-"
-                                                   )
+                                                 info.fld_name.replace(/\W|_/g,"")
                                                }`
  
                                              }
@@ -1632,13 +1605,7 @@ class Tabs extends React.Component {
                                                "/" +
                                                info.fld_id +
                                                "/" +
-                                               info.fld_name
-                                                 .replace(/ /g, "-")
-                                                 .replace(/\//g, "-")
-                                                 .replace(
-                                                   /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                   "-"
-                                                 )
+                                               info.fld_name.replace(/\W|_/g,"")
                                              }`
  
                                            }
@@ -1681,13 +1648,7 @@ class Tabs extends React.Component {
                                               amount: info.fld_discountprice,
                                               updated_on: moment().format("lll"),
                                               updated_by: login.fld_userid,
-                                              url : `/socks/${info.fld_socksid +"/" +info.fld_id +"/" +info.fld_name
-                                                 .replace(/ /g, "-")
-                                                 .replace(/\//g, "-")
-                                                 .replace(
-                                                   /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                   "-"
-                                                 )
+                                              url : `/socks/${info.fld_socksid +"/" +info.fld_id +"/" +info.fld_name.replace(/\W|_/g,"")
                                              }`
                                               // updated_by :13
                                             },
@@ -1765,13 +1726,7 @@ class Tabs extends React.Component {
                                                  "/" +
                                                  info.fld_id +
                                                  "/" +
-                                                 info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(
-                                                     /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                     "-"
-                                                   )
+                                                 info.fld_name.replace(/\W|_/g,"")
                                                }`
  
                                              }
@@ -1800,13 +1755,7 @@ class Tabs extends React.Component {
                                                "/" +
                                                info.fld_id +
                                                "/" +
-                                               info.fld_name
-                                                 .replace(/ /g, "-")
-                                                 .replace(/\//g, "-")
-                                                 .replace(
-                                                   /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                   "-"
-                                                 )
+                                               info.fld_name.replace(/\W|_/g,"")
                                              }`
  
                                            }
@@ -1847,13 +1796,7 @@ class Tabs extends React.Component {
                                              amount: info.fld_discountprice,
                                              updated_on: moment().format("lll"),
                                              updated_by: login.fld_userid,
-                                             url : `/accessories/${ info.fld_accessoriesid +"/" +info.fld_id +"/" +info.fld_name
-                                                .replace(/ /g, "-")
-                                                .replace(/\//g, "-")
-                                                .replace(
-                                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                  "-"
-                                                )
+                                             url : `/accessories/${ info.fld_accessoriesid +"/" +info.fld_id +"/" +info.fld_name.replace(/\W|_/g,"")
                                             }`
                                              // updated_by :13
                                            },
@@ -1931,13 +1874,7 @@ class Tabs extends React.Component {
                                                 "/" +
                                                 info.fld_id +
                                                 "/" +
-                                                info.fld_name
-                                                  .replace(/ /g, "-")
-                                                  .replace(/\//g, "-")
-                                                  .replace(
-                                                    /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                    "-"
-                                                  )
+                                                info.fld_name.replace(/\W|_/g,"")
                                               }`
 
                                             }
@@ -1966,13 +1903,7 @@ class Tabs extends React.Component {
                                               "/" +
                                               info.fld_id +
                                               "/" +
-                                              info.fld_name
-                                                .replace(/ /g, "-")
-                                                .replace(/\//g, "-")
-                                                .replace(
-                                                  /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                  "-"
-                                                )
+                                              info.fld_name.replace(/\W|_/g,"")
                                             }`
 
                                           }

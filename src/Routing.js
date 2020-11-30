@@ -47,7 +47,6 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import Disclaimer from "./Disclaimer";
 import TermsCondition from "./TermsCondition";
 import Careers from "./Careers";
-import AboutUsDummy from "./AboutUsDummy";
 import CareersDummy from "./CareersDummy";
 import TermsDummy from "./TermsDummy";
 import DisclaimerDummy from "./DisclaimerDummy";
@@ -236,7 +235,7 @@ class Routing extends Component {
 
           <Route exact path={"/careers/:id/:title"} component={Careers} />
 
-          <Route exact path={"/aboutusdummy"} component={AboutUsDummy} />
+
 
           <Route exact path={"/careersdummy"} component={CareersDummy} />
           <Route exact path={"/termsdummy"} component={TermsDummy} />

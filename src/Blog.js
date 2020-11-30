@@ -130,7 +130,7 @@ BlogCategory : obj.data
 
       onBlogView(blog){
 
-        window.location.href = `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'-')}/${(blog.fld_subcategory != '' && blog.fld_subcategory != null ? blog.fld_subcategory.replace( /\W|_/g,'-') : moment(blog.fld_publishdate).format('ll'))+"/" }${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'-')}`
+        window.location.href = `/healthknowledge/${blog.fld_category.replace( /\W|_/g,'')}/${(blog.fld_subcategory != '' && blog.fld_subcategory != null ? blog.fld_subcategory.replace( /\W|_/g,'') : moment(blog.fld_publishdate).format('ll'))+"/" }${blog.fld_id+"-"+blog.fld_title.replace( /\W|_/g,'')}`
 
 
       }

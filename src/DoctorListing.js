@@ -135,7 +135,7 @@ componentDidMount(){
 
 
 onViewDetails(doc){
-    window.location.href = `/doctor/${doc.fld_id+"-"+doc.fld_name.replace( / /g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+    window.location.href = `/doctor/${doc.fld_id+"-"+doc.fld_name.replace(/\W|_/g,"")}`
 }
 
 

@@ -695,7 +695,7 @@ src={info.fld_image}/>
 
                             if(this.state.FoodVariants[i].Pack == dt.target.value){
 
-                            window.location.href = `/food/${this.state.FoodMaster.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,)+"/"+this.state.FoodMaster.fld_id+"/"+this.state.FoodVariants[i].fld_id+"/"+this.state.FoodVariants[i].fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                            window.location.href = `/food/${this.state.FoodMaster.fld_category.replace(/\W|_/g,"")+"/"+this.state.FoodMaster.fld_id+"/"+this.state.FoodVariants[i].fld_id+"/"+this.state.FoodVariants[i].fld_name.replace(/\W|_/g,"")}`
 
 
                             }
@@ -936,7 +936,7 @@ src={info.fld_image}/>
                       class="book-image"
                       src={info.SelectedVar.split('@')[0].split('$')[1]}
                       onClick={()=>{
-                        window.location.href = `/food/${info.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,)+"/"+info.fld_id+"/"+info.SelectedVar.split('#')[7].split('$')[0]+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                        window.location.href = `/food/${info.fld_category.replace(/\W|_/g,"")+"/"+info.fld_id+"/"+info.SelectedVar.split('#')[7].split('$')[0]+"/"+info.fld_name.replace(/\W|_/g,"")}`
                       }}
                     />
               
@@ -944,7 +944,7 @@ src={info.fld_image}/>
                       <p class="product-title " >
                         <a
                     onClick={()=>{
-                      window.location.href = `/food/${info.fld_category.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,)+"/"+info.fld_id+"/"+info.SelectedVar.split('#')[7].split('$')[0]+"/"+info.fld_name.replace( / /g,'-').replace( /\//g,'-').replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')}`
+                      window.location.href = `/food/${info.fld_category.replace(/\W|_/g,"")+"/"+info.fld_id+"/"+info.SelectedVar.split('#')[7].split('$')[0]+"/"+info.fld_name.replace(/\W|_/g,"")}`
                     }}
                         >
                           {info.SelectedVar.split('#')[0]}
@@ -1150,10 +1150,7 @@ src={info.fld_image}/>
                                                amount: info.SelectedVar.split("#")[3],
                                                updated_on: moment().format("lll"),
                                                updated_by: login.fld_userid,
-                                               url : `/food/${info.fld_id +"/" +info.SelectedVar.split("#")[7].split("$")[0] +"/" +info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                               url : `/food/${info.fld_id +"/" +info.SelectedVar.split("#")[7].split("$")[0] +"/" +info.fld_name.replace(/\W|_/g,"")
                                                }`
                                                // updated_by :13
                                              },
@@ -1231,10 +1228,7 @@ src={info.fld_image}/>
                                                    "/" +
                                                    info.SelectedVar.split("#")[7].split("$")[0] +
                                                    "/" +
-                                                   info.fld_name
-                                                     .replace(/ /g, "-")
-                                                     .replace(/\//g, "-")
-                                                     .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                   info.fld_name.replace(/\W|_/g,"")
                                                  }`
    
                                                }
@@ -1264,10 +1258,7 @@ src={info.fld_image}/>
                                                  "/" +
                                                  info.SelectedVar.split("#")[7].split("$")[0] +
                                                  "/" +
-                                                 info.fld_name
-                                                   .replace(/ /g, "-")
-                                                   .replace(/\//g, "-")
-                                                   .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                 info.fld_name.replace(/\W|_/g,"")
                                                }`
    
                                              }

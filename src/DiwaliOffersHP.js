@@ -180,21 +180,12 @@ class DiwaliOffersHP extends Component {
       {
 
         window.location.href = `/food/${
-          info.ProdInfo.fld_category.replace(
-            /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-            "-"
-          ) +'/'+
+          info.ProdInfo.fld_category.replace(/\W|_/g,"") +'/'+
           info.ProdInfo.fld_foodid +
           "/" +
           info.ProdInfo.fld_id +
           "/" +
-          info.ProdInfo.fld_name
-            .replace(/ /g, "-")
-            .replace(/\//g, "-")
-            .replace(
-              /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-              "-"
-            )
+          info.ProdInfo.fld_name.replace(/\W|_/g,"")
         }`;
 
       }else if(info.fld_category == 'Footwear')
@@ -205,13 +196,7 @@ class DiwaliOffersHP extends Component {
           "/" +
           info.ProdInfo.fld_id +
           "/" +
-          info.ProdInfo.fld_name
-            .replace(/ /g, "-")
-            .replace(/\//g, "-")
-            .replace(
-              /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-              "-"
-            )
+          info.ProdInfo.fld_name.replace(/\W|_/g,"")
         }`;
 
       }else
@@ -221,13 +206,7 @@ class DiwaliOffersHP extends Component {
           "/" +
           info.ProdInfo.fld_id +
           "/" +
-          info.ProdInfo.fld_name
-            .replace(/ /g, "-")
-            .replace(/\//g, "-")
-            .replace(
-              /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-              "-"
-            )
+          info.ProdInfo.fld_name.replace(/\W|_/g,"")
         }`;
       }
      
@@ -249,13 +228,7 @@ class DiwaliOffersHP extends Component {
                                                  amount: info.ProdInfo.fld_discountprice,
                                                  updated_on: moment().format("lll"),
                                                  updated_by: login.fld_userid,
-                                                 url : `/footwear/${ info.ProdInfo.fld_footid +"/" +info.ProdInfo.fld_id +"/" +info.ProdInfo.fld_name
-                                                    .replace(/ /g, "-")
-                                                    .replace(/\//g, "-")
-                                                    .replace(
-                                                      /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                      "-"
-                                                    )
+                                                 url : `/footwear/${ info.ProdInfo.fld_footid +"/" +info.ProdInfo.fld_id +"/" +info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                 }`
                                                },
                                                "AddShoppingCart"
@@ -307,13 +280,7 @@ class DiwaliOffersHP extends Component {
                                                     "/" +
                                                     info.ProdInfo.fld_id +
                                                     "/" +
-                                                    info.ProdInfo.fld_name
-                                                      .replace(/ /g, "-")
-                                                      .replace(/\//g, "-")
-                                                      .replace(
-                                                        /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                        "-"
-                                                      )
+                                                    info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                   }`
     
                                                 }
@@ -342,13 +309,7 @@ class DiwaliOffersHP extends Component {
                                                   "/" +
                                                   info.ProdInfo.fld_id +
                                                   "/" +
-                                                  info.ProdInfo.fld_name
-                                                    .replace(/ /g, "-")
-                                                    .replace(/\//g, "-")
-                                                    .replace(
-                                                      /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                      "-"
-                                                    )
+                                                  info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                 }`
                                               }
     
@@ -380,13 +341,7 @@ class DiwaliOffersHP extends Component {
                                                  amount: info.ProdInfo.fld_discountprice,
                                                  updated_on: moment().format("lll"),
                                                  updated_by: login.fld_userid,
-                                                 url : `/socks/${info.ProdInfo.fld_socksid +"/" +info.ProdInfo.fld_id +"/" +info.ProdInfo.fld_name
-                                                    .replace(/ /g, "-")
-                                                    .replace(/\//g, "-")
-                                                    .replace(
-                                                      /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                      "-"
-                                                    )
+                                                 url : `/socks/${info.ProdInfo.fld_socksid +"/" +info.ProdInfo.fld_id +"/" +info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                 }`
                                                },
                                                "AddShoppingCart"
@@ -441,13 +396,7 @@ class DiwaliOffersHP extends Component {
                                                     "/" +
                                                     info.ProdInfo.fld_id +
                                                     "/" +
-                                                    info.ProdInfo.fld_name
-                                                      .replace(/ /g, "-")
-                                                      .replace(/\//g, "-")
-                                                      .replace(
-                                                        /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                        "-"
-                                                      )
+                                                    info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                   }`
     
                                                 }
@@ -473,13 +422,7 @@ class DiwaliOffersHP extends Component {
                                                   "/" +
                                                   info.ProdInfo.fld_id +
                                                   "/" +
-                                                  info.ProdInfo.fld_name
-                                                    .replace(/ /g, "-")
-                                                    .replace(/\//g, "-")
-                                                    .replace(
-                                                      /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
-                                                      "-"
-                                                    )
+                                                  info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                 }`
                                               }
                                               newCart.push(addNewCartData)
@@ -512,10 +455,7 @@ class DiwaliOffersHP extends Component {
                                                  amount: info.ProdInfo.fld_discountprice,
                                                  updated_on: moment().format("lll"),
                                                  updated_by: login.fld_userid,
-                                                 url : `/food/${info.ProdInfo.fld_foodid +"/" +info.ProdInfo.fld_id +"/" +info.ProdInfo.fld_name
-                                                     .replace(/ /g, "-")
-                                                     .replace(/\//g, "-")
-                                                     .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                 url : `/food/${info.ProdInfo.fld_foodid +"/" +info.ProdInfo.fld_id +"/" +info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                  }`
                                                },
                                                "AddShoppingCart"
@@ -570,10 +510,7 @@ class DiwaliOffersHP extends Component {
                                                      "/" +
                                                      info.ProdInfo.fld_id +
                                                      "/" +
-                                                     info.ProdInfo.fld_name
-                                                       .replace(/ /g, "-")
-                                                       .replace(/\//g, "-")
-                                                       .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                     info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                    }`
                                                  }
                                                  newCart.push(addNewCartData)
@@ -598,10 +535,7 @@ class DiwaliOffersHP extends Component {
                                                    "/" +
                                                    info.ProdInfo.fld_id +
                                                    "/" +
-                                                   info.ProdInfo.fld_name
-                                                     .replace(/ /g, "-")
-                                                     .replace(/\//g, "-")
-                                                     .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '-')
+                                                   info.ProdInfo.fld_name.replace(/\W|_/g,"")
                                                  }`
      
                                                }

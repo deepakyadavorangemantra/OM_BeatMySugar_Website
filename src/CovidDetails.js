@@ -132,10 +132,10 @@ class CovidDetails extends React.Component {
 
                 // console.log(dtar[i])
                 if(obj1.data[i].Variant != null){
-                //   dtar[i].SelectedVar = obj1.data[i].Variant.split('^')[0] 
+                  dtar[i].SelectedVar = obj1.data[i].Variant.split('^')[0] 
                 }else
                 {
-                  dtar.splice(dtar[i])
+                  // dtar.splice(dtar[i])
                 }
             
 
@@ -786,7 +786,7 @@ src={info.fld_image}/>
                             <b>Sizes Available (UK)</b>
                           </p>
                           <span>
-                            <a
+                            {/* <a
                               href=""
                               style={{
                                 marginLeft: "5px",
@@ -798,7 +798,7 @@ src={info.fld_image}/>
                               data-target="#exampleModal"
                             >
                               Size Chart
-                            </a>
+                            </a> */}
                           </span>
                           <ul>
                             {this.state.SizeData.map((dt, i) => (
@@ -1153,7 +1153,7 @@ src={info.fld_image}/>
                       <p class="brief-desc"></p>
                       <ul class="group-buttons">
 
-                        {this.state.FoodData && this.state.FoodData.find(cart=>cart.fld_footid==info.fld_footid)==undefined?   <li style={{display : info.fld_availability =='In stock' ? '' : 'none'}}>
+                         <li style={{display : info.fld_availability =='In stock' ? '' : 'none'}}>
                           {" "}
                           <button class="add-to-cart-btn"
                           
@@ -1166,8 +1166,7 @@ src={info.fld_image}/>
                           >
                             <i class="fas fa-shopping-cart"></i> ADD TO CART
                           </button>
-                        </li>:null
-                            }
+                        </li>
 
                       
                         <li>

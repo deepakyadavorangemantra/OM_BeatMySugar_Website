@@ -80,7 +80,7 @@ class HealthcareDeviceListing extends React.Component
 
                                         //     if(device.fld_deviceid == this.state.DeviceDetails[i].fld_deviceid){
                                         //         arr.push(this.state.DeviceDetails[i])
-                                    window.location.href = `/device/${device.fld_deviceid+"-"+device.fld_itemname.replace( / /g,'-')}`
+                                    window.location.href = `/device/${device.fld_deviceid+"/"+device.fld_itemname.replace(/\W|_/g,"")}`
                                                 
                                         //     }
 
