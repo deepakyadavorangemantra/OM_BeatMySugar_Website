@@ -53,9 +53,14 @@ class CourseContentMain extends React.Component {
           status: results.status
         })
     ).then(res => {
-        this.setState({ ChapterData : res.data.data });
+        var chapterData = res.data.data.map(function(el , index) {
+            var o = Object.assign({}, el);
+            o.activeClass = (index==0 ? true:false);
+            return o;
+          });
+        this.setState({ ChapterData : chapterData });
         Notiflix.Loading.Remove();
-        }) 
+        });
     })
   }
 
@@ -103,7 +108,6 @@ class CourseContentMain extends React.Component {
 
   goToNextChapterTopic=()=>{
     let ChapterData = this.state.ChapterData;
-    debugger;
     if(this.state.current_chapter_index< ChapterData.length-1){
       let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
       let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
@@ -203,14 +207,14 @@ class CourseContentMain extends React.Component {
                                 <HeaderCourseProgress />
                                 <div class="panel-group" id="accordion">
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
-                                 return <div class="panel panel-default">
-                                        <div class="panel-heading lockedtitle active" id="headingOne">
+                                 return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
+                                        <div class="panel-heading lockedtitle " id="headingOne">
                                             <h4 class="panel-title">                            
-                                            Chapter Number {chapterIndex+1} : {Item.fld_title}
+                                                Chapter Number {chapterIndex+1} : {Item.fld_title}
                                             </h4>
                                             <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
                                         </div>
-                                        <div id="collapseOne" class="panel-collapse">
+                                        <div id="collapseOne" class={"panel-collapse "+ + (Item.activeClass == true ? 'active' : 'deactive')}>
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
