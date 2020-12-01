@@ -10,6 +10,7 @@ const HeaderCourseProgress = (props) => {
                         <h2>Course Content</h2>
                     </div>
                     <div class="col-md-9">
+                    { props.login != null && props.login != "" ? 
                         <div class="course-progress">
                             <div class="course-progess-sec">
                             <p>Learning Progress<strong> 30%</strong></p>
@@ -24,7 +25,7 @@ const HeaderCourseProgress = (props) => {
                                     <span class="time-course-take">25 Min</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> : '' }
                     </div>
                 </div>
             </div>
