@@ -290,3 +290,74 @@ font-weight: 500;
   display: flex;
   align-items: center;
 }
+.course-details {
+  padding: 30px;
+  position: relative;
+  border: 1px solid #a8a8a8;
+}
+
+.panel-title {
+  font-size: 22px;
+  color: #000000;
+  font-weight: 700;
+}
+
+.course-details p {
+  font-size: 18px;
+  color: #000000;
+  font-weight: 500;
+}
+.course-details .coloredsec {
+  font-size: 22px;
+  color: #ec3764;
+  font-weight: 500;
+}
+.navlinkbutton a {
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: flex;
+  color: #fff;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navlinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 30px;
+}
+
+.disable {
+  background: #bebebe;
+}
+
+.navlinkbutton a span {
+  padding: 0 10px;
+}
+
+.activelink {
+  background: #507dbe;
+}
+.homelink {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+}
+
+.homelink i {
+    font-size: 32px;
+}
+
+.homelink i {
+    color: #000;
+}
+.course-details-disc {
+  padding: 20px 0;
+}
+.navlinkbutton p {
+    padding-top: 10px;
+    color: #507dbe;
+    font-size: 15px;
+}

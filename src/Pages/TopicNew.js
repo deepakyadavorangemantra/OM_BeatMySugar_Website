@@ -200,34 +200,28 @@ class TopicContentMain extends React.Component {
               </div>
                 <div class="container" style={{background:"none"}}>
                     <div class="row mt-2">
-                        <div class="col-lg-8 order-lg-first ">
+                        <div class="col-lg-12 order-lg-first ">
                             <div class="dashboard-content">
-                             
-
                                 <HeaderCourseProgress />
-                                <div class="panel-group" id="accordion">
-                                {this.state.ChapterData.map(( Item, chapterIndex)=>{
-                                 return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div class="panel-heading lockedtitle " id="headingOne">
-                                            <h4 class="panel-title">                            
-                                                Chapter Number {chapterIndex+1} : {Item.fld_title}
-                                            </h4>
-                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
-                                        </div>
-                                        <div id="collapseOne" class={"panel-collapse "+ + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                            <div class="panel-body">
-                                                <ul class="topiclist">
-                                                    {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class="locked"><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
-                                                    }) : ''}
-                                                </ul>
-                                            </div>
-                                        </div>
+                                  <div class="course-details">
+                                    <div class="homelink">
+                                      <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
-                                    })}
-                                
-                                
-                              </div>
+                                      <h3 class="panel-title">Chapter Number 1 : Diabetes Learning Program1</h3>
+                                      <p><span class="topic">3 Topics</span> . <span class="length">05h 01m total length</span></p>
+                                      <p class="coloredsec">A cooperative Latin American implementation study</p>
+                                    <div class="course-details-disc">
+                                   <h4>OBJECTIVE</h4> 
+                                   <p>To implement an educational program in 10 Latin American countries and to evaluate its effect on the clinical, biochemical, and therapeutic aspects as well as the economic cost of diabetes.</p> 
+                                    </div>
+                                  </div>
+                                  <div class="navlinks">
+                                      <div class="navlinkbutton next"><a class="disable" href="#"><span><img src="/assets/images/previous.png"/></span> Previous Topic</a></div>
+                                      <div class="navlinkbutton previous">
+                                        <a class="activelink" href="#">Next Topic <span><img src="/assets/images/next.png"/></span> </a>
+                                        <p>Topic 2 - Lorem Ipsum dummy text lorem</p>
+                                        </div>
+                                  </div>
                                 {/* <div class="row">
                                     <div class="col-md-12">
                                       { Show_course_content_list === true ? 
@@ -266,33 +260,7 @@ class TopicContentMain extends React.Component {
                                 </div> */}
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="course-side-bar">
-                                { login != null && login != "" ? 
-                                    <div class="login-box">
-                                        <h3>Want to start your free course?</h3>
-                                        <a href="#" className="loginbutton">Resume Learning</a>
-                                    </div>:
-                                        <div class="login-box">
-                                            <h3>Want to start your free course?</h3>
-                                            <a href="#" className="loginbutton">Login Now</a>
-                                        </div>
-                                }
-                              <div class="benefits">
-                                 <h4>Course Benefits</h4>
-                                 <ul>
-                                   <li><strong>Flexible</strong> You pick the schedule</li>
-                                   <li><strong>Pause</strong> Take break anytime</li>
-                                   <li><strong>Reliable</strong> Prepared by experts</li>
-                                   <li><strong>Goodies</strong> Free gifts on completion</li>
-                                 </ul>
-                              </div>
-                              <div class="gift-hemper">
-                                <h5>Gift Hamper</h5>
-                                <img src="/assets/images/gifts.jpg" />
-                              </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
