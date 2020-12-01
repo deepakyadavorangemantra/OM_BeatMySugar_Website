@@ -88,6 +88,8 @@ import OrderSuccess from "./OrderSuccess";
 import NotFound from "./NotFound";
 import DiwalioffersListing from "./DiwalioffersListing";
 import Education from "./Pages/Education";
+import CourseContentMain from './Pages/CourseContent';
+
 class Routing extends Component {
   render() {
     return (
@@ -394,7 +396,9 @@ class Routing extends Component {
             path={"/festive-offers"}
             component={DiwalioffersListing}
           />
-        <Route exact path={"/education"} component={Education} />
+        <Route exact path={"/educationDesign"} component={Education} />
+        <Route exact path={"/education"} component={CourseContentMain} />
+        
       </BrowserRouter>
     );
   }

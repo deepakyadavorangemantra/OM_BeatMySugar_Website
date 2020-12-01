@@ -69,7 +69,11 @@ class Menu extends React.Component {
 
     GetApiCall.getRequest("GetFoodCategoryWebsiteData").then((resultdes) =>
       resultdes.json().then((obj) => {
+        if( Array.isArray(obj.data) ){
+
+        
         // console.log(obj.data)
+        debugger;
         this.setState({
           FoodCategory: obj.data,
         });
@@ -107,6 +111,7 @@ class Menu extends React.Component {
           // CategorySelected : obj.data[0].fld_category,
           // FoodRef : obj.data
         });
+      }
       })
     );
 
@@ -1026,7 +1031,7 @@ class Menu extends React.Component {
                         Food & Supplements{" "}
                       </a>
                       <ul>
-                        {this.state.FoodCategory.map((cat, index) => (
+                        { this.state.FoodCategory.map((cat, index) => (
                           <li>
                             <a
                               onClick={() => {

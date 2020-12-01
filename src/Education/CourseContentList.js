@@ -5,7 +5,7 @@ const CourseContentList =( props)=>{
     return(
         <React.Fragment>
             <div class="card">
-                {props.ChapterData && props.ChapterData.length>0 ? 
+                { Array.isArray(props.ChapterData) && props.ChapterData.length>0 ? 
                     props.ChapterData.map(( Item, chapterIndex)=>{
 
                 
