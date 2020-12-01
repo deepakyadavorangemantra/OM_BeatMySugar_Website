@@ -13,7 +13,7 @@ import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 
 import courseImage from '../images/course.jpg'
-class CourseContentMain extends React.Component {
+class TopicContentMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,71 +90,7 @@ class CourseContentMain extends React.Component {
     });
   }
 
-  setQuestionsView=( chapter_id)=>{
-    // chapterid
-    Notiflix.Loading.Dots()
-    GetApiCall.getRequest("ListQuestion?chapterid="+ chapter_id).then(resultdes =>
-      resultdes.json().then(obj => {
-      this.setState({
-        ChapterQuestionList : obj.data, Show_Questions_Module : true, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : false, Show_User_Feedback : false
-      })
-      Notiflix.Loading.Remove();
-    }))
-  }
-
-  updateUserAnsAndShowCorrectAns=( questionDataWithUserAns)=>{
-    // post api to users answer of questions.
-    this.setState({
-      ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true, Show_User_Feedback : false
-    })
-    console.log(questionDataWithUserAns);
-  }
-
-  gotoNextTopic=(current_topic_index)=>{
-    debugger;
-    this.setState({ Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
-  }
-
-  goToNextChapterTopic=()=>{
-    let ChapterData = this.state.ChapterData;
-    if(this.state.current_chapter_index< ChapterData.length-1){
-      let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
-      let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
-      let current_topic_index = 0;
-      let current_chapter_index = this.state.current_chapter_index+1;
-      //unlock new chapter first topic.
-     this.showTopicDetails( topic, current_chapter_data, current_topic_index, current_chapter_index)
-    }else{
-      this.setState({  Show_course_content_list : false, 
-        Show_Topics : false, 
-        Show_Questions_Module: false,
-        Show_Correct_Question_Ans : false,
-        Show_User_Feedback : true,
-      });
-    }
-    
-  }
-
-  onSubmitFeedback =(feedback)=>{
-    // user feedback api...
-    // go to congratulation .....
-    this.setState({  Show_course_content_list : false, 
-      Show_Topics : false, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Show_User_Feedback : false,
-      Show_Congratulation_Page : true
-    });
-  }
-
-  goToTopic =( current_chapter, currect_topic, current_chapter_index, current_topic_index)=>{
-      debugger;
-    console.log(current_chapter);
-    console.log(currect_topic);
-    console.log(current_chapter_index);
-    console.log(current_topic_index);
-    
-  }
+  
 
 
   render() {
@@ -321,4 +257,4 @@ class CourseContentMain extends React.Component {
   }
 }
 
-export default CourseContentMain;
+export default TopicContentMain;
