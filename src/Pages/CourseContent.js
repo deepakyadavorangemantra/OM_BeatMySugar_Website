@@ -138,6 +138,13 @@ class CourseContentMain extends React.Component {
   render() {
     const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
       current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
+
+      var log = localStorage.getItem(
+        "CustomerLoginDetails"
+      );
+      var login = JSON.parse(log);
+
+      
     return (
       <div>
         <Menu></Menu>
@@ -195,46 +202,29 @@ class CourseContentMain extends React.Component {
 
                                 <HeaderCourseProgress />
                                 <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                  <div class="panel-heading lockedtitle" id="headingOne">
-                                    <h4 class="panel-title">                            
-                                    Chapter Number 1 : Diabetes Learning Program1
-                                  </h4>
-                                  <p><span class="topic">6 Topics</span> . <span class="length">26h 35m total length</span></p>
-                                  </div>
-                                  <div id="collapseOne" class="panel-collapse">
-                                    <div class="panel-body">
-                                    <ul class="topiclist">
-                                      <li class="locked"><a class="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
-                                      </ul>
+                                {this.state.ChapterData.map(( Item, chapterIndex)=>{
+                                 return <div class="panel panel-default">
+                                        <div class="panel-heading lockedtitle active" id="headingOne">
+                                            <h4 class="panel-title">                            
+                                            Chapter Number {chapterIndex+1} : {Item.fld_title}
+                                            </h4>
+                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse">
+                                            <div class="panel-body">
+                                                <ul class="topiclist">
+                                                    {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
+                                                        return <li class="locked"><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
+                                                    }) : ''}
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                </div>
-                                <div class="panel panel-default">
-                                  <div class="panel-heading lockedtitle" id="headingOne">
-                                    <h4 class="panel-title">                            
-                                    Chapter Number 2 : Diabetes Learning Program1
-                                  </h4>
-                                  <p><span class="topic">6 Topics</span> . <span class="length">26h 35m total length</span></p>
-                                  </div>
-                                  <div id="collapseOne" class="panel-collapse">
-                                    <div class="panel-body">
-                                    <ul class="topiclist">
-                                      <li class="locked"><a class="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
+                                    })}
+                                
+                                
                               </div>
-                                <div class="row">
+                                {/* <div class="row">
                                     <div class="col-md-12">
                                       { Show_course_content_list === true ? 
                                         <CourseContentList 
@@ -269,15 +259,21 @@ class CourseContentMain extends React.Component {
                                       ''
                                       }
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="course-side-bar">
-                              <div class="login-box">
-                                      <h3>Want to start your free course?</h3>
-                                      <a href="#" className="loginbutton">Login Now</a>
-                              </div>
+                                { login != null && login != "" ? 
+                                    <div class="login-box">
+                                        <h3>Want to start your free course?</h3>
+                                        <a href="#" className="loginbutton">Resume Learning</a>
+                                    </div>:
+                                        <div class="login-box">
+                                            <h3>Want to start your free course?</h3>
+                                            <a href="#" className="loginbutton">Login Now</a>
+                                        </div>
+                                }
                               <div class="benefits">
                                  <h4>Course Benefits</h4>
                                  <ul>
