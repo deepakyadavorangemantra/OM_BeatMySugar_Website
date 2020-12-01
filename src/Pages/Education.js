@@ -141,45 +141,45 @@ class Education extends React.Component {
     return (
       <div>
         <Menu></Menu>
-        <div class="account-section"> 
-            <div class="co">
-              <div class="banner-sec">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="head-text">
-                        <h1 class="main-head">Diabetes Learning Program</h1>
-                        <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
-                        <div class="rating-box">
-                          <span class="ratingtext">4.8 Rating</span>
-                          <span class="ratingsse">
-                          <span class="star-rating" title="70%">
-                              <span class="back-stars">
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+        <div className="account-section"> 
+            <div className="co">
+              <div className="banner-sec">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-8">
+                      <div className="head-text">
+                        <h1 className="main-head">Diabetes Learning Program</h1>
+                        <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
+                        <div className="rating-box">
+                          <span className="ratingtext">4.8 Rating</span>
+                          <span className="ratingsse">
+                          <span className="star-rating" title="70%">
+                              <span className="back-stars">
+                                  <i className="icon-star-empty" aria-hidden="true"></i>
+                                  <i className="icon-star-empty" aria-hidden="true"></i>
+                                  <i className="icon-star-empty" aria-hidden="true"></i>
+                                  <i className="icon-star-empty" aria-hidden="true"></i>
+                                  <i className="icon-star-empty" aria-hidden="true"></i>
                                   
-                                  <span class="front-stars" style={{width: "70%"}}>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                  <span className="front-stars" style={{width: "70%"}}>
+                                      <i className="icon-star" aria-hidden="true"></i>
+                                      <i className="icon-star" aria-hidden="true"></i>
+                                      <i className="icon-star" aria-hidden="true"></i>
+                                      <i className="icon-star" aria-hidden="true"></i>
+                                      <i className="icon-star" aria-hidden="true"></i> 
                                   </span>
                                   </span>
                               </span>   
                             </span>
                         </div>
                       </div>
-                      <div class="tag-section">
-                        <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
+                      <div className="tag-section">
+                        <div className="tag-box"><span><img src="/assets/images/free.png" /></span><span className="tagtext">On Demand</span></div>
 
                       </div>
                     </div>
-                    <div class="col-md-4">
-                      <div class="courseimage">
+                    <div className="col-md-4">
+                      <div className="courseimage">
                            <img src="/assets/images/course.jpg" alt="course image"/>
                       </div>
                     </div>
@@ -187,55 +187,56 @@ class Education extends React.Component {
                 </div>
 
               </div>
-                <div class="container" style={{background:"none"}}>
-                    <div class="row mt-2">
-                        <div class="col-lg-8 order-lg-first ">
-                            <div class="dashboard-content">
+                <div className="container" style={{background:"none"}}>
+                    <div className="row mt-2">
+                        <div className="col-lg-8 order-lg-first ">
+                            <div className="dashboard-content">
                              
 
                                 <HeaderCourseProgress />
-                                <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                  <div class="panel-heading lockedtitle" id="headingOne">
-                                    <h4 class="panel-title">                            
+                                <div className="panel-group" id="accordion">
+                                <div className="panel panel-default">
+                                  <div className="panel-heading unlockedlockedtitle" id="headingOne">
+                                    <h4 className="panel-title">                            
                                     Chapter Number 1 : Diabetes Learning Program1
                                   </h4>
-                                  <p><span class="topic">6 Topics</span> . <span class="length">26h 35m total length</span></p>
+                                  <p><span className="topic">6 Topics</span> . <span className="length">26h 35m total length</span></p>
                                   </div>
-                                  <div id="collapseOne" class="panel-collapse">
-                                    <div class="panel-body">
-                                    <ul class="topiclist">
-                                      <li class="locked"><a class="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
+                                  <div id="collapseOne" className="panel-collapse">
+                                    <div className="panel-body">
+                                    <ul className="topiclist">
+                                      <li className="unlocked"><a className="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
                                       </ul>
                                     </div>
                                   </div>
                                 </div>
-                                <div class="panel panel-default">
-                                  <div class="panel-heading lockedtitle" id="headingOne">
-                                    <h4 class="panel-title">                            
+                                <div className="panel panel-default">
+                                  <div className="panel-heading lockedtitle" id="headingOne">
+                                    <h4 className="panel-title">                            
                                     Chapter Number 2 : Diabetes Learning Program1
                                   </h4>
-                                  <p><span class="topic">6 Topics</span> . <span class="length">26h 35m total length</span></p>
+                                  <p><span className="topic">6 Topics</span> . <span className="length">26h 35m total length</span></p>
                                   </div>
-                                  <div id="collapseOne" class="panel-collapse">
-                                    <div class="panel-body">
-                                    <ul class="topiclist">
-                                      <li class="locked"><a class="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
-                                      <li class="locked"><a class="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
+                                  <div id="collapseOne" className="panel-collapse">
+                                    <div className="panel-body">
+                                    <ul className="topiclist">
+                                      <li className="locked"><a className="card-edit">Topic 1 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 2 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 3 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 4 - Lorem Ipsum dummy text lorem</a></li>
+                                      <li className="locked"><a className="card-edit">Topic 5 - Lorem Ipsum dummy text lorem</a></li>
                                       </ul>
+
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                                <div class="row">
-                                    <div class="col-md-12">
+                                <div className="row">
+                                    <div className="col-md-12">
                                       { Show_course_content_list === true ? 
                                         <CourseContentList 
                                           ChapterData={this.state.ChapterData}
@@ -272,13 +273,13 @@ class Education extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="course-side-bar">
-                              <div class="login-box">
+                        <div className="col-lg-4">
+                            <div className="course-side-bar">
+                              <div className="login-box">
                                       <h3>Want to start your free course?</h3>
                                       <a href="#" className="loginbutton">Login Now</a>
                               </div>
-                              <div class="benefits">
+                              <div className="benefits">
                                  <h4>Course Benefits</h4>
                                  <ul>
                                    <li><strong>Flexible</strong> You pick the schedule</li>
@@ -287,7 +288,7 @@ class Education extends React.Component {
                                    <li><strong>Goodies</strong> Free gifts on completion</li>
                                  </ul>
                               </div>
-                              <div class="gift-hemper">
+                              <div className="gift-hemper">
                                 <h5>Gift Hamper</h5>
                                 <img src="/assets/images/gifts.jpg" />
                               </div>
