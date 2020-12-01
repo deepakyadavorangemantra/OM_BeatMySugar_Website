@@ -31,6 +31,9 @@ img.new-option{width:15px;display:inline-block}
   font-size: 28px;
   line-height: 1.3em;
 }
+.head-text {
+  padding-right: 30px;
+}
 .ratingtext {
   font-size: 26px;
   color: #ffc107;
@@ -149,6 +152,16 @@ img.new-option{width:15px;display:inline-block}
   background: url('../images/lock.png');
   background-repeat: no-repeat;
 }
+.unlocked:before, .unlockedlockedtitle:after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url(../images/unlock.png);
+  background-repeat: no-repeat;
+}
 .lockedtitle{
   position:relative;
 }
@@ -206,11 +219,11 @@ font-weight: 500;
 }
 .panel-heading:before {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  content: "\f107";
-  font-family: "Font Awesome 5 Free";
+  font-size: 24px;
+  font-family: porto;
+  content: "\e81c";
   left: 30px;
+  top: 0px;
 }
 
 .panel-heading {
@@ -220,8 +233,60 @@ font-weight: 500;
 .panel-collapse {
     padding-left: 60px;
 }
-.dashboard-content h2 {
-  font-size: 32px;
+.dashboard-content .progress-course h2 {
+  font-size: 24px;
   color: #000000;
   font-weight: 700;
+  margin-bottom: 0;
+}
+.progress-bar.progress-bar-info.courseprogress {
+    background: #eb4b64;
+}
+
+.progress-course {
+    padding: 20px 0;
+}
+
+.course-progress p {
+    font-size: 16px;
+}
+.progress-course .row {
+  align-items: flex-end;
+}
+.course-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.course-progess-sec {
+  width: 80%;
+  padding-right: 5px;
+}
+
+.time-section {
+  width: 20%;
+  padding-left: 5px;
+}
+
+.time-coures-box {
+  background: #fad0db;
+  padding: 10px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.time-icon i {
+  font-size: 20px;
+}
+
+.time-course-take {
+  font-size: 18px;
+  font-weight: 600;
+}
+.rating-box {
+  display: flex;
+  align-items: center;
 }
