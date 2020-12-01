@@ -64,6 +64,15 @@ class CourseContentMain extends React.Component {
     })
   }
 
+  handleActiveClass=( fld_chapterid)=>{
+      var chapterData = this.state.ChapterData.map(function(el ) {
+        var o = Object.assign({}, el);
+        o.activeClass = (el.fld_chapterid == fld_chapterid ? true:false);
+        return o;
+      });
+      this.setState({ ChapterData : chapterData });
+  }
+
   showTopicDetails=(topic, current_chapter_data, current_topic_index, chapterIndex )=>{
     if(chapterIndex === this.state.ChapterData.length-1 ){
       this.setState({ is_finel_chapter : true});
@@ -204,11 +213,11 @@ class CourseContentMain extends React.Component {
                             <div class="dashboard-content">
                              
 
-                                <HeaderCourseProgress />
+                                <HeaderCourseProgress login={login}/>
                                 <div class="panel-group" id="accordion">
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div class="panel-heading lockedtitle " id="headingOne">
+                                        <div class="panel-heading lockedtitle " onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
                                             <h4 class="panel-title">                            
                                                 Chapter Number {chapterIndex+1} : {Item.fld_title}
                                             </h4>
