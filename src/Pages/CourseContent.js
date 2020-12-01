@@ -147,6 +147,12 @@ class CourseContentMain extends React.Component {
     });
   }
 
+  goToTopic =( current_chapter, currect_topic)=>{
+      debugger;
+    console.log(current_chapter);
+    console.log(currect_topic);
+  }
+
 
   render() {
     const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
@@ -227,7 +233,7 @@ class CourseContentMain extends React.Component {
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class="locked"><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
+                                                        return <li class="locked" onClick={()=>{ this.goToTopic( Item, TopicItem ) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
                                                     }) : ''}
                                                 </ul>
                                             </div>
