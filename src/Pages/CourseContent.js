@@ -2,9 +2,12 @@ import React from "react";
 import Menu from "../Header";
 import Footer from "../Footer";
 import GetApiCall from "../GetApi";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
 import HeaderCourseProgress from '../Education/HeaderCourseProgress';
+import {setChapterListFullDetails} from '../Actions/Education/actionType'
 import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
 import CourseQuestionsAns from '../Education/CourseQuestionAns';
@@ -12,7 +15,7 @@ import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 
-import courseImage from '../images/course.jpg'
+import courseImage from '../images/course.jpg';
 class CourseContentMain extends React.Component {
   constructor(props) {
     super(props);
@@ -44,24 +47,52 @@ class CourseContentMain extends React.Component {
       svgColor: "#507dc0",
       //  #507dc0'
     }); 
-    
     Notiflix.Loading.Dots()
-    GetApiCall.getRequest("GetChaperListData").then((results) => {
-    
-        results.json().then(data => ({
-          data: data,
-          status: results.status
-        })
+
+    var log = localStorage.getItem("CustomerLoginDetails");
+    var login = JSON.parse(log);
+    if(login != null && login != ""){
+      this.getChapterContentByUser(login.fld_userid,)
+    }else{
+      this.getChapterContent();
+    }
+  }
+
+  getChapterContentByUser=(current_user_id)=>{
+    GetApiCall.getRequest("ListCustomerEducationDetails/?customerid="+ current_user_id).then((results) => {
+      results.json().then(data => ({
+        data: data,
+        status: results.status
+      })
     ).then(res => {
         var chapterData = res.data.data.map(function(el , index) {
             var o = Object.assign({}, el);
             o.activeClass = (index==0 ? true:false);
             return o;
           });
+          this.props.dispatch(setChapterListFullDetails(chapterData));
         this.setState({ ChapterData : chapterData });
         Notiflix.Loading.Remove();
         });
-    })
+    });
+  }
+
+  getChapterContent=()=>{
+    GetApiCall.getRequest("GetChaperListData").then((results) => {
+      results.json().then(data => ({
+        data: data,
+        status: results.status
+      })
+  ).then(res => {
+      var chapterData = res.data.data.map(function(el , index) {
+          var o = Object.assign({}, el);
+          o.activeClass = (index==0 ? true:false);
+          return o;
+        });
+      this.setState({ ChapterData : chapterData });
+      Notiflix.Loading.Remove();
+      });
+  });
   }
 
   handleActiveClass=( fld_chapterid)=>{
@@ -148,11 +179,18 @@ class CourseContentMain extends React.Component {
   }
 
   goToTopic =( current_chapter, currect_topic, current_chapter_index, current_topic_index)=>{
-      debugger;
-    console.log(current_chapter);
-    console.log(currect_topic);
-    console.log(current_chapter_index);
-    console.log(current_topic_index);
+    var log = localStorage.getItem("CustomerLoginDetails");
+    var login = JSON.parse(log);
+    if(login != null && login != ""){
+      this.props.history.push({
+        pathname : '/education-topic',
+        state : {
+          current_chapter : current_chapter,
+          currect_topic : currect_topic,
+          chaptersList : this.state.ChapterData
+        }
+      });
+    }
     
   }
 
@@ -220,8 +258,6 @@ class CourseContentMain extends React.Component {
                     <div class="row mt-2">
                         <div class="col-lg-8 order-lg-first ">
                             <div class="dashboard-content">
-                             
-
                                 <HeaderCourseProgress login={login}/>
                                 <div class="panel-group" id="accordion">
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
@@ -232,7 +268,7 @@ class CourseContentMain extends React.Component {
                                             </h4>
                                             <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
                                         </div>
-                                        <div id="collapseOne" class={"panel-collapse "+ + (Item.activeClass == true ? 'active' : 'deactive')}>
+                                        <div id="collapseOne" class={"panel-collapse "+ (Item.activeClass == true ? 'active' : 'deactive')}>
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
@@ -293,7 +329,7 @@ class CourseContentMain extends React.Component {
                                     </div>:
                                         <div class="login-box">
                                             <h3>Want to start your free course?</h3>
-                                            <a href="#" className="loginbutton">Login Now</a>
+                                            <a href="/Login" className="loginbutton">Login Now</a>
                                         </div>
                                 }
                               <div class="benefits">
@@ -321,4 +357,8 @@ class CourseContentMain extends React.Component {
   }
 }
 
-export default CourseContentMain;
+const mapStateToProps = state => ({
+  
+});
+
+export default connect(mapStateToProps)(CourseContentMain);

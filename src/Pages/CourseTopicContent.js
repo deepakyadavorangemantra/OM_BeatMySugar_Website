@@ -11,9 +11,9 @@ import CourseQuestionsAns from '../Education/CourseQuestionAns';
 import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
-
+import { connect } from 'react-redux';
 import courseImage from '../images/course.jpg'
-class TopicContentMain extends React.Component {
+class CourseTopicContentMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,7 @@ class TopicContentMain extends React.Component {
 
       EnteredOtp: "",
       ChapterData: [],
-      ResendCount: 0,
+      contentIndex: 0,
       MobileOtp: "",
       Show_course_content_list : true, //
       Show_Topics : false,
@@ -35,67 +35,42 @@ class TopicContentMain extends React.Component {
       ChapterQuestionList:[],
       is_finel_chapter : false,
       Show_User_Feedback : false,
-      Show_Congratulation_Page : false
+      Show_Congratulation_Page : false,
+      current_chapter_total_Topics:0
     };
   }
 
   componentDidMount() {
-    Notiflix.Loading.Init({
-      svgColor: "#507dc0",
-      //  #507dc0'
-    }); 
+    debugger;
+    const data = this.props.location.state;
+    console.log( data.current_chapter);
+    console.log( data.currect_topic);
+    console.log( data.chaptersList);
+    let current_chapter_index = (data.chaptersList.findIndex(x => x.fld_chapterid ==data.current_chapter.fld_chapterid));
+    let current_topic_index = (data.current_chapter.topics.findIndex(x => x.fld_id ==data.currect_topic.fld_id));
+    this.setState({ current_chapter_total_Topics : data.current_chapter.topics.length ,current_chapter_data : data.current_chapter, current_chapter_index : current_chapter_index, current_topic_index : current_topic_index, Topic_Details : data.currect_topic})
     
-    Notiflix.Loading.Dots()
-    GetApiCall.getRequest("GetChaperListData").then((results) => {
-    
-        results.json().then(data => ({
-          data: data,
-          status: results.status
-        })
-    ).then(res => {
-        var chapterData = res.data.data.map(function(el , index) {
-            var o = Object.assign({}, el);
-            o.activeClass = (index==0 ? true:false);
-            return o;
-          });
-        this.setState({ ChapterData : chapterData });
-        Notiflix.Loading.Remove();
-        });
-    })
   }
 
-  handleActiveClass=( fld_chapterid)=>{
-      var chapterData = this.state.ChapterData.map(function(el ) {
-        var o = Object.assign({}, el);
-        o.activeClass = (el.fld_chapterid == fld_chapterid ? true:false);
-        return o;
-      });
-      this.setState({ ChapterData : chapterData });
-  }
 
-  showTopicDetails=(topic, current_chapter_data, current_topic_index, chapterIndex )=>{
-    if(chapterIndex === this.state.ChapterData.length-1 ){
-      this.setState({ is_finel_chapter : true});
+
+   ordinal_suffix_of =(i)=> {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
     }
-
-    this.setState({ 
-      Show_course_content_list : false, 
-      Show_Topics : true, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Topic_Details : topic, 
-      current_chapter_data: current_chapter_data, 
-      current_topic_index : current_topic_index, 
-      current_chapter_index : chapterIndex
-    });
-  }
-
-  
-
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+}
 
   render() {
-    const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
-      current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
+    const {  Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics} = this.state;
 
       var log = localStorage.getItem(
         "CustomerLoginDetails"
@@ -154,99 +129,52 @@ class TopicContentMain extends React.Component {
               </div>
                 <div class="container" style={{background:"none"}}>
                     <div class="row mt-2">
-                        <div class="col-lg-8 order-lg-first ">
+                        <div class="col-lg-12 order-lg-first ">
                             <div class="dashboard-content">
-                             
+                                <HeaderCourseProgress />
+                                  <div class="course-details">
+                                    <div class="homelink">
+                                      <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                    </div>
+                                      <h3 class="panel-title">Chapter Number {current_chapter_index+1} :{ current_chapter_data.fld_title }</h3>
+                                      <p><span class="topic">{ this.ordinal_suffix_of( current_topic_index + 1 ) }  Topics</span> . <span class="length"></span></p>
+                                      <p class="coloredsec">{Topic_Details.fld_title}</p>
+                                    <div class="course-details-disc">
+                                   <h4>OBJECTIVE</h4> 
+                                   { Topic_Details.contents && Topic_Details.contents.length > 0 ?
+                                    <>
+                                        <div class="col-md-12">
+                                            <div  dangerouslySetInnerHTML= {{__html: Topic_Details.contents[contentIndex].fld_content ? Topic_Details.contents[contentIndex].fld_content : '' }}></div> 
+                                        </div><br/>
+                                        <div class="col-md-12">
 
-                                <HeaderCourseProgress login={login}/>
-                                <div class="panel-group" id="accordion">
-                                {this.state.ChapterData.map(( Item, chapterIndex)=>{
-                                 return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div class="panel-heading lockedtitle " onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
-                                            <h4 class="panel-title">                            
-                                                Chapter Number {chapterIndex+1} : {Item.fld_title}
-                                            </h4>
-                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
-                                        </div>
-                                        <div id="collapseOne" class={"panel-collapse "+ + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                            <div class="panel-body">
-                                                <ul class="topiclist">
-                                                    {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class="locked" onClick={()=>{ this.goToTopic( Item, TopicItem , chapterIndex, index) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
-                                                    }) : ''}
-                                                </ul>
-                                            </div>
-                                        </div>
+                                            {current_topic_index > 0 && contentIndex ===0 ?
+                                                <button disabled={ current_topic_index ===0 ?true : false } onClick={ ()=>{  this.props.gotoNextTopic(current_topic_index-1)  }}>Previous Topic</button>
+                                                : <button disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}>Previous</button>
+                                            }
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            { Topic_Details.contents.length-1 === contentIndex  && current_chapter_total_Topics-1 ===  current_topic_index ? 
+                                                    <button onClick={ ()=>{ this.props.setQuestionsView(Topic_Details.fld_chapterid) }}>Go to Questions</button> :
+                                                Topic_Details.contents.length-1 === contentIndex ? 
+                                                    <button onClick={ ()=>{ this.props.gotoNextTopic(current_topic_index+1); this.setState({ contentIndex :0}); }}> Next Topic </button> 
+                                                :
+                                                    <button onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }}> Next </button>
+                                            }
+                                        </div><br/> 
+                                    </>: 'Not have content !' }
                                     </div>
-                                    })}
-                                
-                                
-                              </div>
-                                {/* <div class="row">
-                                    <div class="col-md-12">
-                                      { Show_course_content_list === true ? 
-                                        <CourseContentList 
-                                          ChapterData={this.state.ChapterData}
-                                          showTopicDetails={this.showTopicDetails}
-                                        /> 
-                                      : Show_Topics === true ? 
-                                        <CourseContentDetails  
-                                          current_chapter_data = {current_chapter_data}
-                                          Topic_Details = {Topic_Details} 
-                                          current_topic_index={current_topic_index} 
-                                          current_chapter_index={current_chapter_index} 
-                                          gotoNextTopic={this.gotoNextTopic}
-                                          setQuestionsView={this.setQuestionsView}
-                                        />
-                                      : Show_Questions_Module === true ?
-                                        <CourseQuestionsAns
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          updateUserAnsAndShowCorrectAns = {this.updateUserAnsAndShowCorrectAns}
-                                        />
-                                      : Show_Correct_Question_Ans === true?
-                                        <CourseQuestionsAnsList 
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          goToNextChapterTopic={this.goToNextChapterTopic}
-                                          is_finel_chapter={is_finel_chapter}
-                                        />
-                                      : Show_User_Feedback === true?
-                                        <UserFeedBackView onSubmitFeedback={this.onSubmitFeedback} />
-                                      : Show_Congratulation_Page=== true ?
-                                        <CongratulationView />
-                                      :
-                                      ''
-                                      }
-                                    </div>
-                                </div> */}
+                                  </div>
+                                  <div class="navlinks">
+                                      <div class="navlinkbutton next"><a class="disable" href="#"><span><img src="/assets/images/previous.png"/></span> Previous Topic</a></div>
+                                      <div class="navlinkbutton previous">
+                                        <a class="activelink" href="#">Next Topic <span><img src="/assets/images/next.png"/></span> </a>
+                                        <p>Topic 2 - Lorem Ipsum dummy text lorem</p>
+                                        </div>
+                                  </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="course-side-bar">
-                                { login != null && login != "" ? 
-                                    <div class="login-box">
-                                        <h3>Want to start your free course?</h3>
-                                        <a href="#" className="loginbutton">Resume Learning</a>
-                                    </div>:
-                                        <div class="login-box">
-                                            <h3>Want to start your free course?</h3>
-                                            <a href="#" className="loginbutton">Login Now</a>
-                                        </div>
-                                }
-                              <div class="benefits">
-                                 <h4>Course Benefits</h4>
-                                 <ul>
-                                   <li><strong>Flexible</strong> You pick the schedule</li>
-                                   <li><strong>Pause</strong> Take break anytime</li>
-                                   <li><strong>Reliable</strong> Prepared by experts</li>
-                                   <li><strong>Goodies</strong> Free gifts on completion</li>
-                                 </ul>
-                              </div>
-                              <div class="gift-hemper">
-                                <h5>Gift Hamper</h5>
-                                <img src="/assets/images/gifts.jpg" />
-                              </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -257,4 +185,8 @@ class TopicContentMain extends React.Component {
   }
 }
 
-export default TopicContentMain;
+const mapStateToProps = state => ({
+  chaptersList : state.CourseContentReducer.ChapterListFullDetails
+});
+
+export default connect(mapStateToProps)(CourseTopicContentMain);
