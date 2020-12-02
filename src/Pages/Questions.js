@@ -13,7 +13,7 @@ import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 
 import courseImage from '../images/course.jpg'
-class TopicContentMain extends React.Component {
+class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -202,26 +202,51 @@ class TopicContentMain extends React.Component {
                     <div class="row mt-2">
                         <div class="col-lg-12 order-lg-first ">
                             <div class="dashboard-content">
-                                <HeaderCourseProgress />
-                                  <div class="course-details">
+                                <div class="question-progress-bar">
+                                        <div class="progress-section attend"></div>  
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                </div>
+                                <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></a></div>
+                                  <div class="question-course-details">
                                     <div class="homelink">
                                       <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
-                                      <h3 class="panel-title">Chapter Number 1 : Diabetes Learning Program1</h3>
-                                      <p><span class="topic">3 Topics</span> . <span class="length">05h 01m total length</span></p>
-                                      <p class="coloredsec">A cooperative Latin American implementation study</p>
-                                    <div class="course-details-disc">
-                                   <h4>OBJECTIVE</h4> 
-                                   <p>To implement an educational program in 10 Latin American countries and to evaluate its effect on the clinical, biochemical, and therapeutic aspects as well as the economic cost of diabetes.</p> 
-                                    </div>
+                                   <div class="questions">
+                                       <div class="questions-count">
+                                                <p>Question 1 / 5</p>
+                                       </div>
+                                       <form class="quiz-form text-light">
+                                            <div class="my-5 qusestp">
+                                                <p class="lead question">1. Are you working towards any health goals?</p>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input id="1" type="radio" name="q1" value="A" />
+                                                <label for="1" class="form-check-label">A place where don't question my authority.</label>
+                                                </div>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input  id="2" type="radio" name="q1" value="B" />
+                                                <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
+                                                </div>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input id="3" type="radio" name="q1" value="c" />
+                                                <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
+                                                </div>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input id="4" type="radio" name="q1" value="d" />
+                                                <label for="4" class="form-check-label">A place where I'm the boss.</label>
+                                                </div>
+                                                <div class="submitbtn">
+                                                    <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png"/></span></button>
+                                               
+                                                </div>
+                                               
+                                            </div>
+                                        </form>
+                                   </div>
                                   </div>
-                                  <div class="navlinks">
-                                      <div class="navlinkbutton previous"><a class="disable" href="#"><span><img src="/assets/images/previous.png"/></span> Previous Topic</a></div>
-                                      <div class="navlinkbutton next">
-                                        <a class="activelink" href="#">Next Topic <span><img src="/assets/images/next.png"/></span> </a>
-                                        <p>Topic 2 - Lorem Ipsum dummy text lorem</p>
-                                        </div>
-                                  </div>
+                              
                                 {/* <div class="row">
                                     <div class="col-md-12">
                                       { Show_course_content_list === true ? 
@@ -271,4 +296,4 @@ class TopicContentMain extends React.Component {
   }
 }
 
-export default TopicContentMain;
+export default Questions;

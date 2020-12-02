@@ -176,28 +176,28 @@ class CourseContentMain extends React.Component {
                       <div class="head-text">
                         <h1 class="main-head">Diabetes Learning Program</h1>
                         <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
-                        <div class="rating-box">
-                          <span class="ratingtext">4.8 Rating</span>
-                          <span class="ratingsse">
-                          <span class="star-rating" title="70%">
-                              <span class="back-stars">
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  
-                                  <span class="front-stars" style={{width: "70%"}}>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                  </span>
-                                  </span>
-                              </span>   
+                        <div className="rating-box">
+                        <span className="ratingtext">4.8 Rating</span>
+                        <span className="ratingsse">
+                          <span className="star-rating" title="70%">
+                            <span className="back-stars">
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+
+                              <span className="front-stars" style={{ width: "70%" }}>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                              </span>
                             </span>
-                        </div>
+                          </span>
+                        </span>
+                      </div>
                       </div>
                       <div class="tag-section">
                         <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
@@ -229,7 +229,7 @@ class CourseContentMain extends React.Component {
                                             </h4>
                                             <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
                                         </div>
-                                        <div id="collapseOne" class={"panel-collapse "+ + (Item.activeClass == true ? 'active' : 'deactive')}>
+                                        <div id="collapseOne" class={"panel-collapse " + (Item.activeClass == true ? 'active' : 'deactive')}>
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
