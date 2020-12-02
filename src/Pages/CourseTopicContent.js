@@ -13,7 +13,7 @@ import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 
 import courseImage from '../images/course.jpg'
-class CourseContentMain extends React.Component {
+class TopicContentMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,71 +90,7 @@ class CourseContentMain extends React.Component {
     });
   }
 
-  setQuestionsView=( chapter_id)=>{
-    // chapterid
-    Notiflix.Loading.Dots()
-    GetApiCall.getRequest("ListQuestion?chapterid="+ chapter_id).then(resultdes =>
-      resultdes.json().then(obj => {
-      this.setState({
-        ChapterQuestionList : obj.data, Show_Questions_Module : true, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : false, Show_User_Feedback : false
-      })
-      Notiflix.Loading.Remove();
-    }))
-  }
-
-  updateUserAnsAndShowCorrectAns=( questionDataWithUserAns)=>{
-    // post api to users answer of questions.
-    this.setState({
-      ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true, Show_User_Feedback : false
-    })
-    console.log(questionDataWithUserAns);
-  }
-
-  gotoNextTopic=(current_topic_index)=>{
-    debugger;
-    this.setState({ Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
-  }
-
-  goToNextChapterTopic=()=>{
-    let ChapterData = this.state.ChapterData;
-    if(this.state.current_chapter_index< ChapterData.length-1){
-      let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
-      let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
-      let current_topic_index = 0;
-      let current_chapter_index = this.state.current_chapter_index+1;
-      //unlock new chapter first topic.
-     this.showTopicDetails( topic, current_chapter_data, current_topic_index, current_chapter_index)
-    }else{
-      this.setState({  Show_course_content_list : false, 
-        Show_Topics : false, 
-        Show_Questions_Module: false,
-        Show_Correct_Question_Ans : false,
-        Show_User_Feedback : true,
-      });
-    }
-    
-  }
-
-  onSubmitFeedback =(feedback)=>{
-    // user feedback api...
-    // go to congratulation .....
-    this.setState({  Show_course_content_list : false, 
-      Show_Topics : false, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Show_User_Feedback : false,
-      Show_Congratulation_Page : true
-    });
-  }
-
-  goToTopic =( current_chapter, currect_topic, current_chapter_index, current_topic_index)=>{
-      debugger;
-    console.log(current_chapter);
-    console.log(currect_topic);
-    console.log(current_chapter_index);
-    console.log(current_topic_index);
-    
-  }
+  
 
 
   render() {
@@ -179,28 +115,28 @@ class CourseContentMain extends React.Component {
                       <div class="head-text">
                         <h1 class="main-head">Diabetes Learning Program</h1>
                         <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
-                        <div className="rating-box">
-                        <span className="ratingtext">4.8 Rating</span>
-                        <span className="ratingsse">
-                          <span className="star-rating" title="70%">
-                            <span className="back-stars">
-                              <i className="icon-star-empty" aria-hidden="true"></i>
-                              <i className="icon-star-empty" aria-hidden="true"></i>
-                              <i className="icon-star-empty" aria-hidden="true"></i>
-                              <i className="icon-star-empty" aria-hidden="true"></i>
-                              <i className="icon-star-empty" aria-hidden="true"></i>
-
-                              <span className="front-stars" style={{ width: "70%" }}>
-                                <i className="icon-star" aria-hidden="true"></i>
-                                <i className="icon-star" aria-hidden="true"></i>
-                                <i className="icon-star" aria-hidden="true"></i>
-                                <i className="icon-star" aria-hidden="true"></i>
-                                <i className="icon-star" aria-hidden="true"></i>
-                              </span>
+                        <div class="rating-box">
+                          <span class="ratingtext">4.8 Rating</span>
+                          <span class="ratingsse">
+                          <span class="star-rating" title="70%">
+                              <span class="back-stars">
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                                  
+                                  <span class="front-stars" style={{width: "70%"}}>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                  </span>
+                                  </span>
+                              </span>   
                             </span>
-                          </span>
-                        </span>
-                      </div>
+                        </div>
                       </div>
                       <div class="tag-section">
                         <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
@@ -232,7 +168,7 @@ class CourseContentMain extends React.Component {
                                             </h4>
                                             <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
                                         </div>
-                                        <div id="collapseOne" class={"panel-collapse " + (Item.activeClass == true ? 'active' : 'deactive')}>
+                                        <div id="collapseOne" class={"panel-collapse "+ + (Item.activeClass == true ? 'active' : 'deactive')}>
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
@@ -321,4 +257,4 @@ class CourseContentMain extends React.Component {
   }
 }
 
-export default CourseContentMain;
+export default TopicContentMain;
