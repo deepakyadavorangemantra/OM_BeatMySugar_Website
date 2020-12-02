@@ -13,7 +13,7 @@ import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 
 import courseImage from '../images/course.jpg'
-class Questions extends React.Component {
+class Answers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -255,6 +255,37 @@ class Questions extends React.Component {
                                                     </div>
                                                 </form>
                                             </div>
+                                            <div class="questions">
+                                                <div class="questions-count">
+                                                    <p>Question 1 / 5</p>
+                                                </div>
+                                                <form class="quiz-form text-light">
+                                                    <div class="my-5 qusestp">
+                                                        <p class="lead question">1. Are you working towards any health goals?</p>
+                                                        <div class="form-check my-4 text-white-50">
+                                                            <input id="1" type="radio" name="q1" value="A" />
+                                                            <label for="1" class="form-check-label">A place where don't question my authority.</label>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                            <input id="2" type="radio" name="q1" value="B" />
+                                                            <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                            <input id="3" type="radio" name="q1" value="c" />
+                                                            <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                            <input id="4" type="radio" name="q1" value="d" />
+                                                            <label for="4" class="form-check-label">A place where I'm the boss.</label>
+                                                        </div>
+                                                        <div class="submitbtn">
+                                                            <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png" /></span></button>
+
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
 
                                         {/* <div class="row">
@@ -306,4 +337,4 @@ class Questions extends React.Component {
     }
 }
 
-export default Questions;
+export default Answers;
