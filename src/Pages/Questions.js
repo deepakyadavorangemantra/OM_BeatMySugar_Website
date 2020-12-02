@@ -2,12 +2,9 @@ import React from "react";
 import Menu from "../Header";
 import Footer from "../Footer";
 import GetApiCall from "../GetApi";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
 import HeaderCourseProgress from '../Education/HeaderCourseProgress';
-import {setChapterListFullDetails} from '../Actions/Education/actionType'
 import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
 import CourseQuestionsAns from '../Education/CourseQuestionAns';
@@ -15,8 +12,8 @@ import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 
-import courseImage from '../images/course.jpg';
-class CourseContentMain extends React.Component {
+import courseImage from '../images/course.jpg'
+class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,61 +44,24 @@ class CourseContentMain extends React.Component {
       svgColor: "#507dc0",
       //  #507dc0'
     }); 
+    
     Notiflix.Loading.Dots()
-
-    var log = localStorage.getItem("CustomerLoginDetails");
-    var login = JSON.parse(log);
-    if(login != null && login != ""){
-      this.getChapterContentByUser(login.fld_userid,)
-    }else{
-      this.getChapterContent();
-    }
-  }
-
-  getChapterContentByUser=(current_user_id)=>{
-    GetApiCall.getRequest("ListCustomerEducationDetails/?customerid="+ current_user_id).then((results) => {
-      results.json().then(data => ({
-        data: data,
-        status: results.status
-      })
+    GetApiCall.getRequest("GetChaperListData").then((results) => {
+    
+        results.json().then(data => ({
+          data: data,
+          status: results.status
+        })
     ).then(res => {
         var chapterData = res.data.data.map(function(el , index) {
             var o = Object.assign({}, el);
             o.activeClass = (index==0 ? true:false);
             return o;
           });
-          this.props.dispatch(setChapterListFullDetails(chapterData));
         this.setState({ ChapterData : chapterData });
         Notiflix.Loading.Remove();
         });
-    });
-  }
-
-  getChapterContent=()=>{
-    GetApiCall.getRequest("GetChaperListData").then((results) => {
-      results.json().then(data => ({
-        data: data,
-        status: results.status
-      })
-  ).then(res => {
-      var chapterData = res.data.data.map(function(el , index) {
-          var o = Object.assign({}, el);
-          o.activeClass = (index==0 ? true:false);
-          return o;
-        });
-      this.setState({ ChapterData : chapterData });
-      Notiflix.Loading.Remove();
-      });
-  });
-  }
-
-  handleActiveClass=( fld_chapterid)=>{
-      var chapterData = this.state.ChapterData.map(function(el ) {
-        var o = Object.assign({}, el);
-        o.activeClass = (el.fld_chapterid == fld_chapterid ? true:false);
-        return o;
-      });
-      this.setState({ ChapterData : chapterData });
+    })
   }
 
   showTopicDetails=(topic, current_chapter_data, current_topic_index, chapterIndex )=>{
@@ -178,22 +138,6 @@ class CourseContentMain extends React.Component {
     });
   }
 
-  goToTopic =( current_chapter, currect_topic, current_chapter_index, current_topic_index)=>{
-    var log = localStorage.getItem("CustomerLoginDetails");
-    var login = JSON.parse(log);
-    if(login != null && login != ""){
-      this.props.history.push({
-        pathname : '/education-topic',
-        state : {
-          current_chapter : current_chapter,
-          currect_topic : currect_topic,
-          chaptersList : this.state.ChapterData
-        }
-      });
-    }
-    
-  }
-
 
   render() {
     const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
@@ -214,10 +158,10 @@ class CourseContentMain extends React.Component {
                 <div class="container">
                   <div class="row">
                     <div class="col-md-8">
-                      <div class="head-text">
-                        <h1 class="main-head">Diabetes Learning Program</h1>
-                        <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
-                        <div className="rating-box">
+                    <div className="head-text">
+                      <h1 className="main-head">Diabetes Learning Program</h1>
+                      <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
+                      <div className="rating-box">
                         <span className="ratingtext">4.8 Rating</span>
                         <span className="ratingsse">
                           <span className="star-rating" title="70%">
@@ -239,7 +183,7 @@ class CourseContentMain extends React.Component {
                           </span>
                         </span>
                       </div>
-                      </div>
+                    </div>
                       <div class="tag-section">
                         <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
 
@@ -256,32 +200,53 @@ class CourseContentMain extends React.Component {
               </div>
                 <div class="container" style={{background:"none"}}>
                     <div class="row mt-2">
-                        <div class="col-lg-8 order-lg-first ">
+                        <div class="col-lg-12 order-lg-first ">
                             <div class="dashboard-content">
-                                <HeaderCourseProgress login={login}/>
-                                <div class="panel-group" id="accordion">
-                                {this.state.ChapterData.map(( Item, chapterIndex)=>{
-                                 return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div class="panel-heading lockedtitle " onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
-                                            <h4 class="panel-title">                            
-                                                Chapter Number {chapterIndex+1} : {Item.fld_title}
-                                            </h4>
-                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
-                                        </div>
-                                        <div id="collapseOne" class={"panel-collapse " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                            <div class="panel-body">
-                                                <ul class="topiclist">
-                                                    {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class="locked" onClick={()=>{ this.goToTopic( Item, TopicItem , chapterIndex, index) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
-                                                    }) : ''}
-                                                </ul>
-                                            </div>
-                                        </div>
+                                <div class="question-progress-bar">
+                                        <div class="progress-section attend"></div>  
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                </div>
+                                <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></a></div>
+                                  <div class="question-course-details">
+                                    <div class="homelink">
+                                      <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
-                                    })}
-                                
-                                
-                              </div>
+                                   <div class="questions">
+                                       <div class="questions-count">
+                                                <p>Question 1 / 5</p>
+                                       </div>
+                                       <form class="quiz-form text-light">
+                                            <div class="my-5 qusestp">
+                                                <p class="lead question">1. Are you working towards any health goals?</p>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input id="1" type="radio" name="q1" value="A" />
+                                                <label for="1" class="form-check-label">A place where don't question my authority.</label>
+                                                </div>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input  id="2" type="radio" name="q1" value="B" />
+                                                <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
+                                                </div>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input id="3" type="radio" name="q1" value="c" />
+                                                <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
+                                                </div>
+                                                <div class="form-check my-4 text-white-50">
+                                                <input id="4" type="radio" name="q1" value="d" />
+                                                <label for="4" class="form-check-label">A place where I'm the boss.</label>
+                                                </div>
+                                                <div class="submitbtn">
+                                                    <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png"/></span></button>
+                                               
+                                                </div>
+                                               
+                                            </div>
+                                        </form>
+                                   </div>
+                                  </div>
+                              
                                 {/* <div class="row">
                                     <div class="col-md-12">
                                       { Show_course_content_list === true ? 
@@ -320,33 +285,7 @@ class CourseContentMain extends React.Component {
                                 </div> */}
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="course-side-bar">
-                                { login != null && login != "" ? 
-                                    <div class="login-box">
-                                        <h3>Want to start your free course?</h3>
-                                        <a href="#" className="loginbutton">Resume Learning</a>
-                                    </div>:
-                                        <div class="login-box">
-                                            <h3>Want to start your free course?</h3>
-                                            <a href="/Login" className="loginbutton">Login Now</a>
-                                        </div>
-                                }
-                              <div class="benefits">
-                                 <h4>Course Benefits</h4>
-                                 <ul>
-                                   <li><strong>Flexible</strong> You pick the schedule</li>
-                                   <li><strong>Pause</strong> Take break anytime</li>
-                                   <li><strong>Reliable</strong> Prepared by experts</li>
-                                   <li><strong>Goodies</strong> Free gifts on completion</li>
-                                 </ul>
-                              </div>
-                              <div class="gift-hemper">
-                                <h5>Gift Hamper</h5>
-                                <img src="/assets/images/gifts.jpg" />
-                              </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -357,8 +296,4 @@ class CourseContentMain extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  
-});
-
-export default connect(mapStateToProps)(CourseContentMain);
+export default Questions;

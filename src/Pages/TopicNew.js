@@ -158,32 +158,32 @@ class TopicContentMain extends React.Component {
                 <div class="container">
                   <div class="row">
                     <div class="col-md-8">
-                      <div class="head-text">
-                        <h1 class="main-head">Diabetes Learning Program</h1>
-                        <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
-                        <div class="rating-box">
-                          <span class="ratingtext">4.8 Rating</span>
-                          <span class="ratingsse">
-                          <span class="star-rating" title="70%">
-                              <span class="back-stars">
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                                  
-                                  <span class="front-stars" style={{width: "70%"}}>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
-                                  </span>
-                                  </span>
-                              </span>   
+                    <div className="head-text">
+                      <h1 className="main-head">Diabetes Learning Program</h1>
+                      <p className="sub-head">A brief about the course and what is expected to be delivered and many more</p>
+                      <div className="rating-box">
+                        <span className="ratingtext">4.8 Rating</span>
+                        <span className="ratingsse">
+                          <span className="star-rating" title="70%">
+                            <span className="back-stars">
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+                              <i className="icon-star-empty" aria-hidden="true"></i>
+
+                              <span className="front-stars" style={{ width: "70%" }}>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                                <i className="icon-star" aria-hidden="true"></i>
+                              </span>
                             </span>
-                        </div>
+                          </span>
+                        </span>
                       </div>
+                    </div>
                       <div class="tag-section">
                         <div class="tag-box"><img src="/assets/images/free.png" /><span class="tagtext">On Demand</span></div>
 
@@ -216,8 +216,8 @@ class TopicContentMain extends React.Component {
                                     </div>
                                   </div>
                                   <div class="navlinks">
-                                      <div class="navlinkbutton next"><a class="disable" href="#"><span><img src="/assets/images/previous.png"/></span> Previous Topic</a></div>
-                                      <div class="navlinkbutton previous">
+                                      <div class="navlinkbutton previous"><a class="disable" href="#"><span><img src="/assets/images/previous.png"/></span> Previous Topic</a></div>
+                                      <div class="navlinkbutton next">
                                         <a class="activelink" href="#">Next Topic <span><img src="/assets/images/next.png"/></span> </a>
                                         <p>Topic 2 - Lorem Ipsum dummy text lorem</p>
                                         </div>
