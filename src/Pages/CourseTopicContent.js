@@ -36,20 +36,32 @@ class CourseTopicContentMain extends React.Component {
       is_finel_chapter : false,
       Show_User_Feedback : false,
       Show_Congratulation_Page : false,
-      current_chapter_total_Topics:0
+      current_chapter_total_Topics:0,
+      next_topic_title : '',
     };
   }
 
   componentDidMount() {
-    debugger;
-    const data = this.props.location.state;
-    console.log( data.current_chapter);
-    console.log( data.currect_topic);
-    console.log( data.chaptersList);
-    let current_chapter_index = (data.chaptersList.findIndex(x => x.fld_chapterid ==data.current_chapter.fld_chapterid));
-    let current_topic_index = (data.current_chapter.topics.findIndex(x => x.fld_id ==data.currect_topic.fld_id));
-    this.setState({ current_chapter_total_Topics : data.current_chapter.topics.length ,current_chapter_data : data.current_chapter, current_chapter_index : current_chapter_index, current_topic_index : current_topic_index, Topic_Details : data.currect_topic})
+    if(this.props.location.state){
+      const data = this.props.location.state;
+      let current_chapter_index = (data.chaptersList.findIndex(x => x.fld_chapterid ==data.current_chapter.fld_chapterid));
+      let current_topic_index = (data.current_chapter.topics.findIndex(x => x.fld_id ==data.currect_topic.fld_id));
+      if(current_topic_index < data.current_chapter.topics.length-1){
+        this.setState({ next_topic_title : data.current_chapter.topics[current_topic_index+1].fld_title})
+      }
+      this.setState({ current_chapter_total_Topics : data.current_chapter.topics.length ,current_chapter_data : data.current_chapter, current_chapter_index : current_chapter_index, current_topic_index : current_topic_index, Topic_Details : data.currect_topic})
+    }else{
+      this.props.history.push('/education')
+    }
     
+  }
+
+  gotoNextTopic=(current_topic_index)=>{
+    let next_topic_title= '';
+    if(current_topic_index < this.state.current_chapter_data.topics.length-1){
+       next_topic_title = this.state.current_chapter_data.topics[current_topic_index+1].fld_title;
+    }
+    this.setState({ next_topic_title : next_topic_title, Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
   }
 
 
@@ -70,7 +82,7 @@ class CourseTopicContentMain extends React.Component {
 }
 
   render() {
-    const {  Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics} = this.state;
+    const { next_topic_title, Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics} = this.state;
 
       var log = localStorage.getItem(
         "CustomerLoginDetails"
@@ -131,47 +143,52 @@ class CourseTopicContentMain extends React.Component {
                     <div class="row mt-2">
                         <div class="col-lg-12 order-lg-first ">
                             <div class="dashboard-content">
-                                <HeaderCourseProgress />
+                                <HeaderCourseProgress login={login}/>
                                   <div class="course-details">
                                     <div class="homelink">
-                                      <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                      <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
                                       <h3 class="panel-title">Chapter Number {current_chapter_index+1} :{ current_chapter_data.fld_title }</h3>
                                       <p><span class="topic">{ this.ordinal_suffix_of( current_topic_index + 1 ) }  Topics</span> . <span class="length"></span></p>
                                       <p class="coloredsec">{Topic_Details.fld_title}</p>
                                     <div class="course-details-disc">
-                                   <h4>OBJECTIVE</h4> 
+                                   
                                    { Topic_Details.contents && Topic_Details.contents.length > 0 ?
                                     <>
                                         <div class="col-md-12">
+                                          <h4>Content {this.ordinal_suffix_of(contentIndex+1)}</h4> 
                                             <div  dangerouslySetInnerHTML= {{__html: Topic_Details.contents[contentIndex].fld_content ? Topic_Details.contents[contentIndex].fld_content : '' }}></div> 
                                         </div><br/>
-                                        <div class="col-md-12">
-
-                                            {current_topic_index > 0 && contentIndex ===0 ?
-                                                <button disabled={ current_topic_index ===0 ?true : false } onClick={ ()=>{  this.props.gotoNextTopic(current_topic_index-1)  }}>Previous Topic</button>
-                                                : <button disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}>Previous</button>
-                                            }
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-
-                                            { Topic_Details.contents.length-1 === contentIndex  && current_chapter_total_Topics-1 ===  current_topic_index ? 
-                                                    <button onClick={ ()=>{ this.props.setQuestionsView(Topic_Details.fld_chapterid) }}>Go to Questions</button> :
-                                                Topic_Details.contents.length-1 === contentIndex ? 
-                                                    <button onClick={ ()=>{ this.props.gotoNextTopic(current_topic_index+1); this.setState({ contentIndex :0}); }}> Next Topic </button> 
-                                                :
-                                                    <button onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }}> Next </button>
-                                            }
-                                        </div><br/> 
                                     </>: 'Not have content !' }
                                     </div>
                                   </div>
+                                  { Topic_Details.contents && Topic_Details.contents.length > 0 ?
                                   <div class="navlinks">
-                                      <div class="navlinkbutton next"><a class="disable" href="#"><span><img src="/assets/images/previous.png"/></span> Previous Topic</a></div>
+                                      
+                                      {current_topic_index > 0 && contentIndex ===0 ?
+                                        <div class="navlinkbutton next"><button className={current_topic_index ===0 ?"disable":''} onClick={ ()=>{  this.gotoNextTopic(current_topic_index-1)  }}><span><img src="/assets/images/previous.png"/></span> Previous Topic</button></div> 
+                                        : 
+                                        <div class="navlinkbutton next"><button disabled={true} className={contentIndex ===0 ?"disable":''} onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}><span><img src="/assets/images/previous.png"/></span> Previous</button></div>        
+                                      }
+
                                       <div class="navlinkbutton previous">
-                                        <a class="activelink" href="#">Next Topic <span><img src="/assets/images/next.png"/></span> </a>
-                                        <p>Topic 2 - Lorem Ipsum dummy text lorem</p>
-                                        </div>
+                                        
+                                       
+                                      { Topic_Details.contents.length-1 === contentIndex  && current_chapter_total_Topics-1 ===  current_topic_index ? 
+                                        <button class="activelink"  onClick={ ()=>{ this.props.history.push({
+                                          pathname : '/questions',
+                                          state :{chapter_id : Topic_Details.fld_chapterid}
+                                        }) }} > Go to Questions <span><img src="/assets/images/next.png"/></span> </button>
+                                        :
+                                        Topic_Details.contents.length-1 === contentIndex ? 
+                                        <button class="activelink" onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1); this.setState({ contentIndex :0}); }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
+                                        :
+                                        <button class="activelink" onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
+                                      }
+                                        {next_topic_title!='' ?<p>Topic {current_topic_index+2} - {next_topic_title}</p>:''}
+                                      </div>
                                   </div>
+                                  :''}
                             </div>
                         </div>
                        

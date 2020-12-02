@@ -32,10 +32,12 @@ class Questions extends React.Component {
       current_chapter_data: '',
       current_topic_index : 0,
       current_chapter_index : 0,
-      ChapterQuestionList:[],
+      ChapterQuestionList: [],
       is_finel_chapter : false,
       Show_User_Feedback : false,
-      Show_Congratulation_Page : false
+      Show_Congratulation_Page : false,
+      questionData : '',
+      contentIndex : 0,
     };
   }
 
@@ -46,48 +48,20 @@ class Questions extends React.Component {
     }); 
     
     Notiflix.Loading.Dots()
-    GetApiCall.getRequest("GetChaperListData").then((results) => {
-    
-        results.json().then(data => ({
-          data: data,
-          status: results.status
-        })
-    ).then(res => {
-        var chapterData = res.data.data.map(function(el , index) {
-            var o = Object.assign({}, el);
-            o.activeClass = (index==0 ? true:false);
-            return o;
-          });
-        this.setState({ ChapterData : chapterData });
-        Notiflix.Loading.Remove();
-        });
-    })
-  }
-
-  showTopicDetails=(topic, current_chapter_data, current_topic_index, chapterIndex )=>{
-    if(chapterIndex === this.state.ChapterData.length-1 ){
-      this.setState({ is_finel_chapter : true});
+    if(this.props.location.state){
+      this.setQuestionsView(this.props.location.state.chapter_id)
+    }else{
+      this.props.history.push('/education')
     }
-
-    this.setState({ 
-      Show_course_content_list : false, 
-      Show_Topics : true, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Topic_Details : topic, 
-      current_chapter_data: current_chapter_data, 
-      current_topic_index : current_topic_index, 
-      current_chapter_index : chapterIndex
-    });
   }
+
 
   setQuestionsView=( chapter_id)=>{
-    // chapterid
-    Notiflix.Loading.Dots()
     GetApiCall.getRequest("ListQuestion?chapterid="+ chapter_id).then(resultdes =>
       resultdes.json().then(obj => {
       this.setState({
-        ChapterQuestionList : obj.data, Show_Questions_Module : true, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : false, Show_User_Feedback : false
+        ChapterQuestionList : obj.data,
+        questionData : obj.data[0]
       })
       Notiflix.Loading.Remove();
     }))
@@ -98,50 +72,17 @@ class Questions extends React.Component {
     this.setState({
       ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true, Show_User_Feedback : false
     })
-    console.log(questionDataWithUserAns);
   }
 
-  gotoNextTopic=(current_topic_index)=>{
-    debugger;
-    this.setState({ Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
-  }
-
-  goToNextChapterTopic=()=>{
-    let ChapterData = this.state.ChapterData;
-    if(this.state.current_chapter_index< ChapterData.length-1){
-      let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
-      let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
-      let current_topic_index = 0;
-      let current_chapter_index = this.state.current_chapter_index+1;
-      //unlock new chapter first topic.
-     this.showTopicDetails( topic, current_chapter_data, current_topic_index, current_chapter_index)
-    }else{
-      this.setState({  Show_course_content_list : false, 
-        Show_Topics : false, 
-        Show_Questions_Module: false,
-        Show_Correct_Question_Ans : false,
-        Show_User_Feedback : true,
-      });
-    }
-    
-  }
-
-  onSubmitFeedback =(feedback)=>{
-    // user feedback api...
-    // go to congratulation .....
-    this.setState({  Show_course_content_list : false, 
-      Show_Topics : false, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Show_User_Feedback : false,
-      Show_Congratulation_Page : true
-    });
+  handleCheckChange( option_data){
+    let question = this.state.questionData;
+    question.user_ans = option_data;
+    this.setState({ questionData : question });
   }
 
 
   render() {
-    const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
-      current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
+    const { questionData, ChapterQuestionList, contentIndex } = this.state;
 
       var log = localStorage.getItem(
         "CustomerLoginDetails"
@@ -208,84 +149,55 @@ class Questions extends React.Component {
                                         <div class="progress-section"></div>
                                         <div class="progress-section"></div>
                                         <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
+                                        <div class="progress-section"></div>
                                 </div>
-                                <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></a></div>
+                                <div class="prevquestion">
+                                <button class="prev" disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex-1] }); this.setState({contentIndex :contentIndex-1}) }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></button>
+                                 </div>
+                                  {/* <a class="prev" href="#"><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></a></div> */}
                                   <div class="question-course-details">
                                     <div class="homelink">
                                       <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                                     </div>
                                    <div class="questions">
                                        <div class="questions-count">
-                                                <p>Question 1 / 5</p>
+                                                <p>Question  {contentIndex+1} / {ChapterQuestionList.length}</p>
                                        </div>
                                        <form class="quiz-form text-light">
                                             <div class="my-5 qusestp">
-                                                <p class="lead question">1. Are you working towards any health goals?</p>
-                                                <div class="form-check my-4 text-white-50">
-                                                <input id="1" type="radio" name="q1" value="A" />
-                                                <label for="1" class="form-check-label">A place where don't question my authority.</label>
-                                                </div>
-                                                <div class="form-check my-4 text-white-50">
-                                                <input  id="2" type="radio" name="q1" value="B" />
-                                                <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
-                                                </div>
-                                                <div class="form-check my-4 text-white-50">
-                                                <input id="3" type="radio" name="q1" value="c" />
-                                                <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
-                                                </div>
-                                                <div class="form-check my-4 text-white-50">
-                                                <input id="4" type="radio" name="q1" value="d" />
-                                                <label for="4" class="form-check-label">A place where I'm the boss.</label>
-                                                </div>
-                                                <div class="submitbtn">
-                                                    <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png"/></span></button>
+                                              <p class="lead question">1. {questionData.fld_questiontext}</p>
+                                              {
+                                                  questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>(
+                                                  <div class="form-check my-4 text-white-50">
+                                                    <input  
+                                                      type="radio" 
+                                                      onChange={ ()=>{ this.handleCheckChange(option.fld_id) }}
+                                                      checked={ questionData.user_ans === option.fld_id? true : false}  
+                                                      id={option.fld_id}
+                                                      value={option.fld_id}
+                                                    />
+                                                    <label for={option.fld_id} class="form-check-label" >{option.fld_optiontext}</label>
+                                                  </div>
+                                                  )
+                                              )} 
+                                              { ChapterQuestionList && ChapterQuestionList.length>0 ?
+                                              <div class="submitbtn">
                                                
-                                                </div>
-                                               
+                                                  &nbsp;&nbsp;&nbsp;&nbsp;
+                                                { ChapterQuestionList.length-1 === contentIndex ? 
+                                                  <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={()=>{ this.props.updateUserAnsAndShowCorrectAns(ChapterQuestionList) }}>Submit & Check Correct Answer -{'>'}</button> 
+                                                  :
+                                                  <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question</button>
+                                                }
+                                              </div>:''}
                                             </div>
                                         </form>
                                    </div>
                                   </div>
-                              
-                                {/* <div class="row">
-                                    <div class="col-md-12">
-                                      { Show_course_content_list === true ? 
-                                        <CourseContentList 
-                                          ChapterData={this.state.ChapterData}
-                                          showTopicDetails={this.showTopicDetails}
-                                        /> 
-                                      : Show_Topics === true ? 
-                                        <CourseContentDetails  
-                                          current_chapter_data = {current_chapter_data}
-                                          Topic_Details = {Topic_Details} 
-                                          current_topic_index={current_topic_index} 
-                                          current_chapter_index={current_chapter_index} 
-                                          gotoNextTopic={this.gotoNextTopic}
-                                          setQuestionsView={this.setQuestionsView}
-                                        />
-                                      : Show_Questions_Module === true ?
-                                        <CourseQuestionsAns
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          updateUserAnsAndShowCorrectAns = {this.updateUserAnsAndShowCorrectAns}
-                                        />
-                                      : Show_Correct_Question_Ans === true?
-                                        <CourseQuestionsAnsList 
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          goToNextChapterTopic={this.goToNextChapterTopic}
-                                          is_finel_chapter={is_finel_chapter}
-                                        />
-                                      : Show_User_Feedback === true?
-                                        <UserFeedBackView onSubmitFeedback={this.onSubmitFeedback} />
-                                      : Show_Congratulation_Page=== true ?
-                                        <CongratulationView />
-                                      :
-                                      ''
-                                      }
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
-                       
                     </div>
                 </div>
             </div>
