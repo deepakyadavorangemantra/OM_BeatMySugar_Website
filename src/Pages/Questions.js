@@ -91,15 +91,10 @@ class Questions extends React.Component {
   }
 
 
-    }
+    
 
   render() {
     const { questionData, ChapterQuestionList, contentIndex } = this.state;
-
-
-    render() {
-        const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index, current_chapter_index, Show_Questions_Module, ChapterQuestionList,
-            current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page } = this.state;
 
         var log = localStorage.getItem(
             "CustomerLoginDetails"
@@ -175,41 +170,49 @@ class Questions extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png" /></span> <span>Previous</span></a></div>
+                                        <div class="prevquestion">
+                                          <button class="prev" disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex-1] }); this.setState({contentIndex :contentIndex-1}) }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></button>
+                                        </div>
                                         <div class="question-course-details">
                                             <div class="homelink">
                                                 <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="questions">
-                                                <div class="questions-count">
-                                                    <p>Question 1 / 5</p>
-                                                </div>
-                                                <form class="quiz-form text-light">
-                                                    <div class="my-5 qusestp">
-                                                        <p class="lead question">1. Are you working towards any health goals?</p>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="1" type="radio" name="q1" value="A" />
-                                                            <label for="1" class="form-check-label">A place where don't question my authority.</label>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="2" type="radio" name="q1" value="B" />
-                                                            <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="3" type="radio" name="q1" value="c" />
-                                                            <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="4" type="radio" name="q1" value="d" />
-                                                            <label for="4" class="form-check-label">A place where I'm the boss.</label>
-                                                        </div>
-                                                        <div class="submitbtn">
-                                                            <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png" /></span></button>
+                                              <div class="questions-count">
+                                                <p>Question  {contentIndex+1} / {ChapterQuestionList.length}</p>
+                                              </div>
+                                              <form class="quiz-form text-light">
+                                                  <div class="my-5 qusestp">
+                                                      <p class="lead question">{contentIndex+1}. {questionData.fld_questiontext}</p>
+                                                      {
+                                                        questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>(
+                                                          <div class="form-check my-4 text-white-50">
+                                                            <input  
+                                                              type="radio" 
+                                                              onChange={ ()=>{ this.handleCheckChange(option.fld_id) }}
+                                                              checked={ questionData.user_ans === option.fld_id? true : false}  
+                                                              id={option.fld_id}
+                                                              value={option.fld_id}
+                                                            />
+                                                            <label for={option.fld_id} class="form-check-label" >{option.fld_optiontext}</label>
+                                                          </div>
+                                                          )
+                                                      )} 
+                                                      
+                                                    { ChapterQuestionList && ChapterQuestionList.length>0 ?
+                                                      <div class="submitbtn">
+                                                      
+                                                          &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        { ChapterQuestionList.length-1 === contentIndex ? 
+                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={()=>{ this.updateUserAnsAndShowCorrectAns(ChapterQuestionList) }}>Submit & Check Correct Answer -{'>'}</button> 
+                                                          :
+                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question</button>
+                                                        }
+                                                      </div>:''
+                                                    }
 
-                                                        </div>
-
-                                                    </div>
-                                                </form>
+                                                  </div>
+                                              </form>
                                             </div>
                                         </div>
 
