@@ -80,6 +80,19 @@ class Questions extends React.Component {
     this.setState({ questionData : question });
   }
 
+  updateUserAnsAndShowCorrectAns=(questionData)=>{
+    debugger;
+    var log = localStorage.getItem("CustomerLoginDetails");
+    var login = JSON.parse(log);
+    if(login != null && login != ""){
+      console.log(login.fld_userid);
+      console.log(questionData);
+      
+    }
+   
+  }
+
+
 
   render() {
     const { questionData, ChapterQuestionList, contentIndex } = this.state;
@@ -187,7 +200,7 @@ class Questions extends React.Component {
                                                
                                                   &nbsp;&nbsp;&nbsp;&nbsp;
                                                 { ChapterQuestionList.length-1 === contentIndex ? 
-                                                  <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={()=>{ this.props.updateUserAnsAndShowCorrectAns(ChapterQuestionList) }}>Submit & Check Correct Answer -{'>'}</button> 
+                                                  <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={()=>{ this.updateUserAnsAndShowCorrectAns(ChapterQuestionList) }}>Submit & Check Correct Answer -{'>'}</button> 
                                                   :
                                                   <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question</button>
                                                 }
