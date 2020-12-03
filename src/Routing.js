@@ -90,8 +90,8 @@ import DiwalioffersListing from "./DiwalioffersListing";
 import Education from "./Pages/Education";
 import CourseContentMain from './Pages/CourseContent';
 import TopicContentMain from './Pages/TopicNew';
-import CourseTopicContentMain from './Pages/CourseTopicContent';
-import Questions from './Pages/Questions'
+import Questions from './Pages/Questions';
+import Answers from "./Pages/Answers";
 
 class Routing extends Component {
   render() {
@@ -405,6 +405,7 @@ class Routing extends Component {
         <Route exact path={"/education-topic"} component={CourseTopicContentMain} />
         
         <Route exact path={"/questions"} component={Questions} />
+        <Route exact path={"/answers"} component={Answers} />
         
         
       </BrowserRouter>
