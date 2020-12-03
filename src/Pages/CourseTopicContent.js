@@ -177,7 +177,10 @@ class CourseTopicContentMain extends React.Component {
                                       { Topic_Details.contents.length-1 === contentIndex  && current_chapter_total_Topics-1 ===  current_topic_index ? 
                                         <button class="activelink"  onClick={ ()=>{ this.props.history.push({
                                           pathname : '/questions',
-                                          state :{chapter_id : Topic_Details.fld_chapterid}
+                                          state :{
+                                            chapter_id : Topic_Details.fld_chapterid,
+                                            chaptersList : this.props.location.state.chaptersList
+                                          }
                                         }) }} > Go to Questions <span><img src="/assets/images/next.png"/></span> </button>
                                         :
                                         Topic_Details.contents.length-1 === contentIndex ? 

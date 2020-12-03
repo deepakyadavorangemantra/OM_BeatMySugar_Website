@@ -4,6 +4,7 @@ import Footer from "../Footer";
 import GetApiCall from "../GetApi";
 import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
+import { connect } from 'react-redux';
 import HeaderCourseProgress from '../Education/HeaderCourseProgress';
 import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
@@ -65,13 +66,6 @@ class Questions extends React.Component {
     }))
   }
 
-  updateUserAnsAndShowCorrectAns=( questionDataWithUserAns)=>{
-    // post api to users answer of questions.
-    this.setState({
-      ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true, Show_User_Feedback : false
-    })
-  }
-
   handleCheckChange( option_data){
     let question = this.state.questionData;
     question.user_ans = option_data;
@@ -79,15 +73,17 @@ class Questions extends React.Component {
   }
 
   updateUserAnsAndShowCorrectAns=(questionData)=>{
-    debugger;
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
+    debugger;
     if(login != null && login != ""){
-      console.log(login.fld_userid);
-      console.log(questionData);
-      
+      this.props.history.push({
+        pathname : '/answers',
+        state: { 
+          questionData : questionData,
+          chaptersList : this.props.location.state.chaptersList}
+      })
     }
-   
   }
 
 
@@ -214,43 +210,6 @@ class Questions extends React.Component {
                                               </form>
                                             </div>
                                         </div>
-
-                                        {/* <div class="row">
-                                    <div class="col-md-12">
-                                      { Show_course_content_list === true ? 
-                                        <CourseContentList 
-                                          ChapterData={this.state.ChapterData}
-                                          showTopicDetails={this.showTopicDetails}
-                                        /> 
-                                      : Show_Topics === true ? 
-                                        <CourseContentDetails  
-                                          current_chapter_data = {current_chapter_data}
-                                          Topic_Details = {Topic_Details} 
-                                          current_topic_index={current_topic_index} 
-                                          current_chapter_index={current_chapter_index} 
-                                          gotoNextTopic={this.gotoNextTopic}
-                                          setQuestionsView={this.setQuestionsView}
-                                        />
-                                      : Show_Questions_Module === true ?
-                                        <CourseQuestionsAns
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          updateUserAnsAndShowCorrectAns = {this.updateUserAnsAndShowCorrectAns}
-                                        />
-                                      : Show_Correct_Question_Ans === true?
-                                        <CourseQuestionsAnsList 
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          goToNextChapterTopic={this.goToNextChapterTopic}
-                                          is_finel_chapter={is_finel_chapter}
-                                        />
-                                      : Show_User_Feedback === true?
-                                        <UserFeedBackView onSubmitFeedback={this.onSubmitFeedback} />
-                                      : Show_Congratulation_Page=== true ?
-                                        <CongratulationView />
-                                      :
-                                      ''
-                                      }
-                                    </div>
-                                </div> */}
                                     </div>
                                 </div>
 
@@ -264,4 +223,8 @@ class Questions extends React.Component {
     }
 }
 
-export default Questions;
+const mapStateToProps = state => ({
+  chaptersList : state.CourseContentReducer.ChapterListFullDetails
+});
+
+export default connect(mapStateToProps)(Questions);

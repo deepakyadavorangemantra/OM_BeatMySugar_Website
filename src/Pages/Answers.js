@@ -17,139 +17,42 @@ class Answers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
-            EmailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-
-            EnteredOtp: "",
-            ChapterData: [],
-            ResendCount: 0,
-            MobileOtp: "",
-            Show_course_content_list: true, //
-            Show_Topics: false,
-            Show_Questions_Module: false,
-            Show_Correct_Question_Ans: false,
-            Topic_Details: [],
-            current_chapter_data: '',
-            current_topic_index: 0,
-            current_chapter_index: 0,
-            ChapterQuestionList: [],
-            is_finel_chapter: false,
-            Show_User_Feedback: false,
-            Show_Congratulation_Page: false
+            chaptersList :[],
+            questionData : [],
+            correct_ans_count : 0
         };
     }
 
     componentDidMount() {
-        Notiflix.Loading.Init({
-            svgColor: "#507dc0",
-            //  #507dc0'
-        });
 
-        Notiflix.Loading.Dots()
-        GetApiCall.getRequest("GetChaperListData").then((results) => {
-
-            results.json().then(data => ({
-                data: data,
-                status: results.status
-            })
-            ).then(res => {
-                var chapterData = res.data.data.map(function (el, index) {
-                    var o = Object.assign({}, el);
-                    o.activeClass = (index == 0 ? true : false);
-                    return o;
-                });
-                this.setState({ ChapterData: chapterData });
-                Notiflix.Loading.Remove();
-            });
-        })
-    }
-
-    showTopicDetails = (topic, current_chapter_data, current_topic_index, chapterIndex) => {
-        if (chapterIndex === this.state.ChapterData.length - 1) {
-            this.setState({ is_finel_chapter: true });
+        if(this.props.location.state){
+            let count =0;
+            let questionlistData = this.props.location.state.questionData;
+            for(let i=0; i<questionlistData.length;i++){
+                let questionData = questionlistData[i];
+                let options = questionlistData[i].options.filter(item => item.fld_iscorrect==1);
+                if(options.length>0 && options[0].fld_id === questionData.user_ans){
+                    count++;
+                }
+            }
+            this.setState({ correct_ans_count : count, chaptersList : this.props.location.state.chaptersList, questionData : this.props.location.state.questionData });
+        }else{
+            this.props.history.push('/education')
         }
-
-        this.setState({
-            Show_course_content_list: false,
-            Show_Topics: true,
-            Show_Questions_Module: false,
-            Show_Correct_Question_Ans: false,
-            Topic_Details: topic,
-            current_chapter_data: current_chapter_data,
-            current_topic_index: current_topic_index,
-            current_chapter_index: chapterIndex
-        });
     }
 
-    setQuestionsView = (chapter_id) => {
-        // chapterid
-        Notiflix.Loading.Dots()
-        GetApiCall.getRequest("ListQuestion?chapterid=" + chapter_id).then(resultdes =>
-            resultdes.json().then(obj => {
-                this.setState({
-                    ChapterQuestionList: obj.data, Show_Questions_Module: true, Show_Topics: false, Show_course_content_list: false, Show_Correct_Question_Ans: false, Show_User_Feedback: false
-                })
-                Notiflix.Loading.Remove();
-            }))
-    }
 
-    updateUserAnsAndShowCorrectAns = (questionDataWithUserAns) => {
-        // post api to users answer of questions.
-        this.setState({
-            ChapterQuestionList: questionDataWithUserAns, Show_Questions_Module: false, Show_Topics: false, Show_course_content_list: false, Show_Correct_Question_Ans: true, Show_User_Feedback: false
-        })
-        console.log(questionDataWithUserAns);
-    }
 
-    gotoNextTopic = (current_topic_index) => {
-        debugger;
-        this.setState({ Topic_Details: this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
-    }
+ 
 
-    goToNextChapterTopic = () => {
-        let ChapterData = this.state.ChapterData;
-        if (this.state.current_chapter_index < ChapterData.length - 1) {
-            let current_chapter_data = ChapterData[this.state.current_chapter_index + 1];
-            let topic = current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
-            let current_topic_index = 0;
-            let current_chapter_index = this.state.current_chapter_index + 1;
-            //unlock new chapter first topic.
-            this.showTopicDetails(topic, current_chapter_data, current_topic_index, current_chapter_index)
-        } else {
-            this.setState({
-                Show_course_content_list: false,
-                Show_Topics: false,
-                Show_Questions_Module: false,
-                Show_Correct_Question_Ans: false,
-                Show_User_Feedback: true,
-            });
-        }
 
-    }
-
-    onSubmitFeedback = (feedback) => {
-        // user feedback api...
-        // go to congratulation .....
-        this.setState({
-            Show_course_content_list: false,
-            Show_Topics: false,
-            Show_Questions_Module: false,
-            Show_Correct_Question_Ans: false,
-            Show_User_Feedback: false,
-            Show_Congratulation_Page: true
-        });
-    }
+ 
 
 
     render() {
-        const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index, current_chapter_index, Show_Questions_Module, ChapterQuestionList,
-            current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page } = this.state;
+        const {  } = this.state;
 
-        var log = localStorage.getItem(
-            "CustomerLoginDetails"
-        );
-        var login = JSON.parse(log);
-
+                const { questionData, chaptersList, correct_ans_count } = this.state;
 
         return (
             <div>
@@ -226,119 +129,36 @@ class Answers extends React.Component {
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
-                                                    <p>Question 4 / 4</p>
+                                                    <p>Question {correct_ans_count} / {questionData.length}</p>
                                                 </div>
                                                 <div class="quiz-form text-light">
                                                     <div class="my-5 qusestp">
-                                                    <div class="answers">
-                                                        <p class="lead question">1. Are you working towards any health goals?</p>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <p class="answers">A place where don't question my authority.</p>
+                                                    { questionData && questionData.length>0 && questionData.map( (questionData, index)=>{
+
+                                                        return<div class="answers">
+                                                        <p class="lead question">{index+1}. {questionData.fld_questiontext}</p>
+                                                        {
+                                                            questionData.options && questionData.options.length>0 && questionData.options.map((option,index)=>(
+                                                                option.fld_iscorrect === 1 ? 
+                                                                <div class="form-check my-4 text-white-50">
+                                                                     <p class="answers wrong">Whenever my best friends are, that's where I want to be. <span class="wrongcomment">Wrong Answer</span></p>
+                                                                    {/* <p class="answers correct">{option.fld_optiontext} <span class={  option.fld_id != questionData.user_ans ? "wrongcomment" : "correctcomment"}>Correct Answer</span></p> */}
+                                                                </div>
+                                                                :''
+                                                            )
+                                                        )}
                                                         </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                          <p class="answers">A place where everyone knows I'm the Boss.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50"> 
-                                                            <p class="answers">A place where I'm the boss.</p>    
-                                                        </div>
-                                                        </div>
-                                                        <div class="answers">
-                                                        <p class="lead question">2. Are you working towards any health goals?</p>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <p class="answers">A place where don't question my authority.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                        <p class="answers">Whenever my best friends are, that's where I want to be.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50"> 
-                                                            <p class="answers">A place where I'm the boss.</p>    
-                                                        </div>
-                                                        </div>
-                                                        <div class="answers">
-                                                        <p class="lead question">3. Are you working towards any health goals?</p>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <p class="answers">A place where don't question my authority.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                        <p class="answers">Whenever my best friends are, that's where I want to be.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                          <p class="answers">A place where everyone knows I'm the Boss.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50"> 
-                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
-                                                        </div>
-                                                        </div>
-                                                        <div class="answers">
-                                                        <p class="lead question">4. Are you working towards any health goals?</p>
-                                                        <div class="form-check my-4 text-white-50">
-                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                        <p class="answers">Whenever my best friends are, that's where I want to be.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                          <p class="answers">A place where everyone knows I'm the Boss.</p>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50"> 
-                                                            <p class="answers">A place where I'm the boss.</p>    
-                                                        </div>
-                                                        </div>
+                                                    })
+                                                    }
                                                         <div class="submitbtn">
                                                             <button type="submit" class="activelinksubmit"><span>Submit &amp; Share Feedback </span><span><img src="/assets/images/next.png" /></span></button>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
-
-                                        {/* <div class="row">
-                                    <div class="col-md-12">
-                                      { Show_course_content_list === true ? 
-                                        <CourseContentList 
-                                          ChapterData={this.state.ChapterData}
-                                          showTopicDetails={this.showTopicDetails}
-                                        /> 
-                                      : Show_Topics === true ? 
-                                        <CourseContentDetails  
-                                          current_chapter_data = {current_chapter_data}
-                                          Topic_Details = {Topic_Details} 
-                                          current_topic_index={current_topic_index} 
-                                          current_chapter_index={current_chapter_index} 
-                                          gotoNextTopic={this.gotoNextTopic}
-                                          setQuestionsView={this.setQuestionsView}
-                                        />
-                                      : Show_Questions_Module === true ?
-                                        <CourseQuestionsAns
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          updateUserAnsAndShowCorrectAns = {this.updateUserAnsAndShowCorrectAns}
-                                        />
-                                      : Show_Correct_Question_Ans === true?
-                                        <CourseQuestionsAnsList 
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          goToNextChapterTopic={this.goToNextChapterTopic}
-                                          is_finel_chapter={is_finel_chapter}
-                                        />
-                                      : Show_User_Feedback === true?
-                                        <UserFeedBackView onSubmitFeedback={this.onSubmitFeedback} />
-                                      : Show_Congratulation_Page=== true ?
-                                        <CongratulationView />
-                                      :
-                                      ''
-                                      }
-                                    </div>
-                                </div> */}
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
