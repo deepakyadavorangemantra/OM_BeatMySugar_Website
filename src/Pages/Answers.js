@@ -278,7 +278,7 @@ class Answers extends React.Component {
                                                         <div class="answers">
                                                         <p class="lead question">4. Are you working towards any health goals?</p>
                                                         <div class="form-check my-4 text-white-50">
-                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
+                                                        <p class="answers wrong">Whenever my best friends are, that's where I want to be. <span class="wrongcomment">Wrong Answer</span></p>
                                                         </div>
                                                         <div class="form-check my-4 text-white-50">
                                                         <p class="answers">Whenever my best friends are, that's where I want to be.</p>

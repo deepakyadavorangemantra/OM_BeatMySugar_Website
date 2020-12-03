@@ -562,3 +562,17 @@ font-weight: 500;
   top: 5px;
   font-size: 16px;
 }
+.answers.wrong {
+  background: hsl(349deg 50% 57% / 34%);
+}
+
+.wrongcomment {
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  white-space: nowrap;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px;
+}
