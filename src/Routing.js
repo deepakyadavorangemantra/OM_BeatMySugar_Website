@@ -92,6 +92,7 @@ import CourseContentMain from './Pages/CourseContent';
 import TopicContentMain from './Pages/TopicNew';
 import Questions from './Pages/Questions';
 import Answers from "./Pages/Answers";
+import Feedback from "./Pages/Feedback";
 import CourseTopicContentMain from './Pages/CourseTopicContent';
 
 class Routing extends Component {
@@ -407,6 +408,7 @@ class Routing extends Component {
         
         <Route exact path={"/questions"} component={Questions} />
         <Route exact path={"/answers"} component={Answers} />
+        <Route exact path={"/feedback"} component={Feedback} />
         
         
       </BrowserRouter>
