@@ -24,6 +24,8 @@ import FootwearHP from "./HomePage/FootwearHP";
 import SocksHP from "./HomePage/SocksHP";
 import BannerHP from "./HomePage/BannerHP";
 import HealthHP from "./HomePage/HealthHP";
+import CovidHP from "./HomePage/CovidHP";
+import AccessoriesHP from "./HomePage/AccessoriesHP";
 
 class App extends React.Component {
   constructor(props) {
@@ -67,6 +69,8 @@ class App extends React.Component {
            <FoodHP />
            <FootwearHP/>
            <SocksHP />
+          <CovidHP />
+          <AccessoriesHP />
         <HealthHP />
             {/* <div class="container">
               <div class="app-section margin-top margin-bottom">

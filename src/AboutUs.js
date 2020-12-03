@@ -753,7 +753,7 @@ class AboutUs extends React.Component {
               </a>
             </li>
           
-            <li class="nav-item">
+            {/* <li class="nav-item">
               <a
                 data-toggle="tab"
                 href="#tab9"
@@ -766,7 +766,7 @@ class AboutUs extends React.Component {
                 <h4>Dr. Shilpa Chugh Garcha</h4>
                 <p>Director, Medical Affairs</p>
               </a>
-            </li>
+            </li> */}
             {/* <li class="nav-item">
               <a
                 data-toggle="tab"

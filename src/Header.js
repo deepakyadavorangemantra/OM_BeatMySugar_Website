@@ -1304,10 +1304,10 @@ class Menu extends React.Component {
                       <a href="/festive-offers" class="" style={{marginRight:'10px'}}>
                         {/* {console.log(this.state.OfferData)} */}
                      {this.state.OfferData[0] != undefined ? this.state.OfferData[0].fld_title : ''}
-                     <span class="new-option" style={{dispaly :  JSON.stringify(this.state.OfferData) != '[]' ? '' : 'none'}}>
+                     {/* <span class="new-option" style={{dispaly :  JSON.stringify(this.state.OfferData) != '[]' ? '' : 'none'}}> */}
                        {/* <img class="new-option" src="/assets/images/lamp.png"></img> */}
-                       *New
-                       </span>
+                       {/* *New */}
+                       {/* </span> */}
                      
                       </a>
                     </li>
@@ -1424,7 +1424,10 @@ class Menu extends React.Component {
                         onKeyPress={(e) => {
                           if (e.key === "Enter") {
 
-                            window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
+                            if(this.state.SearchText!=''){
+                              window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
+                            }
+
                             
                           }
                         }}
@@ -1439,8 +1442,9 @@ class Menu extends React.Component {
                     <div class="col-md-2 col-2">
                         <button class="search-button-mobile"
                         onClick={()=>{
+                          if(this.state.SearchText!=''){
                           window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
-                          
+                          }
                         }}
                         ><i class="icon-magnifier"></i></button>
                       </div>
@@ -1887,10 +1891,10 @@ class Menu extends React.Component {
                         {/* {console.log(this.state.OfferData)} */}
                        
                      {this.state.OfferData[0] != undefined ? this.state.OfferData[0].fld_title : ''}
-                     <span class="new-option" style={{dispaly :  JSON.stringify(this.state.OfferData) != '[]' ? '' : 'none',color : 'green'}}>
+                     {/* <span class="new-option" style={{dispaly :  JSON.stringify(this.state.OfferData) != '[]' ? '' : 'none',color : 'green'}}> */}
                        {/* <img class="new-option" src="/assets/images/lamp.png"></img> */}
-                       *New
-                       </span>
+                       {/* *New */}
+                       {/* </span> */}
                       </a>
                     </li>
                 {/* <li class="hvr-overline-from-left">
