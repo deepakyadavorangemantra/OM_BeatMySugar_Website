@@ -226,66 +226,78 @@ class Answers extends React.Component {
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
-                                                    <p>Question 1 / 5</p>
+                                                    <p>Question 4 / 4</p>
                                                 </div>
-                                                <form class="quiz-form text-light">
+                                                <div class="quiz-form text-light">
                                                     <div class="my-5 qusestp">
+                                                    <div class="answers">
                                                         <p class="lead question">1. Are you working towards any health goals?</p>
                                                         <div class="form-check my-4 text-white-50">
-                                                            <input id="1" type="radio" name="q1" value="A" />
-                                                            <label for="1" class="form-check-label">A place where don't question my authority.</label>
+                                                            <p class="answers">A place where don't question my authority.</p>
                                                         </div>
                                                         <div class="form-check my-4 text-white-50">
-                                                            <input id="2" type="radio" name="q1" value="B" />
-                                                            <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
+                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
                                                         </div>
                                                         <div class="form-check my-4 text-white-50">
-                                                            <input id="3" type="radio" name="q1" value="c" />
-                                                            <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
+                                                          <p class="answers">A place where everyone knows I'm the Boss.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50"> 
+                                                            <p class="answers">A place where I'm the boss.</p>    
+                                                        </div>
+                                                        </div>
+                                                        <div class="answers">
+                                                        <p class="lead question">2. Are you working towards any health goals?</p>
+                                                        <div class="form-check my-4 text-white-50">
+                                                            <p class="answers">A place where don't question my authority.</p>
                                                         </div>
                                                         <div class="form-check my-4 text-white-50">
-                                                            <input id="4" type="radio" name="q1" value="d" />
-                                                            <label for="4" class="form-check-label">A place where I'm the boss.</label>
+                                                        <p class="answers">Whenever my best friends are, that's where I want to be.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50"> 
+                                                            <p class="answers">A place where I'm the boss.</p>    
+                                                        </div>
+                                                        </div>
+                                                        <div class="answers">
+                                                        <p class="lead question">3. Are you working towards any health goals?</p>
+                                                        <div class="form-check my-4 text-white-50">
+                                                            <p class="answers">A place where don't question my authority.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                        <p class="answers">Whenever my best friends are, that's where I want to be.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                          <p class="answers">A place where everyone knows I'm the Boss.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50"> 
+                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
+                                                        </div>
+                                                        </div>
+                                                        <div class="answers">
+                                                        <p class="lead question">4. Are you working towards any health goals?</p>
+                                                        <div class="form-check my-4 text-white-50">
+                                                        <p class="answers correct">Whenever my best friends are, that's where I want to be. <span class="correctcomment">Correct Answer</span></p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                        <p class="answers">Whenever my best friends are, that's where I want to be.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50">
+                                                          <p class="answers">A place where everyone knows I'm the Boss.</p>
+                                                        </div>
+                                                        <div class="form-check my-4 text-white-50"> 
+                                                            <p class="answers">A place where I'm the boss.</p>    
+                                                        </div>
                                                         </div>
                                                         <div class="submitbtn">
-                                                            <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png" /></span></button>
+                                                            <button type="submit" class="activelinksubmit"><span>Submit &amp; Share Feedback </span><span><img src="/assets/images/next.png" /></span></button>
 
                                                         </div>
-
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div class="questions">
-                                                <div class="questions-count">
-                                                    <p>Question 1 / 5</p>
                                                 </div>
-                                                <form class="quiz-form text-light">
-                                                    <div class="my-5 qusestp">
-                                                        <p class="lead question">1. Are you working towards any health goals?</p>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="1" type="radio" name="q1" value="A" />
-                                                            <label for="1" class="form-check-label">A place where don't question my authority.</label>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="2" type="radio" name="q1" value="B" />
-                                                            <label for="2" class="form-check-label">Whenever my best friends are, that's where I want to be.</label>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="3" type="radio" name="q1" value="c" />
-                                                            <label for="3" class="form-check-label">A place where everyone knows I'm the Boss.</label>
-                                                        </div>
-                                                        <div class="form-check my-4 text-white-50">
-                                                            <input id="4" type="radio" name="q1" value="d" />
-                                                            <label for="4" class="form-check-label">A place where I'm the boss.</label>
-                                                        </div>
-                                                        <div class="submitbtn">
-                                                            <button type="submit" class="activelinksubmit"><span>Next Question </span><span><img src="/assets/images/next.png" /></span></button>
-
-                                                        </div>
-
-                                                    </div>
-                                                </form>
                                             </div>
+                                            
                                         </div>
 
                                         {/* <div class="row">

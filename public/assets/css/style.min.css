@@ -417,7 +417,7 @@ font-weight: 500;
 }
 
 .questions {
-    width:50%;
+    width: 70%;
     margin:auto;
 }
 .question-course-details {
@@ -505,7 +505,7 @@ font-weight: 500;
   border-radius: 30px !important;
   display: inline-flex;
   color: #fff;
-  font-size: 16px;
+  font-size: 18px;
   justify-content: space-between;
   align-items: center;
   border:1px solid #507dbe;
@@ -521,4 +521,44 @@ font-weight: 500;
 }
 .question-course-details .homelink {
   top: 0;
+}
+.disclaimer {
+  padding: 15px;
+  background: #ececec;
+}
+
+.disclaimer ol {
+  font-size: 13px;
+  padding-left: 15px;
+}
+
+.disclaimer h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.answers {
+  padding-bottom: 30px;
+}
+.quiz-form.text-light .form-check .answers {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  line-height: 20px;
+  display: block;
+  font-size: 20px;
+  padding: 10px;
+}
+.answers.correct {
+  background: hsl(120deg 26% 58% / 34%);
+}
+
+.correctcomment {
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  white-space: nowrap;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px;
 }
