@@ -157,11 +157,10 @@ class Questions extends React.Component {
                                     <div class="dashboard-content">
                                         <div class="progessandtime">
                                             <div class="question-progress-bar">
-                                                <div class="progress-section attend"></div>
-                                                <div class="progress-section"></div>
-                                                <div class="progress-section"></div>
-                                                <div class="progress-section"></div>
-                                                <div class="progress-section"></div>
+                                            { ChapterQuestionList && ChapterQuestionList.length>0 && ChapterQuestionList.map(( item, index)=>{
+                                                return  item.user_ans ? <div class="progress-section attend"></div> : <div class="progress-section"></div> 
+                                              })
+                                            }
                                             </div>
                                             <div class="time-section">
                                                 <div class="time-coures-box">
