@@ -9,7 +9,8 @@
   import Profile from './ProfileReducers'
   import CartReducer from './CartReducer'
 
-
+//............Education Model reducer ..................//
+import CourseContentReducer from './Education/CourseContent';
 
 export default combineReducers({
     BlogReducer : BlogReducer,
@@ -17,6 +18,7 @@ export default combineReducers({
     SellReducers: SellWithUs,
     InsuranceReducers:Insurance,
     ProfileReducers:Profile,
-    CartReducer : CartReducer
+    CartReducer : CartReducer,
+    CourseContentReducer : CourseContentReducer
     
 });

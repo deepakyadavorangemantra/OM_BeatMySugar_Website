@@ -73,7 +73,7 @@ class Menu extends React.Component {
 
         
         // console.log(obj.data)
-        debugger;
+
         this.setState({
           FoodCategory: obj.data,
         });

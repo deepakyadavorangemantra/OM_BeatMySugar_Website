@@ -92,6 +92,7 @@ import CourseContentMain from './Pages/CourseContent';
 import TopicContentMain from './Pages/TopicNew';
 import Questions from './Pages/Questions';
 import Answers from "./Pages/Answers";
+import CourseTopicContentMain from './Pages/CourseTopicContent';
 
 class Routing extends Component {
   render() {
@@ -402,6 +403,8 @@ class Routing extends Component {
         <Route exact path={"/educationDesign"} component={Education} />
         <Route exact path={"/education"} component={CourseContentMain} />
         <Route exact path={"/topicDesign"} component={TopicContentMain} />
+        <Route exact path={"/education-topic"} component={CourseTopicContentMain} />
+        
         <Route exact path={"/questions"} component={Questions} />
         <Route exact path={"/answers"} component={Answers} />
         
