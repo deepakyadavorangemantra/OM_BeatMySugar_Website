@@ -5,6 +5,7 @@ import GetApiCall from "../GetApi";
 import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
 import { connect } from 'react-redux';
+import moment from 'moment';
 import HeaderCourseProgress from '../Education/HeaderCourseProgress';
 import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
@@ -72,17 +73,48 @@ class Questions extends React.Component {
     this.setState({ questionData : question });
   }
 
-  updateUserAnsAndShowCorrectAns=(questionData)=>{
+  updateUserAnsAndShowCorrectAns(e){
+    debugger;
+    e.preventDefault();
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
-    debugger;
     if(login != null && login != ""){
-      this.props.history.push({
-        pathname : '/answers',
-        state: { 
-          questionData : questionData,
-          chaptersList : this.props.location.state.chaptersList}
-      })
+      let data={};
+      data.user_id= login.fld_userid;
+      data.chapterid = this.props.location.state.chapter_id;
+      data.createdon = moment().format('lll');
+      data.questions = this.state.ChapterQuestionList;
+      Notiflix.Loading.Dots();
+
+        PostApiCall.postRequest(
+          {
+            data
+          },
+          "AddCustomerEducationTest"
+        ).then((results1) =>
+          // const objs = JSON.parse(result._bodyText)
+          
+          results1.json().then((obj1) => {
+            if (results1.status == 200 || results1.status == 201) {
+              debugger;
+              Notiflix.Loading.Remove()
+                this.props.history.push({
+                  pathname : '/answers',
+                  state: { 
+                    questionData : this.state.ChapterQuestionList,
+                    chaptersList : this.props.location.state.chaptersList,
+                    current_chapter_index : this.props.location.state.current_chapter_index}
+                })
+            }else{
+
+              Notiflix.Loading.Remove()
+              Notiflix.Notify.Failure(obj1.data);
+          
+            }
+          }));
+      // login.fld_userid
+
+      
     }
   }
 
@@ -199,7 +231,7 @@ class Questions extends React.Component {
                                                       
                                                           &nbsp;&nbsp;&nbsp;&nbsp;
                                                         { ChapterQuestionList.length-1 === contentIndex ? 
-                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={()=>{ this.updateUserAnsAndShowCorrectAns(ChapterQuestionList) }}>Submit & Check Correct Answer -{'>'}</button> 
+                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={this.updateUserAnsAndShowCorrectAns.bind(this) }>Submit & Check Correct Answer -{'>'}</button> 
                                                           :
                                                           <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question</button>
                                                         }

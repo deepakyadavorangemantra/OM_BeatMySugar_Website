@@ -12,7 +12,8 @@ import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 import { connect } from 'react-redux';
-import courseImage from '../images/course.jpg'
+import courseImage from '../images/course.jpg';
+import moment from 'moment';
 class CourseTopicContentMain extends React.Component {
   constructor(props) {
     super(props);
@@ -33,8 +34,8 @@ class CourseTopicContentMain extends React.Component {
       current_topic_index : 0,
       current_chapter_index : 0,
       ChapterQuestionList:[],
-      is_finel_chapter : false,
       Show_User_Feedback : false,
+      is_finel_chapter : false,
       Show_Congratulation_Page : false,
       current_chapter_total_Topics:0,
       next_topic_title : '',
@@ -44,12 +45,17 @@ class CourseTopicContentMain extends React.Component {
   componentDidMount() {
     if(this.props.location.state){
       const data = this.props.location.state;
+      debugger;
       let current_chapter_index = (data.chaptersList.findIndex(x => x.fld_chapterid ==data.current_chapter.fld_chapterid));
       let current_topic_index = (data.current_chapter.topics.findIndex(x => x.fld_id ==data.currect_topic.fld_id));
+      debugger;
+      if(current_chapter_index === data.chaptersList.length-1 ){
+        this.setState({ is_finel_chapter : true});
+      }
       if(current_topic_index < data.current_chapter.topics.length-1){
         this.setState({ next_topic_title : data.current_chapter.topics[current_topic_index+1].fld_title})
       }
-      this.setState({ current_chapter_total_Topics : data.current_chapter.topics.length ,current_chapter_data : data.current_chapter, current_chapter_index : current_chapter_index, current_topic_index : current_topic_index, Topic_Details : data.currect_topic})
+      this.setState({ current_chapter_total_Topics : data.current_chapter.topics.length, current_chapter_data : data.current_chapter, current_chapter_index : current_chapter_index, current_topic_index : current_topic_index, Topic_Details : data.currect_topic})
     }else{
       this.props.history.push('/education')
     }
@@ -58,14 +64,57 @@ class CourseTopicContentMain extends React.Component {
 
   gotoNextTopic=(current_topic_index)=>{
     let next_topic_title= '';
-    if(current_topic_index < this.state.current_chapter_data.topics.length-1){
-       next_topic_title = this.state.current_chapter_data.topics[current_topic_index+1].fld_title;
+    if(current_topic_index < this.state.current_chapter_data.topics.length){
+      if(current_topic_index < this.state.current_chapter_data.topics.length-1){
+        next_topic_title = this.state.current_chapter_data.topics[current_topic_index+1].fld_title;
+      }
+      
+      if(this.state.current_chapter_data.topics[current_topic_index].fld_isunlocked ==0){
+        var log = localStorage.getItem("CustomerLoginDetails");
+        var login = JSON.parse(log);
+        if(login != null && login != ""){
+          Notiflix.Loading.Dots();
+          PostApiCall.postRequest(
+            {
+              customerid : login.fld_userid,
+              topicid : this.state.current_chapter_data.topics[current_topic_index].fld_id,
+              isunlocked : 1,
+              createdon :  moment().format('lll'),
+              status : 1
+            },
+            "AddCustomerUnlockTopic"
+          ).then((results1) =>
+            // const objs = JSON.parse(result._bodyText)
+            results1.json().then((obj1) => {
+              if (results1.status == 200 || results1.status == 201) {
+                let current_chapter_data_obj = this.state.current_chapter_data;
+                current_chapter_data_obj.topics[current_topic_index].fld_isunlocked = 1;
+
+                this.setState({ current_chapter_data : current_chapter_data_obj });
+
+                this.props.history.replace({ pathname : '/education-topic',
+                  state : {
+                      current_chapter : current_chapter_data_obj,
+                      currect_topic : this.props.location.state.currect_topic,
+                      chaptersList : this.props.location.state.chaptersList
+                    }})
+
+                this.setState({ contentIndex :0, next_topic_title : next_topic_title, Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
+                Notiflix.Loading.Remove();
+              }else{
+                Notiflix.Loading.Remove();
+                Notiflix.Notify.Failure(obj1.data);
+              }
+            }));
+          }
+      }else{
+        
+        this.setState({ contentIndex :0, next_topic_title : next_topic_title, Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
+      }
     }
-    this.setState({ next_topic_title : next_topic_title, Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
   }
 
-
-
+ 
    ordinal_suffix_of =(i)=> {
     var j = i % 10,
         k = i % 100;
@@ -81,8 +130,31 @@ class CourseTopicContentMain extends React.Component {
     return i + "th";
 }
 
+goToNextChapterTopic=()=>{
+  debugger;
+  let ChapterData = this.props.location.state.chaptersList;
+  if(this.state.current_chapter_index< ChapterData.length-1){
+  let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
+  let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
+  let current_topic_index = 0;
+  let current_chapter_index = this.state.current_chapter_index+1;
+      
+      this.props.history.push({
+          pathname : '/education-topic',
+          state : {
+          current_chapter : current_chapter_data,
+          currect_topic : topic,
+          chaptersList : ChapterData
+          }
+      });
+      window.location.reload();
+  }else{
+      this.props.history.push('/feedback');
+  }
+}
+
   render() {
-    const { next_topic_title, Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics} = this.state;
+    const { next_topic_title, Topic_Details,  current_topic_index , current_chapter_index,  contentIndex, current_chapter_data, current_chapter_total_Topics, is_finel_chapter} = this.state;
 
       var log = localStorage.getItem(
         "CustomerLoginDetails"
@@ -166,25 +238,33 @@ class CourseTopicContentMain extends React.Component {
                                   <div class="navlinks">
                                       
                                       {current_topic_index > 0 && contentIndex ===0 ?
-                                        <div class="navlinkbutton next"><button className={current_topic_index ===0 ?"disable":''} onClick={ ()=>{  this.gotoNextTopic(current_topic_index-1)  }}><span><img src="/assets/images/previous.png"/></span> Previous Topic</button></div> 
+                                        <div class="navlinkbutton next"><button className={current_topic_index ===0 ?"disable":'activelink'} onClick={ ()=>{  this.gotoNextTopic(current_topic_index-1)  }}><span><img src="/assets/images/previous.png"/></span> Previous Topic</button></div> 
                                         : 
-                                        <div class="navlinkbutton next"><button disabled={true} className={contentIndex ===0 ?"disable":''} onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}><span><img src="/assets/images/previous.png"/></span> Previous</button></div>        
+                                        <div class="navlinkbutton next"><button disabled={true} className={contentIndex ===0 ?"disable":'activelink'} onClick={ ()=>{this.setState({ contentIndex : contentIndex-1 })}}><span><img src="/assets/images/previous.png"/></span> Previous</button></div>        
                                       }
 
                                       <div class="navlinkbutton previous">
                                         
                                        
                                       { Topic_Details.contents.length-1 === contentIndex  && current_chapter_total_Topics-1 ===  current_topic_index ? 
+                                        current_chapter_data.fld_isQuestionTestCompleted === 1? 
+                                          <button onClick={()=>{this.goToNextChapterTopic()}} class="activelink"><span>{ is_finel_chapter === true ? 
+                                            'Submit & Go To Feedback '
+                                            :
+                                            'Go To Next Chapter '
+                                        } </span><span><img src="/assets/images/next.png" /></span></button>
+                                        :
                                         <button class="activelink"  onClick={ ()=>{ this.props.history.push({
                                           pathname : '/questions',
                                           state :{
                                             chapter_id : Topic_Details.fld_chapterid,
-                                            chaptersList : this.props.location.state.chaptersList
+                                            chaptersList : this.props.location.state.chaptersList,
+                                            current_chapter_index : this.state.current_chapter_index
                                           }
                                         }) }} > Go to Questions <span><img src="/assets/images/next.png"/></span> </button>
                                         :
                                         Topic_Details.contents.length-1 === contentIndex ? 
-                                        <button class="activelink" onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1); this.setState({ contentIndex :0}); }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
+                                        <button class="activelink" onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1);  }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
                                         :
                                         <button class="activelink" onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
                                       }

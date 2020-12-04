@@ -7,7 +7,8 @@ import { withRouter } from "react-router-dom";
 import PostApiCall from "../Api";
 import Notiflix from "notiflix-react";
 import HeaderCourseProgress from '../Education/HeaderCourseProgress';
-import {setChapterListFullDetails} from '../Actions/Education/actionType'
+import {setChapterListFullDetails} from '../Actions/Education/actionType';
+import moment from 'moment';
 import CourseContentList from '../Education/CourseContentList';
 import CourseContentDetails from '../Education/CourseContentDetails';
 import CourseQuestionsAns from '../Education/CourseQuestionAns';
@@ -59,7 +60,7 @@ class CourseContentMain extends React.Component {
   }
 
   getChapterContentByUser=(current_user_id)=>{
-    GetApiCall.getRequest("ListCustomerEducationDetails/?customerid="+ current_user_id).then((results) => {
+    PostApiCall.postRequest({ customerid : current_user_id},"ListCustomerEducationDetails").then((results) => {
       results.json().then(data => ({
         data: data,
         status: results.status
@@ -70,11 +71,48 @@ class CourseContentMain extends React.Component {
             o.activeClass = (index==0 ? true:false);
             return o;
           });
+          chapterData = chapterData.map(function(el , index) {
+            var o = Object.assign({}, el);
+            o.chapter_unLock = (index==0 ? true: chapterData[index-1].fld_isQuestionTestCompleted === 1? true : false);
+            return o;
+          });
+          debugger;
+          if(chapterData[0].topics[0].fld_isunlocked === 0){
+            this.unlockTopic( current_user_id, chapterData[0].topics[0]);
+          }
           this.props.dispatch(setChapterListFullDetails(chapterData));
         this.setState({ ChapterData : chapterData });
         Notiflix.Loading.Remove();
         });
     });
+  }
+
+  unlockTopic=(current_user_id, topic_data)=>{
+    debugger;
+    Notiflix.Loading.Dots();
+    PostApiCall.postRequest(
+      {
+        customerid : current_user_id,
+        topicid : topic_data.fld_id,
+        isunlocked : 1,
+        createdon :  moment().format('lll'),
+        status : 1
+      },
+      "AddCustomerUnlockTopic"
+    ).then((results1) =>
+      // const objs = JSON.parse(result._bodyText)
+      results1.json().then((obj1) => {
+        debugger
+        if (results1.status == 200 || results1.status == 201) {
+          let chapterData = this.state.ChapterData;
+          chapterData[0].topics[0].fld_isunlocked = 1;
+          this.setState({ChapterData : chapterData  });
+          Notiflix.Loading.Remove()
+        }else{
+          Notiflix.Loading.Remove()
+          Notiflix.Notify.Failure(obj1.data);
+        }
+      }));
   }
 
   getChapterContent=()=>{
@@ -104,84 +142,10 @@ class CourseContentMain extends React.Component {
       this.setState({ ChapterData : chapterData });
   }
 
-  showTopicDetails=(topic, current_chapter_data, current_topic_index, chapterIndex )=>{
-    if(chapterIndex === this.state.ChapterData.length-1 ){
-      this.setState({ is_finel_chapter : true});
-    }
-
-    this.setState({ 
-      Show_course_content_list : false, 
-      Show_Topics : true, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Topic_Details : topic, 
-      current_chapter_data: current_chapter_data, 
-      current_topic_index : current_topic_index, 
-      current_chapter_index : chapterIndex
-    });
-  }
-
-  setQuestionsView=( chapter_id)=>{
-    // chapterid
-    Notiflix.Loading.Dots()
-    GetApiCall.getRequest("ListQuestion?chapterid="+ chapter_id).then(resultdes =>
-      resultdes.json().then(obj => {
-      this.setState({
-        ChapterQuestionList : obj.data, Show_Questions_Module : true, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : false, Show_User_Feedback : false
-      })
-      Notiflix.Loading.Remove();
-    }))
-  }
-
-  updateUserAnsAndShowCorrectAns=( questionDataWithUserAns)=>{
-    // post api to users answer of questions.
-    this.setState({
-      ChapterQuestionList : questionDataWithUserAns, Show_Questions_Module : false, Show_Topics : false, Show_course_content_list : false, Show_Correct_Question_Ans : true, Show_User_Feedback : false
-    })
-    console.log(questionDataWithUserAns);
-  }
-
-  gotoNextTopic=(current_topic_index)=>{
-    debugger;
-    this.setState({ Topic_Details : this.state.current_chapter_data.topics[current_topic_index], current_topic_index: current_topic_index });
-  }
-
-  goToNextChapterTopic=()=>{
-    let ChapterData = this.state.ChapterData;
-    if(this.state.current_chapter_index< ChapterData.length-1){
-      let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
-      let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
-      let current_topic_index = 0;
-      let current_chapter_index = this.state.current_chapter_index+1;
-      //unlock new chapter first topic.
-     this.showTopicDetails( topic, current_chapter_data, current_topic_index, current_chapter_index)
-    }else{
-      this.setState({  Show_course_content_list : false, 
-        Show_Topics : false, 
-        Show_Questions_Module: false,
-        Show_Correct_Question_Ans : false,
-        Show_User_Feedback : true,
-      });
-    }
-    
-  }
-
-  onSubmitFeedback =(feedback)=>{
-    // user feedback api...
-    // go to congratulation .....
-    this.setState({  Show_course_content_list : false, 
-      Show_Topics : false, 
-      Show_Questions_Module: false,
-      Show_Correct_Question_Ans : false,
-      Show_User_Feedback : false,
-      Show_Congratulation_Page : true
-    });
-  }
-
   goToTopic =( current_chapter, currect_topic, current_chapter_index, current_topic_index)=>{
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
-    if(login != null && login != ""){
+    if(login != null && login != "" && currect_topic.fld_isunlocked===1){
       this.props.history.push({
         pathname : '/education-topic',
         state : {
@@ -262,7 +226,7 @@ class CourseContentMain extends React.Component {
                                 <div class="panel-group" id="accordion">
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
-                                        <div class="panel-heading lockedtitle " onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
+                                        <div class={"panel-heading "+( Item.chapter_unLock == true ? 'unlockedlockedtitle' : 'lockedtitle')} onClick={()=> this.handleActiveClass( Item.fld_chapterid ) } >
                                             <h4 class="panel-title">                            
                                                 Chapter Number {chapterIndex+1} : {Item.fld_title}
                                             </h4>
@@ -272,52 +236,14 @@ class CourseContentMain extends React.Component {
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class="locked" onClick={()=>{ this.goToTopic( Item, TopicItem , chapterIndex, index) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
+                                                        return <li class={TopicItem.fld_isunlocked === 1 ?"unlocked":"locked"} onClick={()=>{ this.goToTopic( Item, TopicItem , chapterIndex, index) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
                                                     }) : ''}
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     })}
-                                
-                                
                               </div>
-                                {/* <div class="row">
-                                    <div class="col-md-12">
-                                      { Show_course_content_list === true ? 
-                                        <CourseContentList 
-                                          ChapterData={this.state.ChapterData}
-                                          showTopicDetails={this.showTopicDetails}
-                                        /> 
-                                      : Show_Topics === true ? 
-                                        <CourseContentDetails  
-                                          current_chapter_data = {current_chapter_data}
-                                          Topic_Details = {Topic_Details} 
-                                          current_topic_index={current_topic_index} 
-                                          current_chapter_index={current_chapter_index} 
-                                          gotoNextTopic={this.gotoNextTopic}
-                                          setQuestionsView={this.setQuestionsView}
-                                        />
-                                      : Show_Questions_Module === true ?
-                                        <CourseQuestionsAns
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          updateUserAnsAndShowCorrectAns = {this.updateUserAnsAndShowCorrectAns}
-                                        />
-                                      : Show_Correct_Question_Ans === true?
-                                        <CourseQuestionsAnsList 
-                                          ChapterQuestionList = {ChapterQuestionList}
-                                          goToNextChapterTopic={this.goToNextChapterTopic}
-                                          is_finel_chapter={is_finel_chapter}
-                                        />
-                                      : Show_User_Feedback === true?
-                                        <UserFeedBackView onSubmitFeedback={this.onSubmitFeedback} />
-                                      : Show_Congratulation_Page=== true ?
-                                        <CongratulationView />
-                                      :
-                                      ''
-                                      }
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                         <div class="col-lg-4">
