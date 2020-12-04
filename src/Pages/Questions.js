@@ -75,6 +75,12 @@ class Questions extends React.Component {
 
   updateUserAnsAndShowCorrectAns(e){
     debugger;
+    let chaptersList = this.props.location.state.chaptersList;
+    let current_chapter_index = this.props.location.state.current_chapter_index;
+    let topic_data ='';
+    if(current_chapter_index< chaptersList.length-1){
+      topic_data = chaptersList.length > 0 ? chaptersList[current_chapter_index+1].topics[0] : '';
+    }
     e.preventDefault();
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
@@ -98,6 +104,29 @@ class Questions extends React.Component {
             if (results1.status == 200 || results1.status == 201) {
               debugger;
               Notiflix.Loading.Remove()
+              Notiflix.Loading.Dots();
+              if(topic_data !=''){
+                PostApiCall.postRequest(
+                  {
+                    customerid : login.fld_userid,
+                    topicid : topic_data.fld_id,
+                    isunlocked : 1,
+                    createdon :  moment().format('lll'),
+                    status : 1
+                  },
+                  "AddCustomerUnlockTopic"
+                ).then((results1) =>
+                  // const objs = JSON.parse(result._bodyText)
+                  results1.json().then((obj1) => {
+                    this.props.history.push({
+                      pathname : '/answers',
+                      state: { 
+                        questionData : this.state.ChapterQuestionList,
+                        chaptersList : this.props.location.state.chaptersList,
+                        current_chapter_index : this.props.location.state.current_chapter_index}
+                    })
+                  }));
+              }else{
                 this.props.history.push({
                   pathname : '/answers',
                   state: { 
@@ -105,6 +134,10 @@ class Questions extends React.Component {
                     chaptersList : this.props.location.state.chaptersList,
                     current_chapter_index : this.props.location.state.current_chapter_index}
                 })
+              }
+              
+
+              
             }else{
 
               Notiflix.Loading.Remove()
@@ -202,7 +235,7 @@ class Questions extends React.Component {
                                         </div>
                                         <div class="question-course-details">
                                             <div class="homelink">
-                                                <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                              <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="questions">
                                               <div class="questions-count">

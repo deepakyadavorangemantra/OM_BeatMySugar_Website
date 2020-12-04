@@ -131,7 +131,6 @@ class CourseTopicContentMain extends React.Component {
 }
 
 goToNextChapterTopic=()=>{
-  debugger;
   let ChapterData = this.props.location.state.chaptersList;
   if(this.state.current_chapter_index< ChapterData.length-1){
   let current_chapter_data = ChapterData[this.state.current_chapter_index+1];

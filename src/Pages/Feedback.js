@@ -11,16 +11,17 @@ class Feedback extends React.Component {
         super(props);
         this.state = {
             rating:'',
-            comments:''
+            comments:'',
+            show_congratulation : false,
+            congratulaion: ''
         };
     }
 
     componentDidMount() {
-       
+       this.getCongratulation();
     }
 
     SubmitFeedback =()=>{
-        debugger;
         if( this.state.rating != '' && this.state.comments !=''){
             var log = localStorage.getItem("CustomerLoginDetails");
             var login = JSON.parse(log);
@@ -44,15 +45,33 @@ class Feedback extends React.Component {
                 results1.json().then((obj1) => {
                     if (results1.status == 200 || results1.status == 201) {
                     debugger;
-                    Notiflix.Loading.Remove()
+                    
+
+                    // Notiflix.Loading.Remove();
+                    this.getCongratulation();
+                        this.setState({ show_congratulation : true})
+                        //get congratulaion
                     }else{
                         Notiflix.Loading.Remove()
-                        Notiflix.Notify.Failure(obj1.data);
+                        Notiflix.Notify.Failure( obj1.data );
                 
                     }
                 }));
             }
         }
+    }
+
+    getCongratulation=()=>{
+        GetApiCall.getRequest("ListCongratulation").then((results) => {
+            results.json().then(data => ({
+              data: data,
+            })
+        ).then(res => {
+            console.log(res.data);
+            this.setState({ congratulaion : res.data.data && res.data.data.length>0 ? res.data.data[0].fld_content:'' });
+            Notiflix.Loading.Remove();
+            });
+        });
     }
 
     render() {
@@ -117,32 +136,36 @@ class Feedback extends React.Component {
                             <div class="row mt-2">
                                 <div class="col-lg-12 order-lg-first ">
                                     <div class="dashboard-content">
-                                       
-                                       
                                         <div class="question-course-details">
                                             <div class="homelink">
-                                                <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                                <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                             </div>
-                                           <div class="feedback-section">
+                                            {this.state.show_congratulation === true? 
+                                            <div class="feedback-section">
                                                
-                                               <h3>Give Us Feedback</h3>
-                                                <p>Overall, how satisfied were you with our products?</p>
-                                                <div class="feedback-rating" style={{width: "50rem"}}>
-                                                    <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-5" type="radio" name="rating" value="5" /><label for="rating-5"><i class="fas fa-3x fa-star"></i></label>
-                                                    <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-4" type="radio" name="rating" value="4"/><label for="rating-4"><i class="fas fa-3x fa-star"></i></label>
-                                                    <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-3" type="radio" name="rating" value="3" /><label for="rating-3"><i class="fas fa-3x fa-star"></i></label>
-                                                    <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-2" type="radio" name="rating" value="2"/><label for="rating-2"><i class="fas fa-3x fa-star"></i></label>
-                                                    <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-1" type="radio" name="rating" value="1"/><label for="rating-1"><i class="fas fa-3x fa-star"></i></label>
+                                                <h3>Congratulaion !! </h3>
+                                                <div class="col-md-12">
+                                                    <div dangerouslySetInnerHTML= {{__html: this.state.congratulaion}}></div>
                                                 </div>
-                                                <p>Any additional comments or suggestion?</p>
-                                                <div class="textbox">
-                                                <textarea maxlength="300" onChange={(e)=>{ this.setState({ comments : e.target.value })}} id="w3review" name="w3review" rows="4" cols="50" > </textarea>
-                                                </div>
-                                                <div class="submitbtn">
-                                                    <button class="activelinksubmit" onClick={this.SubmitFeedback.bind(this)} ><span>Submit Feedback </span><span><img src="/assets/images/next.png" /></span></button>
-                                                </div>
-                                        
-                                           </div>
+                                                </div>:
+                                                <div class="feedback-section">
+                                                    <h3>Give Us Feedback</h3>
+                                                    <p>Overall, how satisfied were you with our products?</p>
+                                                    <div class="feedback-rating" style={{width: "50rem"}}>
+                                                        <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-5" type="radio" name="rating" value="5" /><label for="rating-5"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-4" type="radio" name="rating" value="4"/><label for="rating-4"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-3" type="radio" name="rating" value="3" /><label for="rating-3"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-2" type="radio" name="rating" value="2"/><label for="rating-2"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input onClick={(e)=>{ this.setState( {rating : e.target.value })} } id="rating-1" type="radio" name="rating" value="1"/><label for="rating-1"><i class="fas fa-3x fa-star"></i></label>
+                                                    </div>
+                                                    <p>Any additional comments or suggestion?</p>
+                                                    <div class="textbox">
+                                                    <textarea maxlength="300" onChange={(e)=>{ this.setState({ comments : e.target.value })}} id="w3review" name="w3review" rows="4" cols="50" > </textarea>
+                                                    </div>
+                                                    <div class="submitbtn">
+                                                        <button class="activelinksubmit" onClick={this.SubmitFeedback.bind(this)} ><span>Submit Feedback </span><span><img src="/assets/images/next.png" /></span></button>
+                                                    </div>
+                                            </div>}
                                         </div>
                                     </div>
                                 </div>

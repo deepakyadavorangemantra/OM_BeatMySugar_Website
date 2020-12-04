@@ -153,7 +153,7 @@ class Answers extends React.Component {
                                         {/* <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png" /></span> <span>Previous</span></a></div> */}
                                         <div class="question-course-details">
                                             <div class="homelink">
-                                                <a href="#"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                                <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="questions">
                                                 <div class="questions-count">
