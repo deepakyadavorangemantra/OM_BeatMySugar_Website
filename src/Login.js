@@ -440,16 +440,16 @@ class Login extends React.Component {
           }
           else{
 
-            PostApiCall.postRequest(
-              {
-                email: this.state.email,
-              },
-              "GetIfEmailVerified"
-            ).then((resultsv) =>
-              // const objs = JSON.parse(result._bodyText)
-              resultsv.json().then((objv) => {
-                // console.log(obj1.data)
-                if (resultsv.status == 200 || resultsv.status == 201) {
+            // PostApiCall.postRequest(
+            //   {
+            //     email: this.state.email,
+            //   },
+            //   "GetIfEmailVerified"
+            // ).then((resultsv) =>
+            //   // const objs = JSON.parse(result._bodyText)
+            //   resultsv.json().then((objv) => {
+            //     console.log(objv.data)
+            //     if (resultsv.status == 200 || resultsv.status == 201) {
 
             PostApiCall.postRequest(
               {
@@ -486,13 +486,13 @@ class Login extends React.Component {
           }
         }))
 
-      }
-      else
-      {
-        Notiflix.Loading.Remove();
-        Notiflix.Notify.Failure("Email Address is not verified.");
-      }
-    }))
+    //   }
+    //   else
+    //   {
+    //     Notiflix.Loading.Remove();
+    //     Notiflix.Notify.Failure("Email Address is not verified.");
+    //   }
+    // }))
    
       }
     }))

@@ -681,6 +681,7 @@ src={info.fld_image}/>
                             </p>
                           </div>
                         )}
+                           <p class="tax">Inclusive of All Taxes</p>
 
                         <ul class="product-list">
                           <li

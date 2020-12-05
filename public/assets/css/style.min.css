@@ -16,3 +16,9 @@
       .sort-dropdown span {
         font: 500 15px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
       }
+
+      .tax 
+{
+  font-weight:600!important;
+  margin-top : -15px;
+}

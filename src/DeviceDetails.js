@@ -212,6 +212,7 @@ class DeviceDetails extends React.Component
                                                 <span class="old-price"><strike>&#8377;{this.state.Device.fld_productprice}</strike> ({this.state.Device.fld_discountpercent}% Discount)</span>
                                             </div>
                                             <p class="discount-price">You Save &#8377;{parseFloat(this.state.Device.fld_productprice - this.state.Device.fld_discountprice).toFixed(2)}</p>
+                                            <p class="tax">Inclusive of All Taxes</p>
                                             <div class="product-desc">
                                             <p><b>Know your Product</b></p>
                                                 <p> {Parser(('<p>'+this.state.Device.fld_knowyourproduct+'</p>').replace(/font-family/g, '').replace(/color/g, ''))}</p>

@@ -120,7 +120,6 @@ class CartUpdated extends React.Component
                         // }
 
                     }
-
                     this.setState({
                       FoodData: obj.data,
                       Cart : arr
@@ -235,8 +234,11 @@ class CartUpdated extends React.Component
                                                 this.setState({
                                                     done : true
                                                 })
-                                                Notiflix.Loading.Remove()
+                              
+
                         
+                                                // Notiflix.Loading.Remove()
+
                                                 for(var i = 0 ; i<Object.keys(this.state.Cart).length;i++){
                         
                                                     for(var j = 0 ; j<Object.keys(this.state.Cart[i]).length;j++){
@@ -253,6 +255,7 @@ class CartUpdated extends React.Component
                                                         })
                                                         this.props.setcartitemcount(this.state.Cart.length)
                                                         this.props.setcartamount(subt)
+                                                        Notiflix.Loading.Remove()
                                                     }
                                              
                                                 }
@@ -402,18 +405,22 @@ class CartUpdated extends React.Component
                                 // console.log(this.state.)
                                 this.setState({
                                     done : true,
-                                    CartData : crtData,
+                                    cartPrice : crtData,
                                     FootwearData : ftData,
                                     FoodData : fdData,
                                     SocksData : skData,
                                     AccessoriesData : accData,
                                     CovidData : covData
                                 },()=>{
-                                    for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
-                                        subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
-                                        mrpt = mrpt + this.state.CartData[j].fld_price*this.state.CartData[j].fld_quantity
-                                        baset = baset + (this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity
-                                        gstval = gstval + ((this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity)*(this.state.CartData[j].fld_gstpercent/100)
+
+
+                                 
+
+                                    for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
+                                        subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
+                                        mrpt = mrpt + this.state.Cart[j].fld_price*this.state.Cart[j].fld_quantity
+                                        baset = baset + (this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity
+                                        gstval = gstval + ((this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity)*(this.state.Cart[j].fld_gstpercent/100)
                                         this.setState({
                                             SubTotal : subt,
                                             MrpSubTotal : mrpt,
@@ -421,7 +428,7 @@ class CartUpdated extends React.Component
                                             GstValue : gstval,
                                             GstValueRef : gstval
                                         })
-                                        this.props.setcartitemcount(this.state.CartData.length)
+                                        this.props.setcartitemcount(this.state.Cart.length)
                                         this.props.setcartamount(subt)
                                         Notiflix.Loading.Remove()
                                     }
@@ -463,18 +470,23 @@ class CartUpdated extends React.Component
                                         // console.log(ftData)
                                         this.setState({
                                             done : true,
-                                            CartData : crtData,
+                                            Cart : crtData,
                                             FootwearData : ftData,
                                             FoodData : fdData,
                                             SocksData : skData,
                                             AccessoriesData : accData,
                                             CovidData : covData
                                         },()=>{
-                                            for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
-                                                subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
-                                                mrpt = mrpt + this.state.CartData[j].fld_price*this.state.CartData[j].fld_quantity
-                                                baset = baset + (this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity
-                                                gstval = gstval + ((this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity)*(this.state.CartData[j].fld_gstpercent/100)
+
+
+                                       
+
+
+                                            for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
+                                                subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
+                                                mrpt = mrpt + this.state.Cart[j].fld_price*this.state.Cart[j].fld_quantity
+                                                baset = baset + (this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity
+                                                gstval = gstval + ((this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity)*(this.state.Cart[j].fld_gstpercent/100)
                                                 this.setState({
                                                     SubTotal : subt,
                                                     MrpSubTotal : mrpt,
@@ -482,7 +494,7 @@ class CartUpdated extends React.Component
                                                     GstValue : gstval,
                                                     GstValueRef : gstval
                                                 })
-                                                this.props.setcartitemcount(this.state.CartData.length)
+                                                this.props.setcartitemcount(this.state.Cart.length)
                                                 this.props.setcartamount(subt)
                                                 Notiflix.Loading.Remove()
                                             }
@@ -523,29 +535,32 @@ class CartUpdated extends React.Component
                                 // console.log(this.state.)
                                 this.setState({
                                     done : true,
-                                    CartData : crtData,
+                                    Cart : crtData,
                                     FootwearData : ftData,
                                     FoodData : fdData,
                                     SocksData : skData,
                                     AccessoriesData : accData,
                                     CovidData : covData
                                 },()=>{
-                                    for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
-                                        subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
-                                        mrpt = mrpt + this.state.CartData[j].fld_price*this.state.CartData[j].fld_quantity
-                                        baset = baset + (this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity
-                                        gstval = gstval + ((this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity)*(this.state.CartData[j].fld_gstpercent/100)
-                                        this.setState({
-                                            SubTotal : subt,
-                                            MrpSubTotal : mrpt,
-                                            BaseSubTotal : baset,
-                                            GstValue : gstval,
-                                            GstValueRef : gstval
-                                        })
-                                        this.props.setcartitemcount(this.state.CartData.length)
-                                        this.props.setcartamount(subt)
-                                        Notiflix.Loading.Remove()
-                                    }
+
+                                
+
+                                  for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
+                                    subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
+                                    mrpt = mrpt + this.state.Cart[j].fld_price*this.state.Cart[j].fld_quantity
+                                    baset = baset + (this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity
+                                    gstval = gstval + ((this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity)*(this.state.Cart[j].fld_gstpercent/100)
+                                    this.setState({
+                                        SubTotal : subt,
+                                        MrpSubTotal : mrpt,
+                                        BaseSubTotal : baset,
+                                        GstValue : gstval,
+                                        GstValueRef : gstval
+                                    })
+                                    this.props.setcartitemcount(this.state.Cart.length)
+                                    this.props.setcartamount(subt)
+                                    Notiflix.Loading.Remove()
+                                }
                                 })
                                 
     
@@ -583,29 +598,33 @@ class CartUpdated extends React.Component
                                 // console.log(this.state.)
                                 this.setState({
                                     done : true,
-                                    CartData : crtData,
+                                    Cart : crtData,
                                     FootwearData : ftData,
                                     FoodData : fdData,
                                     SocksData : skData,
                                     AccessoriesData : accData,
                                     CovidData : covData
                                 },()=>{
-                                    for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
-                                        subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
-                                        mrpt = mrpt + this.state.CartData[j].fld_price*this.state.CartData[j].fld_quantity
-                                        baset = baset + (this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity
-                                        gstval = gstval + ((this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity)*(this.state.CartData[j].fld_gstpercent/100)
-                                        this.setState({
-                                            SubTotal : subt,
-                                            MrpSubTotal : mrpt,
-                                            BaseSubTotal : baset,
-                                            GstValue : gstval,
-                                            GstValueRef : gstval
-                                        })
-                                        this.props.setcartitemcount(this.state.CartData.length)
-                                        this.props.setcartamount(subt)
-                                        Notiflix.Loading.Remove()
-                                    }
+
+                                
+
+
+                                  for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
+                                    subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
+                                    mrpt = mrpt + this.state.Cart[j].fld_price*this.state.Cart[j].fld_quantity
+                                    baset = baset + (this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity
+                                    gstval = gstval + ((this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity)*(this.state.Cart[j].fld_gstpercent/100)
+                                    this.setState({
+                                        SubTotal : subt,
+                                        MrpSubTotal : mrpt,
+                                        BaseSubTotal : baset,
+                                        GstValue : gstval,
+                                        GstValueRef : gstval
+                                    })
+                                    this.props.setcartitemcount(this.state.Cart.length)
+                                    this.props.setcartamount(subt)
+                                    Notiflix.Loading.Remove()
+                                }
                                 })
                                 
     
@@ -644,29 +663,33 @@ class CartUpdated extends React.Component
                                 // console.log(this.state.)
                                 this.setState({
                                     done : true,
-                                    CartData : crtData,
+                                    Cart : crtData,
                                     FootwearData : ftData,
                                     FoodData : fdData,
                                     SocksData : skData,
                                     AccessoriesData : accData,
                                     CovidData : covData
                                 },()=>{
-                                    for(var j = 0 ; j<Object.keys(this.state.CartData).length;j++){
-                                        subt = subt + this.state.CartData[j].fld_discountprice*this.state.CartData[j].fld_quantity
-                                        mrpt = mrpt + this.state.CartData[j].fld_price*this.state.CartData[j].fld_quantity
-                                        baset = baset + (this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity
-                                        gstval = gstval + ((this.state.CartData[j].fld_discountprice/(1+(this.state.CartData[j].fld_gstpercent/100)))*this.state.CartData[j].fld_quantity)*(this.state.CartData[j].fld_gstpercent/100)
-                                        this.setState({
-                                            SubTotal : subt,
-                                            MrpSubTotal : mrpt,
-                                            BaseSubTotal : baset,
-                                            GstValue : gstval,
-                                            GstValueRef : gstval
-                                        })
-                                        this.props.setcartitemcount(this.state.CartData.length)
-                                        this.props.setcartamount(subt)
-                                        Notiflix.Loading.Remove()
-                                    }
+
+                             
+
+
+                                  for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
+                                    subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
+                                    mrpt = mrpt + this.state.Cart[j].fld_price*this.state.Cart[j].fld_quantity
+                                    baset = baset + (this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity
+                                    gstval = gstval + ((this.state.Cart[j].fld_discountprice/(1+(this.state.Cart[j].fld_gstpercent/100)))*this.state.Cart[j].fld_quantity)*(this.state.Cart[j].fld_gstpercent/100)
+                                    this.setState({
+                                        SubTotal : subt,
+                                        MrpSubTotal : mrpt,
+                                        BaseSubTotal : baset,
+                                        GstValue : gstval,
+                                        GstValueRef : gstval
+                                    })
+                                    this.props.setcartitemcount(this.state.Cart.length)
+                                    this.props.setcartamount(subt)
+                                    Notiflix.Loading.Remove()
+                                }
                                 })
                                 
     
@@ -751,7 +774,7 @@ class CartUpdated extends React.Component
                 <Menu></Menu>
                   <div class="container">
                  
-                  {this.state.SubTotal == 0 && this.state.done ? (
+                  {(this.state.SubTotal == 0 && this.state.done) || this.state.Cart == 0 ? (
                  <div class="container-box cart-section">
                 <div class="col-md-12">
                   <img src="/assets/images/Empty-Cart.png" style={{    margin: 'auto'}}/>
@@ -1102,7 +1125,7 @@ class CartUpdated extends React.Component
                           */}
                             </div>
 
-                            <div class="row">
+                            <div class="row" style={{display : this.state.Cart.length == 0 ? 'none' : ''}}>
                                 <div class="col-md-8">
                                     <div class="title-col">
                                     <div class="row ">
@@ -1702,7 +1725,7 @@ class CartUpdated extends React.Component
                                                                     </tr>
                                                                     <tr>
                                                                     <td>Shipping Charges</td>
-                                                                    <td>₹ {(this.state.BaseSubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge :'0.00'}</td>
+                                                                    <td>₹ {(this.state.SubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge :'0.00'}</td>
                                                                     </tr>
 
                                                                     <tr>
@@ -1753,18 +1776,18 @@ class CartUpdated extends React.Component
                                                                                     YouSaved : parseFloat((this.state.MrpSubTotal-this.state.SubTotal)+this.state.Offer).toFixed(2),
                                                                                     // OfferPercent : '5',
                                                                                     OfferAmt : JSON.stringify(this.state.SelectedCouponData) == '[]' ? 0.00 : parseFloat(((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))).toFixed(2),
-                                                                                    ShippngAmt : (this.state.BaseSubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00,
+                                                                                    ShippngAmt : (this.state.SubTotal - this.state.Offer) < this.state.ShippingTh ? this.state.ShippingCharge : 0.00,
                                                                                     CodAmt : this.state.PayCod ? this.state.COD : 0.00,
                                                                                     PayMode : this.state.PayCod ? 'COD' : 'Online',
                                                                                     TotalAmt :
                                                                                     JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
-                                                                                    (this.state.BaseSubTotal) < this.state.ShippingTh ? 
+                                                                                    (this.state.SubTotal) < this.state.ShippingTh ? 
                                                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
                                                                                     : parseFloat(this.state.BaseSubTotal+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
                                                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.COD+this.state.GstValue).toFixed(2)
                                                                                     : parseFloat(this.state.BaseSubTotal+this.state.GstValue).toFixed(2)
                                                                                     :
-                                                                                    (this.state.BaseSubTotal - (this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
+                                                                                    (this.state.SubTotal - (this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
                                                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
                                                                                     : parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
                                                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.COD+this.state.GstValue).toFixed(2)
@@ -1793,13 +1816,13 @@ class CartUpdated extends React.Component
                                                                         <tr><td>Payable Amount</td>
                                                 <td style={{textAlign:"right"}}>₹{
                                                     JSON.stringify(this.state.SelectedCouponData) == '[]' ? 
-                                                    (this.state.BaseSubTotal) < this.state.ShippingTh ? 
+                                                    (this.state.SubTotal) < this.state.ShippingTh ? 
                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
                                                     : parseFloat(this.state.BaseSubTotal+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal+this.state.COD+this.state.GstValue).toFixed(2)
                                                     : parseFloat(this.state.BaseSubTotal+this.state.GstValue).toFixed(2)
                                                     :
-                                                    (this.state.BaseSubTotal - (this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
+                                                    (this.state.SubTotal - (this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100))) < this.state.ShippingTh ? 
                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.COD+this.state.GstValue).toFixed(2)
                                                     : parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.ShippingCharge+this.state.GstValue).toFixed(2) : 
                                                     this.state.PayCod ? parseFloat(this.state.BaseSubTotal-((this.state.BaseSubTotal*(this.state.SelectedCouponData.fld_pricepercent/100)))+this.state.COD+this.state.GstValue).toFixed(2)

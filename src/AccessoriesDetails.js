@@ -670,9 +670,12 @@ src={info.fld_image}/>
                                   this.state.SelectedVariant.fld_discountprice} ({this.state.SelectedVariant.fld_discountpercent}
                                     %)
                               </span>
+                            
                             </p>
+                           
                           </div>
                         )}
+                <p class="tax">Inclusive of All Taxes</p>
 
                         <ul class="product-list">
                           <li
@@ -1120,7 +1123,7 @@ src={info.fld_image}/>
                  <Slider {...settings}>
 
                 {this.state.RelatedProducts.map((info, index) => (
-                  <li>
+                  <li style={{display : info.fld_name == '' ? 'none' : ''}}>
                     <div class="partner product-inner ">
                       <div
                         id="overlay"

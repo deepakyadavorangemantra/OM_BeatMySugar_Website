@@ -693,6 +693,7 @@ src={info.fld_image}/>
                                   : "none",
                             }}
                           >
+                               <p class="tax">Inclusive of All Taxes</p>
                             
                             In Stock <span style={{ color: "#bdbdbd" }}>|</span>
                           </li>

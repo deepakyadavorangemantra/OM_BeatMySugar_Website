@@ -677,6 +677,7 @@ src={info.fld_image}/>
                         <p class="discount-price"><span class="old-price old-price-updated" style={{padding:"0px"}}> You Save &#8377; {parseFloat(this.state.SelectedVariant.fld_price - this.state.SelectedVariant.fld_discountprice).toFixed(2)} ({this.state.SelectedVariant.fld_discountpercent}%)</span></p>
                         </div>
                         }
+                           <p class="tax">Inclusive of All Taxes</p>
                       
                         
                          
@@ -1082,7 +1083,7 @@ src={info.fld_image}/>
 <Slider {...settings}>
                 {this.state.RelatedProducts.map((info,index)=>(
 
-<li>
+<li style={{display : info.fld_name == '' ? 'none' : ''}}>
 <div class="partner product-inner ">
                     <div id="overlay" style={{display : info.fld_availability =='In stock' ? 'none' : ''}}>Out Of Stock</div>
 
