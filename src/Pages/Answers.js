@@ -52,10 +52,10 @@ class Answers extends React.Component {
 
     goToNextChapterTopic=()=>{
         let ChapterData = this.state.chaptersList;
-        debugger;
         if(this.state.current_chapter_index< ChapterData.length-1){
         let current_chapter_data = ChapterData[this.state.current_chapter_index+1];
         let topic =  current_chapter_data.topics.length > 0 ? current_chapter_data.topics[0] : '';
+        topic.fld_isunlocked = 0;
         let current_topic_index = 0;
         let current_chapter_index = this.state.current_chapter_index+1;
             
@@ -88,7 +88,7 @@ class Answers extends React.Component {
                 <Menu></Menu>
                 <div class="account-section">
                     <div class="co">
-                        <div class="banner-sec">
+                        {/* <div class="banner-sec">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -131,7 +131,7 @@ class Answers extends React.Component {
                                 </div>
                             </div>
 
-                        </div>
+                        </div> */}
                         <div class="container" style={{ background: "none" }}>
                             <div class="row mt-2">
                                 <div class="col-lg-12 order-lg-first ">
@@ -143,12 +143,12 @@ class Answers extends React.Component {
                                               })
                                             }
                                             </div>
-                                            <div class="time-section">
+                                            {/* <div class="time-section">
                                                 <div class="time-coures-box">
                                                     <span class="time-icon"><i class="icon-clock-1"></i></span>
                                                     <span class="time-course-take">25 Min</span>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {/* <div class="prevquestion"><a class="prev" href="#"><span><img src="/assets/images/arrow.png" /></span> <span>Previous</span></a></div> */}
                                         <div class="question-course-details">
