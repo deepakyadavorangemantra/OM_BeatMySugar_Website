@@ -21,9 +21,7 @@ class CourseContentMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
       EmailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-
       EnteredOtp: "",
       ChapterData: [],
       ResendCount: 0,
@@ -39,7 +37,8 @@ class CourseContentMain extends React.Component {
       ChapterQuestionList:[],
       is_finel_chapter : false,
       Show_User_Feedback : false,
-      Show_Congratulation_Page : false
+      Show_Congratulation_Page : false,
+      resume_learning : {isCompleted: false, fld_currentchapter : 0, fld_currenttopic : 0, start : true}
     };
   }
 
@@ -53,10 +52,78 @@ class CourseContentMain extends React.Component {
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
     if(login != null && login != ""){
-      this.getChapterContentByUser(login.fld_userid,)
+      this.getChapterContentByUser(login.fld_userid);
+      this.checkFeedbackByUser(login.fld_userid);
+      this.addUserEducationModule(login.fld_userid);
     }else{
       this.getChapterContent();
     }
+  }
+
+  addUserEducationModule=(customerid)=>{
+    PostApiCall.postRequest({ 
+      
+        customerid:customerid,
+        currentchapter:0,
+        currenttopic:0,
+        iscompleted:0,
+        alertmailsent:0,
+        giftdeliverystatus:0,
+        createdon:'',
+        status:1
+    
+    },"AddCustomersEducation").then((results) => {
+      results.json().then(data => ({
+        data: data,
+        status: results.status
+      })
+    ).then(res => {
+      setTimeout(  () =>  this.LIstCustomerEducationDetailsAll(customerid) , 3000);
+    });
+  })
+  }
+
+  LIstCustomerEducationDetailsAll=(customerid)=>{
+    GetApiCall.getRequest("LIstCustomerEducationDetailsAll?customerid="+customerid).then((results) => {
+      results.json().then(data => ({
+        data: data,
+        
+
+      })
+    ).then(res => {
+        let data= {};
+        data.isCompleted = res.data.data.fld_iscompleted === 1? true : false;
+        data.fld_currentchapter = res.data.data.fld_currentchapter;
+        data.fld_currenttopic = res.data.data.fld_currenttopic;
+        data.start= (res.data.data.fld_currentchapter ===0 && res.data.data.fld_currenttopic === 0) ? true : false;
+        this.setState({resume_learning : data});
+      })
+    });
+  }
+
+  gotoResumeLearning=()=>{
+    let resumeLearningData = this.state.resume_learning;
+    let current_chapter = this.state.ChapterData.filter(x => x.fld_chapterid == resumeLearningData.fld_currentchapter);
+    
+    let current_topic = current_chapter[0].topics.filter(x=> x.fld_id === resumeLearningData.fld_currenttopic)[0]
+    current_topic.fld_isunlocked = 1;
+    this.goToTopic(current_chapter[0], current_topic);
+  }
+
+
+
+  checkFeedbackByUser=( user_id )=>{
+    GetApiCall.getRequest("ListCustomerEducationFeedbackById/?customerid="+user_id).then((results) => {
+      results.json().then(data => ({
+        data: data,
+        status: results.status
+      })
+    ).then(res => {
+        let feedback = res.data ? res.data.is_feedback : false 
+        localStorage.setItem( 'education_feedback', feedback)
+        Notiflix.Loading.Remove();
+        });
+    });
   }
 
   getChapterContentByUser=(current_user_id)=>{
@@ -76,25 +143,44 @@ class CourseContentMain extends React.Component {
             o.chapter_unLock = (index==0 ? true: chapterData[index-1].fld_isQuestionTestCompleted === 1? true : false);
             return o;
           });
-          debugger;
           if(chapterData[0].topics[0].fld_isunlocked === 0){
             this.unlockTopic( current_user_id, chapterData[0].topics[0]);
           }
           this.props.dispatch(setChapterListFullDetails(chapterData));
-        this.setState({ ChapterData : chapterData });
+          this.setEducationProgressBar( chapterData );
+          this.setState({ ChapterData : chapterData });
         Notiflix.Loading.Remove();
         });
     });
   }
 
+  setEducationProgressBar=(chapterData)=>{
+    let countUnlock = 0;
+    let totalCount = 0;
+    for(let i= 0 ; i < chapterData.length ; i++){
+      if( chapterData[i].fld_isQuestionTestCompleted === 1)
+          countUnlock++;
+          totalCount++;
+    }
+      // let topics= chapterData[i].topics;
+      // // for( let j=0; j<topics.length; j++){
+      // //   if(topics[j].fld_isunlocked===1)
+      // //     countUnlock++;
+      // //     totalCount++;
+      // // }
+    
+    sessionStorage.setItem('educationProgress', JSON.stringify({countUnlock : countUnlock, totalCount : totalCount}));
+  }
+
   unlockTopic=(current_user_id, topic_data)=>{
-    debugger;
+    
     Notiflix.Loading.Dots();
     PostApiCall.postRequest(
       {
         customerid : current_user_id,
         topicid : topic_data.fld_id,
         isunlocked : 1,
+        chapterid : topic_data.fld_chapterid,
         createdon :  moment().format('lll'),
         status : 1
       },
@@ -102,7 +188,6 @@ class CourseContentMain extends React.Component {
     ).then((results1) =>
       // const objs = JSON.parse(result._bodyText)
       results1.json().then((obj1) => {
-        debugger
         if (results1.status == 200 || results1.status == 201) {
           let chapterData = this.state.ChapterData;
           chapterData[0].topics[0].fld_isunlocked = 1;
@@ -142,9 +227,10 @@ class CourseContentMain extends React.Component {
       this.setState({ ChapterData : chapterData });
   }
 
-  goToTopic =( current_chapter, currect_topic, current_chapter_index, current_topic_index)=>{
+  goToTopic =( current_chapter, currect_topic )=>{
     var log = localStorage.getItem("CustomerLoginDetails");
     var login = JSON.parse(log);
+    
     if(login != null && login != "" && currect_topic.fld_isunlocked===1){
       this.props.history.push({
         pathname : '/education-topic',
@@ -160,7 +246,7 @@ class CourseContentMain extends React.Component {
 
 
   render() {
-    const { Show_course_content_list, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
+    const { resume_learning, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
       current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
 
       var log = localStorage.getItem(
@@ -222,7 +308,7 @@ class CourseContentMain extends React.Component {
                     <div class="row mt-2">
                         <div class="col-lg-8 order-lg-first ">
                             <div class="dashboard-content">
-                                <HeaderCourseProgress login={login}/>
+                                <HeaderCourseProgress login={login} ShowTimer={false}/>
                                 <div class="panel-group" id="accordion">
                                 {this.state.ChapterData.map(( Item, chapterIndex)=>{
                                  return <div class={"panel panel-default " + (Item.activeClass == true ? 'active' : 'deactive')}>
@@ -236,7 +322,7 @@ class CourseContentMain extends React.Component {
                                             <div class="panel-body">
                                                 <ul class="topiclist">
                                                     {Item.topics && Item.topics.length > 0 ? Item.topics.map(( TopicItem, index)=>{
-                                                        return <li class={TopicItem.fld_isunlocked === 1 ?"unlocked":"locked"} onClick={()=>{ this.goToTopic( Item, TopicItem , chapterIndex, index) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
+                                                        return <li class={TopicItem.fld_isunlocked === 1 ?"unlocked":"locked"} onClick={()=>{ this.goToTopic( Item, TopicItem ) }} ><a class="card-edit">Topic { index+1 } - {TopicItem.fld_title}</a></li>
                                                     }) : ''}
                                                 </ul>
                                             </div>
@@ -250,9 +336,23 @@ class CourseContentMain extends React.Component {
                             <div class="course-side-bar">
                                 { login != null && login != "" ? 
                                     <div class="login-box">
+                                      {resume_learning.start == true ? 
+                                      <>
+                                       <h3>Want to start your free course?</h3>
+                                        <a onClick={()=>{ this.gotoResumeLearning() }} className="loginbutton">Start Learning</a>
+                                      </> : resume_learning.isCompleted == true ?
+                                      <>
+                                        <h3> course completed</h3>
+                                        {/* <a href="#" className="loginbutton">Resume Learning</a> */}
+                                      </>:
+                                      <>
                                         <h3>Want to start your free course?</h3>
-                                        <a href="#" className="loginbutton">Resume Learning</a>
-                                    </div>:
+                                        <a onClick={()=>{ this.gotoResumeLearning() }} className="loginbutton">Resume Learning</a>
+                                      </>
+                                      
+                                    }
+                                    </div>
+                                    :
                                         <div class="login-box">
                                             <h3>Want to start your free course?</h3>
                                             <a href="/Login" className="loginbutton">Login Now</a>

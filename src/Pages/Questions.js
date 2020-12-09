@@ -74,7 +74,6 @@ class Questions extends React.Component {
   }
 
   updateUserAnsAndShowCorrectAns(e){
-    debugger;
     let chaptersList = this.props.location.state.chaptersList;
     let current_chapter_index = this.props.location.state.current_chapter_index;
     let topic_data ='';
@@ -102,14 +101,15 @@ class Questions extends React.Component {
           
           results1.json().then((obj1) => {
             if (results1.status == 200 || results1.status == 201) {
-              debugger;
-              Notiflix.Loading.Remove()
+              Notiflix.Loading.Remove();
+              sessionStorage.removeItem("user_spend_chapter_time");
               Notiflix.Loading.Dots();
               if(topic_data !=''){
                 PostApiCall.postRequest(
                   {
                     customerid : login.fld_userid,
                     topicid : topic_data.fld_id,
+                    chapterid : data.chapterid,
                     isunlocked : 1,
                     createdon :  moment().format('lll'),
                     status : 1
@@ -118,6 +118,11 @@ class Questions extends React.Component {
                 ).then((results1) =>
                   // const objs = JSON.parse(result._bodyText)
                   results1.json().then((obj1) => {
+                    if(sessionStorage.getItem('educationProgress')) {
+                      let educationProgress = JSON.parse(sessionStorage.getItem('educationProgress'));
+                      educationProgress.countUnlock = educationProgress.countUnlock + 1;
+                      sessionStorage.setItem('educationProgress', JSON.stringify(educationProgress));
+                    }
                     this.props.history.push({
                       pathname : '/answers',
                       state: { 
@@ -168,7 +173,7 @@ class Questions extends React.Component {
                 <Menu></Menu>
                 <div class="account-section">
                     <div class="co">
-                        <div class="banner-sec">
+                        {/* <div class="banner-sec">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -211,7 +216,7 @@ class Questions extends React.Component {
                                 </div>
                             </div>
 
-                        </div>
+                        </div> */}
                         <div class="container" style={{ background: "none" }}>
                             <div class="row mt-2">
                                 <div class="col-lg-12 order-lg-first ">
@@ -223,12 +228,12 @@ class Questions extends React.Component {
                                               })
                                             }
                                             </div>
-                                            <div class="time-section">
+                                            {/* <div class="time-section">
                                                 <div class="time-coures-box">
                                                     <span class="time-icon"><i class="icon-clock-1"></i></span>
                                                     <span class="time-course-take">25 Min</span>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div class="prevquestion">
                                           <button class="prev" disabled={ contentIndex ===0 ?true : false } onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex-1] }); this.setState({contentIndex :contentIndex-1}) }}><span><img src="/assets/images/arrow.png"/></span> <span>Previous</span></button>

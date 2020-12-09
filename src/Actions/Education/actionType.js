@@ -4,3 +4,10 @@ export const setChapterListFullDetails = chapterList => {
       payload: chapterList
     };
   };
+
+export const setChapterTimerEnable =flag=>{
+    return {
+      type: "SET_CHAPTER_TOPIC_TIME_CHECK",
+      payload: flag
+    };
+  };

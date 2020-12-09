@@ -18,6 +18,7 @@ componentDidMount(){
     var details = JSON.parse(login)
 
     localStorage.removeItem('CustomerLoginDetails')
+    localStorage.removeItem('education_feedback')
                                
     window.location.href = '/'
 

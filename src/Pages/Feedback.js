@@ -19,6 +19,7 @@ class Feedback extends React.Component {
 
     componentDidMount() {
        this.getCongratulation();
+    //    this.getCheckFeedback();
     }
 
     SubmitFeedback =()=>{
@@ -44,9 +45,6 @@ class Feedback extends React.Component {
                 
                 results1.json().then((obj1) => {
                     if (results1.status == 200 || results1.status == 201) {
-                    debugger;
-                    
-
                     // Notiflix.Loading.Remove();
                     this.getCongratulation();
                         this.setState({ show_congratulation : true})
@@ -88,7 +86,7 @@ class Feedback extends React.Component {
                 <Menu></Menu>
                 <div class="account-section">
                     <div class="co">
-                        <div class="banner-sec">
+                        {/* <div class="banner-sec">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -131,7 +129,7 @@ class Feedback extends React.Component {
                                 </div>
                             </div>
 
-                        </div>
+                        </div> */}
                         <div class="container" style={{ background: "none" }}>
                             <div class="row mt-2">
                                 <div class="col-lg-12 order-lg-first ">

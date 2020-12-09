@@ -1,5 +1,6 @@
 const intialiseState = {
     ChapterListFullDetails : [],
+    ChapterTopicTimeCheck : false,
       };
       
       export default (state = intialiseState, action) => {
@@ -8,6 +9,13 @@ const intialiseState = {
             return {
               ...state,
               ChapterListFullDetails: action.payload
+            };
+
+            
+            case "SET_CHAPTER_TOPIC_TIME_CHECK":
+            return {
+              ...state,
+              ChapterTopicTimeCheck: action.payload
             };
             
           default:
