@@ -330,7 +330,7 @@ class CourseContentMain extends React.Component {
                                             <h4 class="panel-title">                            
                                                 Chapter Number {chapterIndex+1} : {Item.fld_title}
                                             </h4>
-                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'h '+Item.fld_duration.split(':')[1]+'m') : Item.fld_duration } total length</span></p>
+                                            <p><span class="topic">{Item.topics ? Item.topics.length :0 } Topics</span> . <span class="length">{ Item.fld_duration.includes(':') ? (Item.fld_duration.split(':')[0]+'m '+Item.fld_duration.split(':')[1]+'s') : Item.fld_duration } total length</span></p>
                                         </div>
                                         <div id="collapseOne" class={"panel-collapse " + (Item.activeClass == true ? 'active' : 'deactive')}>
                                             <div class="panel-body">
