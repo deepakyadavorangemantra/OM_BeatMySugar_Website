@@ -12,6 +12,7 @@ import CourseQuestionsAnsList from '../Education/CorrectQestionAnsList';
 import UserFeedBackView from '../Education/UserFeedback';
 import CongratulationView from '../Education/Congratulation';
 import {connect} from 'react-redux';
+import { setChapterTimerEnable} from '../Actions/Education/actionType';
 
 import courseImage from '../images/course.jpg'
 class Answers extends React.Component {
@@ -58,7 +59,7 @@ class Answers extends React.Component {
         topic.fld_isunlocked = 0;
         let current_topic_index = 0;
         let current_chapter_index = this.state.current_chapter_index+1;
-            
+        this.props.dispatch(setChapterTimerEnable( current_chapter_data.fld_isQuestionTestCompleted === 1 ? true : false));
             this.props.history.push({
                 pathname : '/education-topic',
                 state : {

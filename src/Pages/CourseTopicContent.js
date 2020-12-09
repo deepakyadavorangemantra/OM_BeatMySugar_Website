@@ -257,7 +257,9 @@ goToNextChapterTopic=()=>{
                                             'Go To Next Chapter '
                                         } </span><span><img src="/assets/images/next.png" /></span></button> 
                                         :
-                                        <button className={ is_completed_time === true?'activelink':"disable"} disabled={ is_completed_time === true? false : true} onClick={ ()=>{ this.props.history.push({
+                                        <button className={ is_completed_time === true?'activelink':"disable"} disabled={ is_completed_time === true? false : true} onClick={ ()=>{ 
+                                          
+                                          this.props.history.push({
                                           pathname : '/questions',
                                           state :{
                                             chapter_id : Topic_Details.fld_chapterid,
