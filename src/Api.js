@@ -5,7 +5,7 @@
   // const urlString = "https://65.0.39.41:8080/BackofficeApi/"; 
 
   // const urlString = "http://13.126.17.107:8085/";
-  const urlString = "http://65.0.239.177:8080/";
+  const urlString = "http://65.0.239.177:8080/BackofficeApi";
 
   
 
