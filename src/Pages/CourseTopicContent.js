@@ -227,11 +227,11 @@ goToNextChapterTopic=()=>{
                                    
                                    { Topic_Details.contents && Topic_Details.contents.length > 0 ?
                                     <>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12-sec">
                                           <h4>Content {this.ordinal_suffix_of(contentIndex+1)}</h4> 
                                             <div  dangerouslySetInnerHTML= {{__html: Topic_Details.contents[contentIndex].fld_content ? Topic_Details.contents[contentIndex].fld_content : '' }}></div> 
                                         </div><br/>
-                                        <div><h4 style={{color:'blue'}} >{`Page: `+(contentIndex+1)+`/`+Topic_Details.contents.length}</h4></div>
+                                        <div class="count-sec"><p>{`Page: `+(contentIndex+1)+`/`+Topic_Details.contents.length}</p></div>
                                     </>: 'Not have content !' }
                                     </div>
                                   </div>
@@ -257,7 +257,9 @@ goToNextChapterTopic=()=>{
                                             'Go To Next Chapter '
                                         } </span><span><img src="/assets/images/next.png" /></span></button> 
                                         :
-                                        <button className={ is_completed_time === true?'activelink':"disable"} disabled={ is_completed_time === true? false : true} onClick={ ()=>{ this.props.history.push({
+                                        <button className={ is_completed_time === true?'activelink':"disable"} disabled={ is_completed_time === true? false : true} onClick={ ()=>{ 
+                                          
+                                          this.props.history.push({
                                           pathname : '/questions',
                                           state :{
                                             chapter_id : Topic_Details.fld_chapterid,
@@ -267,9 +269,9 @@ goToNextChapterTopic=()=>{
                                         }) }} > Go to Questions <span><img src="/assets/images/next.png"/></span> </button>
                                         :
                                         Topic_Details.contents.length-1 === contentIndex ? 
-                                        <button class="activelink" onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1, true);  }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
+                                        <button class="activelink" style={{ float:'right'}} onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1, true);  }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
                                         :
-                                        <button class="activelink" onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
+                                        <button class="activelink" style={{ float:'right'}} onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
                                       }
                                         {next_topic_title!='' ?<p>Topic {current_topic_index+2} - {next_topic_title}</p>:''}
                                       </div>
