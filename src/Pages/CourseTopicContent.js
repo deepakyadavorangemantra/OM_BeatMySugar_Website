@@ -267,9 +267,9 @@ goToNextChapterTopic=()=>{
                                         }) }} > Go to Questions <span><img src="/assets/images/next.png"/></span> </button>
                                         :
                                         Topic_Details.contents.length-1 === contentIndex ? 
-                                        <button class="activelink" onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1, true);  }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
+                                        <button class="activelink" style={{ float:'right'}} onClick={ ()=>{ this.gotoNextTopic(current_topic_index+1, true);  }}>Next Topic <span><img src="/assets/images/next.png"/></span> </button>
                                         :
-                                        <button class="activelink" onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
+                                        <button class="activelink" style={{ float:'right'}} onClick={ ()=>{ this.setState({ contentIndex : contentIndex+1});  }} >Next <span><img src="/assets/images/next.png"/></span> </button>
                                       }
                                         {next_topic_title!='' ?<p>Topic {current_topic_index+2} - {next_topic_title}</p>:''}
                                       </div>

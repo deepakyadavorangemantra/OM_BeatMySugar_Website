@@ -38,7 +38,9 @@ class CourseContentMain extends React.Component {
       is_finel_chapter : false,
       Show_User_Feedback : false,
       Show_Congratulation_Page : false,
-      resume_learning : {isCompleted: false, fld_currentchapter : 0, fld_currenttopic : 0, start : true}
+      resume_learning : {isCompleted: false, fld_currentchapter : 0, fld_currenttopic : 0, start : true},
+      rating:0,
+      rating_per:0
     };
   }
 
@@ -58,6 +60,18 @@ class CourseContentMain extends React.Component {
     }else{
       this.getChapterContent();
     }
+    this.getEducationModuleRating();
+  }
+  getEducationModuleRating=()=>{
+    GetApiCall.getRequest("EducationDashboard").then((results) => {
+      results.json().then(data => ({
+        data: data,
+      })
+    ).then(res => {
+          if(res.data.data)
+          this.setState({ rating : res.data.data.overall_rating, rating_per : parseInt((res.data.data.overall_rating/5)*100)})
+      });
+    });
   }
 
   addUserEducationModule=(customerid)=>{
@@ -246,7 +260,7 @@ class CourseContentMain extends React.Component {
 
 
   render() {
-    const { resume_learning, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
+    const { resume_learning, rating, rating_per, Topic_Details, Show_Topics, current_topic_index , current_chapter_index, Show_Questions_Module, ChapterQuestionList,
       current_chapter_data, Show_Correct_Question_Ans, is_finel_chapter, Show_User_Feedback, Show_Congratulation_Page} = this.state;
 
       var log = localStorage.getItem(
@@ -268,9 +282,9 @@ class CourseContentMain extends React.Component {
                         <h1 class="main-head">Diabetes Learning Program</h1>
                         <p class="sub-head">A brief about the course and what is expected to be delivered and many more</p>
                         <div className="rating-box">
-                        <span className="ratingtext">4.8 Rating</span>
+                        <span className="ratingtext">{rating} Rating</span>
                         <span className="ratingsse">
-                          <span className="star-rating" title="70%">
+                          <span className="star-rating" title={rating_per}>
                             <span className="back-stars">
                               <i className="icon-star-empty" aria-hidden="true"></i>
                               <i className="icon-star-empty" aria-hidden="true"></i>
@@ -278,7 +292,7 @@ class CourseContentMain extends React.Component {
                               <i className="icon-star-empty" aria-hidden="true"></i>
                               <i className="icon-star-empty" aria-hidden="true"></i>
 
-                              <span className="front-stars" style={{ width: "70%" }}>
+                              <span className="front-stars" style={{ width: rating_per+'%' }}>
                                 <i className="icon-star" aria-hidden="true"></i>
                                 <i className="icon-star" aria-hidden="true"></i>
                                 <i className="icon-star" aria-hidden="true"></i>
