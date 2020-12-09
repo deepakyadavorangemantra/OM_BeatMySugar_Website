@@ -92,7 +92,7 @@ class CourseContentMain extends React.Component {
         status: results.status
       })
     ).then(res => {
-      setTimeout(  () =>  this.LIstCustomerEducationDetailsAll(customerid) , 3000);
+      setTimeout(  () =>  this.LIstCustomerEducationDetailsAll(customerid) , 2000);
     });
   })
   }
