@@ -227,11 +227,11 @@ goToNextChapterTopic=()=>{
                                    
                                    { Topic_Details.contents && Topic_Details.contents.length > 0 ?
                                     <>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12-sec">
                                           <h4>Content {this.ordinal_suffix_of(contentIndex+1)}</h4> 
                                             <div  dangerouslySetInnerHTML= {{__html: Topic_Details.contents[contentIndex].fld_content ? Topic_Details.contents[contentIndex].fld_content : '' }}></div> 
                                         </div><br/>
-                                        <div><h4 style={{color:'blue'}} >{`Page: `+(contentIndex+1)+`/`+Topic_Details.contents.length}</h4></div>
+                                        <div class="count-sec"><p>{`Page: `+(contentIndex+1)+`/`+Topic_Details.contents.length}</p></div>
                                     </>: 'Not have content !' }
                                     </div>
                                   </div>
