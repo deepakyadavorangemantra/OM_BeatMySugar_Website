@@ -10,11 +10,11 @@ const axios = require('axios')
 const Parser = require('html-react-parser')
 
 
-const urlString = "http://13.126.17.107:8085/";
+// const urlString = "http://13.126.17.107:8085/backofficeapi";
 
 // const urlString = "https://api.beatmysugar.com/BackofficeApi/";
 
-// const urlString = "http://localhost:8080/BackofficeApi/";
+const urlString = "http://localhost:8080/BackofficeApi/";
 
 const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
 

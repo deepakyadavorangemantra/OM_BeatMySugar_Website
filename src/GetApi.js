@@ -1,9 +1,9 @@
 // var urlString = "https://api.beatmysugar.com/BackofficeApi/";
-// const urlString = "http://localhost:8080/BackofficeApi/";
+const urlString = "http://localhost:8080/BackofficeApi/";
 // const urlString = "https://65.0.39.41:8080/BackofficeApi/"; 
 
 //  var urlString = "http://localhost:7000/BackofficeApi/";
-const urlString = "http://13.126.17.107:8085/";
+// const urlString = "http://13.126.17.107:8085/backofficeapi";
 
 const GetApiCall = {
   getRequest(url) {

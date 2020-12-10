@@ -118,7 +118,7 @@ class CourseContentMain extends React.Component {
   gotoResumeLearning=()=>{
     let resumeLearningData = this.state.resume_learning;
     let current_chapter = this.state.ChapterData.filter(x => x.fld_chapterid == resumeLearningData.fld_currentchapter);
-    
+    debugger;
     let current_topic = current_chapter[0].topics.filter(x=> x.fld_id === resumeLearningData.fld_currenttopic)[0]
     current_topic.fld_isunlocked = 1;
     this.goToTopic(current_chapter[0], current_topic);
