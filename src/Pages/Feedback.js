@@ -134,7 +134,7 @@ class Feedback extends React.Component {
                             <div class="row mt-2">
                                 <div class="col-lg-12 order-lg-first ">
                                     <div class="dashboard-content">
-                                        <div class="question-course-details">
+                                        <div class="question-course-details-feedback">
                                             <div class="homelink">
                                                 <a href="/education"><i class="fa fa-home" aria-hidden="true"></i></a>
                                             </div>
