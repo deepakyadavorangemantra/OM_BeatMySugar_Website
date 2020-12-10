@@ -269,7 +269,7 @@ class Questions extends React.Component {
                                                       
                                                           &nbsp;&nbsp;&nbsp;&nbsp;
                                                         { ChapterQuestionList.length-1 === contentIndex ? 
-                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={this.updateUserAnsAndShowCorrectAns.bind(this) }>Submit & Check Correct Answer -{'>'}</button> 
+                                                          <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={this.updateUserAnsAndShowCorrectAns.bind(this) }>Submit & Check Correct Answer </button> 
                                                           :
                                                           <button class="activelinksubmit" disabled={ questionData.user_ans != undefined?  false : true} onClick={ ()=>{ this.setState({questionData : ChapterQuestionList[contentIndex+1] }); this.setState({contentIndex :contentIndex+1}) }}>Next Question</button>
                                                         }
