@@ -3,18 +3,18 @@
 const express = require('express');
 // const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 8085;  //3006
+const port = process.env.PORT || 3006
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios')
 const Parser = require('html-react-parser')
 
 
-// const urlString = "http://13.126.17.107:8085/backofficeapi";
+const urlString = "http://13.126.17.107:8085/backofficeapi";
 
 // const urlString = "https://api.beatmysugar.com/BackofficeApi/";
 
-const urlString = "http://localhost:8080/BackofficeApi/";
+// const urlString = "http://localhost:8080/BackofficeApi/";
 
 const ImgUrl = 'https://beatmysugar.com/assets/images/BMS-OG.png'
 
