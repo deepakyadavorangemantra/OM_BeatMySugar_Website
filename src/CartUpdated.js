@@ -237,7 +237,7 @@ class CartUpdated extends React.Component
                               
 
                         
-                                                // Notiflix.Loading.Remove()
+                                                Notiflix.Loading.Remove()
 
                                                 for(var i = 0 ; i<Object.keys(this.state.Cart).length;i++){
                         
@@ -255,7 +255,7 @@ class CartUpdated extends React.Component
                                                         })
                                                         this.props.setcartitemcount(this.state.Cart.length)
                                                         this.props.setcartamount(subt)
-                                                        Notiflix.Loading.Remove()
+                                                        // Notiflix.Loading.Remove()
                                                     }
                                              
                                                 }
@@ -414,7 +414,7 @@ class CartUpdated extends React.Component
                                 },()=>{
 
 
-                                 
+                                  Notiflix.Loading.Remove()
 
                                     for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
                                         subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
@@ -479,7 +479,7 @@ class CartUpdated extends React.Component
                                         },()=>{
 
 
-                                       
+                                          Notiflix.Loading.Remove()
 
 
                                             for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
@@ -543,7 +543,7 @@ class CartUpdated extends React.Component
                                     CovidData : covData
                                 },()=>{
 
-                                
+                                  Notiflix.Loading.Remove()
 
                                   for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
                                     subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
@@ -607,7 +607,7 @@ class CartUpdated extends React.Component
                                 },()=>{
 
                                 
-
+                                  Notiflix.Loading.Remove()
 
                                   for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
                                     subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity
@@ -672,7 +672,7 @@ class CartUpdated extends React.Component
                                 },()=>{
 
                              
-
+                                  Notiflix.Loading.Remove()
 
                                   for(var j = 0 ; j<Object.keys(this.state.Cart).length;j++){
                                     subt = subt + this.state.Cart[j].fld_discountprice*this.state.Cart[j].fld_quantity

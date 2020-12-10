@@ -65,10 +65,14 @@ class Tabs extends React.Component {
       // CategorySelected : this.props.match.params.category
     });
 
+    var stext = JSON.parse(localStorage.getItem("SearchText"));
+   
+
+
     var search = this.props.match.params.key
 
     this.setState({
-      SearchText : search
+      SearchText : stext
     })
     // console.log(this.props.match.params.category)
     PostApiCall.postRequest(
@@ -88,10 +92,10 @@ class Tabs extends React.Component {
 
 
             obj.data.filter(item => {
-              if (item.fld_name.toLowerCase().includes(search.toLowerCase())
-              || item.fld_brand.toLowerCase().includes(search.toLowerCase())
-              || item.fld_category.toLowerCase().includes(search.toLowerCase())
-              || item.Filters.toLowerCase().includes(search.toLowerCase())
+              if (item.fld_name.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+              || item.fld_brand.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+              || item.fld_category.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+              || item.Filters.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
               ) {
                 srDt.push(item)
               }
@@ -163,8 +167,8 @@ class Tabs extends React.Component {
             if(search != null){
   
               res.data.data.filter(item => {
-                if (item.fld_name.toLowerCase().includes(search.toLowerCase())
-                || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                if (item.fld_name.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+                || item.fld_brand.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
                 // || item.fld_description.toLowerCase().includes(search.toLowerCase())
                 ) {
                   srDtfoot.push(item)
@@ -207,8 +211,8 @@ class Tabs extends React.Component {
               if(search != null){
     
                obj.data.filter(item => {
-                  if (item.fld_name.toLowerCase().includes(search.toLowerCase())
-                  || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                  if (item.fld_name.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+                  || item.fld_brand.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
                   // || item.fld_description.toLowerCase().includes(search.toLowerCase())
                   ) {
                     srDt.push(item)
@@ -246,8 +250,8 @@ class Tabs extends React.Component {
               if(search != null){
     
                obj.data.filter(item => {
-                  if (item.fld_name.toLowerCase().includes(search.toLowerCase())
-                  || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                  if (item.fld_name.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+                  || item.fld_brand.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
                   // || item.fld_description.toLowerCase().includes(search.toLowerCase())
                   ) {
                     srDt.push(item)
@@ -283,8 +287,8 @@ class Tabs extends React.Component {
                 if(search != null){
       
                   res.data.data.filter(item => {
-                    if (item.fld_name.toLowerCase().includes(search.toLowerCase())
-                    || item.fld_brand.toLowerCase().includes(search.toLowerCase())
+                    if (item.fld_name.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+                    || item.fld_brand.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
                     // || item.fld_description.toLowerCase().includes(search.toLowerCase())
                     ) {
                       srDtsocks.push(item)
@@ -319,9 +323,9 @@ class Tabs extends React.Component {
                                     // console.log(obj.data)
     
                 obj.data.filter(item => {
-                  if (item.fld_title.toLowerCase().includes(search.toLowerCase())
-                  || item.fld_shortdescription.toLowerCase().includes(search.toLowerCase())
-                  || item.fld_content.toLowerCase().includes(search.toLowerCase())
+                  if (item.fld_title.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+                  || item.fld_shortdescription.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
+                  || item.fld_content.toLowerCase().replace(/\W|_/g,"").includes(search.toLowerCase())
                   ) {
                     srDtblog.push(item)
                   }

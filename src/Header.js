@@ -768,7 +768,7 @@ class Menu extends React.Component {
                                       else if (
                                         this.state.SearchBarCategory[i].fld_page == "search"
                                       ) {
-                                        // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                                        localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                         window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                                       } else {
                                         localStorage.setItem(
@@ -903,7 +903,7 @@ class Menu extends React.Component {
                                       this.state.SearchBarCategory[i]
                                         .fld_page == "search"
                                     ) {
-                                      // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                                      localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                       window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                                     } else {
                                       localStorage.setItem(
@@ -1425,6 +1425,8 @@ class Menu extends React.Component {
                           if (e.key === "Enter") {
 
                             if(this.state.SearchText!=''){
+                              localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+
                               window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                             }
 
@@ -1443,6 +1445,7 @@ class Menu extends React.Component {
                         <button class="search-button-mobile"
                         onClick={()=>{
                           if(this.state.SearchText!=''){
+                                localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                           window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                           }
                         }}
@@ -2208,7 +2211,7 @@ class Menu extends React.Component {
                                 this.state.SearchBarCategory[i].fld_page ==
                                 "search"
                               ) {
-                                // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                                localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                                 window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                               } else {
                                 localStorage.setItem(
@@ -2302,7 +2305,7 @@ class Menu extends React.Component {
                           else if (
                             this.state.SearchBarCategory[i].fld_page == "search"
                           ) {
-                            // localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
+                            localStorage.setItem('SearchText',JSON.stringify(this.state.SearchText))
                             window.location.href = `/search/${this.state.SearchText.replace(/\W|_/g,"")}`;
                           } else {
                             localStorage.setItem(
